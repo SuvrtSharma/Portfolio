@@ -1,0 +1,202 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Token → Tailwind-utility bridge.
+ *
+ * `@theme inline` inlines these values into the generated utilities, so e.g.
+ * `bg-primary` resolves to `var(--primary)` at use-site. We never hardcode a
+ * colour in a component; we reference a semantic token, and each THEME decides
+ * what that token resolves to (see the palette blocks below). Adding a new
+ * theme therefore requires zero changes here or in any component.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand palette — exposed as utilities (bg-gold, text-parchment, …) for the
+     handful of theme-specific decorations that need a literal brand colour. */
+  --color-ocean: var(--brand-ocean);
+  --color-ocean-deep: var(--brand-ocean-deep);
+  --color-ocean-panel: var(--brand-ocean-panel);
+  --color-gold: var(--brand-gold);
+  --color-gold-soft: var(--brand-gold-soft);
+  --color-parchment: var(--brand-parchment);
+  --color-parchment-dark: var(--brand-parchment-dark);
+  --color-ink: var(--brand-ink);
+  --color-wood: var(--brand-wood);
+  --color-fog: var(--brand-fog);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+  --font-script: var(--font-script);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Custom animations. In Tailwind v4 these must be registered in the theme: the
+ * `--animate-*` namespace generates `animate-*` utilities and the nested
+ * `@keyframes` are emitted into the bundle (top-level keyframes get tree-shaken
+ * away). Reduced-motion is handled at use-site with the `motion-reduce:` variant.
+ */
+@theme {
+  --animate-route-flow: route-flow 1.2s linear infinite;
+  --animate-marker-glow: marker-glow 3.8s ease-in-out infinite;
+
+  @keyframes route-flow {
+    to {
+      stroke-dashoffset: -20;
+    }
+  }
+
+  @keyframes marker-glow {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.92);
+    }
+    50% {
+      opacity: 0.65;
+      transform: scale(1.12);
+    }
+  }
+}
+
+/*
+ * THEME: Pirate (default).
+ *
+ * `:root` carries the pirate palette so the app is never unstyled, and
+ * `.theme-pirate` mirrors it so the active theme can be selected explicitly
+ * via its `tokenClass`. A second theme is added purely as `.theme-minimal { … }`
+ * — no engine, component, or build change required (Open/Closed).
+ */
+:root,
+.theme-pirate {
+  --brand-ocean: #081b29;
+  --brand-ocean-deep: #04111a;
+  --brand-ocean-panel: #0b2233;
+  --brand-gold: #d4af37;
+  --brand-gold-soft: #e6c976;
+  --brand-parchment: #e8d8b5;
+  --brand-parchment-dark: #c9b68a;
+  --brand-ink: #2a1c12;
+  --brand-wood: #5b3a29;
+  --brand-fog: rgba(255, 255, 255, 0.08);
+
+  --background: var(--brand-ocean-deep);
+  --foreground: #e9ddc1;
+
+  --card: var(--brand-ocean-panel);
+  --card-foreground: #e9ddc1;
+  --popover: #0c2536;
+  --popover-foreground: #e9ddc1;
+
+  --primary: var(--brand-gold);
+  --primary-foreground: #04111a;
+  --secondary: #0f2c40;
+  --secondary-foreground: #e9ddc1;
+  --muted: #0e2436;
+  --muted-foreground: #93a7b4;
+  --accent: #143449;
+  --accent-foreground: #f3e8cd;
+  --destructive: #c0492f;
+
+  --border: rgba(212, 175, 55, 0.16);
+  --input: rgba(212, 175, 55, 0.22);
+  --ring: var(--brand-gold);
+
+  --chart-1: var(--brand-gold);
+  --chart-2: #6fae9b;
+  --chart-3: #c0492f;
+  --chart-4: var(--brand-parchment);
+  --chart-5: #4a86a8;
+
+  --sidebar: var(--brand-ocean-panel);
+  --sidebar-foreground: #e9ddc1;
+  --sidebar-primary: var(--brand-gold);
+  --sidebar-primary-foreground: #04111a;
+  --sidebar-accent: #143449;
+  --sidebar-accent-foreground: #f3e8cd;
+  --sidebar-border: rgba(212, 175, 55, 0.16);
+  --sidebar-ring: var(--brand-gold);
+
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-wide;
+  }
+
+  ::selection {
+    background-color: rgba(212, 175, 55, 0.35);
+    color: var(--brand-ocean-deep);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

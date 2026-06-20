@@ -1,0 +1,38 @@
+Caregivers clock in when they arrive and clock out when they leave. It sounds
+trivial. It is not — those two timestamps feed compliance, payroll, and billing,
+so they have to be **reliable, auditable, and correct** even when the network
+isn't cooperating.
+
+## Why a microservice
+
+Attendance has its own lifecycle and its own reliability needs, distinct from the
+rest of the platform. Pulling it into a dedicated **Dapr** microservice meant it
+could be reasoned about, scaled, and hardened on its own — and integrated with
+the wider system through clean, event-driven contracts rather than shared
+database tables.
+
+## The Dapr building blocks
+
+Dapr's job here was to provide the boring-but-essential plumbing so I could focus
+on the domain:
+
+- **Pub/sub** to publish attendance events the rest of the platform reacts to.
+- **State** for the service's own durable data.
+- **Resilient service invocation** with retries and timeouts baked in.
+
+## Two things that always bite you
+
+- **Duplicates.** With at-least-once delivery, the same clock-in event can show
+  up twice. Every handler is **idempotent** — keyed so a replay changes nothing.
+- **Time.** Caregivers span US states, timezones, and daylight-saving changes.
+  Store UTC, keep the originating timezone alongside it, and render local. (There
+  is a bug in the [Graveyard](/archipelago) about the day I learned this the hard
+  way.)
+
+## Designed out loud
+
+A surprising amount of this was decided at a whiteboard. I worked through the
+design in architecture-review sessions with senior engineers and product
+stakeholders — which is where I learned that the best distributed-systems
+decisions are made *before* any code exists, by arguing about failure modes
+until the design stops having them.

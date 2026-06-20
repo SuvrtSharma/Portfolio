@@ -1,0 +1,39 @@
+Before the microservices, there were drones. Starting in 2022, as an R&D
+Engineer at JUIT, I spent the better part of two years building **CropHawk** — an
+agri-drone prototype that went on to secure funding from **Kanpur Fertiliser &
+Chemical Ltd (KFCL)** in 2023 — building the systems that let an aircraft look at
+a field and understand what it was seeing.
+
+## The whole stack, from rotor to report
+
+"R&D Engineer" on a small team means you touch everything. I worked across:
+
+- **Custom drone frameworks** for autonomous flight and mission planning in real
+  farms, with dynamic path adjustment mid-flight.
+- **On-device (edge) ML** so crop-health analysis ran *on the drone, on the go* —
+  no cloud round-trip, no latency, decisions in the field.
+- **Multi-spectral image processing** to spot crop-health issues and nutrient
+  deficiencies early, before they're visible to the eye.
+- **IoT and robotics integration**, streaming high-frequency sensor and aerial
+  data into the analytics behind it.
+
+This is where I got my hands genuinely dirty with **embedded systems** and
+end-to-end product development — and learned how unforgiving the physical world
+is compared to a server.
+
+## The lab lies
+
+The single biggest lesson: a model that aces clean lab data can fall apart the
+moment real sunlight, dust, and motion enter the frame. Edge ML for agriculture
+is as much about **validating against messy field reality** as it is about the
+algorithm. (That story has its own headstone in the
+[Graveyard of Bugs](/archipelago).)
+
+## A paper to show for it
+
+The custom algorithm we built for real-time, drone-based agricultural analysis
+became a **research paper that I published and presented at IC3SE**, an
+international conference. Working directly with the client and stakeholders to
+turn their requirements into something that flies — and then defending the
+results in front of a research audience — is still some of the most complete
+engineering I've done.

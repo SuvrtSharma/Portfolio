@@ -1,0 +1,21 @@
+A side project born from a simple question: what would file storage look like if
+no single node could be trusted, and tampering had to be impossible by
+construction rather than by policy?
+
+## Addressing files by their content
+
+The core idea is **content-addressable storage**: a file's address *is* a hash of
+its bytes. Change one bit and the address changes, so tampering is immediately
+detectable. Two identical files share an address, which gives you deduplication
+for free.
+
+## What it does
+
+- **Tamper-proof integrity** — verification happens across distributed nodes, so
+  no one node can quietly alter a file.
+- **Deduplication** — identical content is stored once.
+- **Controlled, immutable sharing** — access is governed, and once written,
+  content doesn't change underneath you.
+
+It's a small system, but it made the ideas behind distributed integrity —
+hashing, immutability, verification — concrete in a way a textbook never did.

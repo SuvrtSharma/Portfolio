@@ -1,0 +1,67 @@
+Electronic Visit Verification (EVV) is the unglamorous backbone of home
+healthcare: proof that a caregiver was where they were supposed to be, when they
+were supposed to be there. In the US it's also a compliance minefield — every
+state aggregator has its own rules, formats, and deadlines. CareSmartz360 had to
+satisfy **13 of them**, and for a long time that logic lived inside one large
+.NET monolith.
+
+## The problem with one big box
+
+A monolith is fine until it isn't. Ours coupled 13 states' worth of integration
+logic into a single deployable. A change for one state meant redeploying — and
+risking — all of them. Failures didn't isolate; a bad day for one aggregator
+could ripple. Scaling meant scaling everything at once.
+
+## Breaking it apart, carefully
+
+The goal wasn't a rewrite — it was a **gradual extraction** into independently
+deployable .NET microservices, so each integration could change and scale on its
+own. The hard part of this kind of work is never the new service; it's keeping
+the old system working while you carve pieces off it.
+
+To make the pieces talk without tightly re-coupling them, we leaned on
+[Dapr](https://dapr.io):
+
+- **Pub/sub** for event-driven messaging, so services react to events instead of
+  calling each other directly.
+- **State stores** for durable, service-owned state.
+- **Resilient invocation** with retries, so transient failures don't become
+  outages.
+
+## Workflows that can't just fail halfway
+
+EVV processes are *long-running* and *compliance-critical* — exactly the kind of
+work you can't leave half-done. We modelled those with **Camunda** (BPMN for
+processes, CMMN for case-style flows) and used **Apache Airflow** for scheduled,
+data-heavy orchestration. The point of a workflow engine here is durability: the
+process survives restarts and knows how to resume.
+
+Two distributed-systems disciplines did most of the heavy lifting:
+
+- **Idempotency.** In an at-least-once world, every message can arrive twice.
+  Consumers are written so a duplicate is a no-op, not a double-charge.
+- **Fault tolerance.** Pipelines retry with backoff and dead-letter what they
+  can't process, instead of retrying forever.
+
+> The lesson I keep relearning: in distributed systems, "it worked once" and "it
+> works reliably" are completely different claims.
+
+## Healthcare-grade data
+
+Healthcare data has rules. I went through **HIPAA compliance training and
+certification**, then helped integrate workflows with **Azure Health Data
+Services (FHIR)** — building compliant pipelines on Azure Functions and Blob
+Storage for data exchange. Separately, I helped migrate analytical reports off a
+legacy .NET reporting engine onto **Power BI**, which made the numbers both
+prettier and more maintainable for business users.
+
+## Sharpening the toolchain
+
+A quieter thread through all of this: better ways of building. I've been
+exploring **spec-first / constitution-driven development** with GitHub's Spec
+Kit — pairing AI-assisted coding with human validation and security review — and
+relying on tools like Copilot, SonarQube, and NotebookLM to move faster without
+lowering the bar on quality.
+
+It's the most systems-heavy work I've done, and the most rewarding: you're not
+shipping a feature, you're shaping how a whole platform communicates.
