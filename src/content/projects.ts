@@ -2,8 +2,36 @@ import type { Project } from "@/types";
 
 export const projects: Project[] = [
   {
+    slug: "arqon",
+    title: "Arqon: SQL Architecture Studio",
+    shortTitle: "Arqon",
+    tagline:
+      "Turns SQL Server stored procedures into interactive diagrams, scores, and simulations.",
+    description:
+      "A VS Code extension backed by a local .NET engine. Arqon parses T-SQL into control-flow graphs, resolves dependencies, scores each procedure deterministically, reads execution plans, and simulates what-if changes. An optional AI mentor explains findings, but every fact on screen comes from the engine, and the engine verifies the AI's suggested fixes.",
+    highlights: [
+      "Published on the VS Code Marketplace; your SQL never leaves your machine",
+      "Layered .NET 10 engine with build-time dependency-rule tests",
+      "Deterministic, confidence-weighted scoring with a visible breakdown",
+      "Execution-plan heatmaps and a what-if re-costing simulator",
+      "AI suggestions verified by re-running the engine's own detectors",
+    ],
+    tech: [".NET 10", "C#", "ScriptDom", "React", "TypeScript", "VS Code API", "SQL Server"],
+    status: "shipped",
+    year: 2026,
+    links: [
+      {
+        label: "VS Code Marketplace",
+        href: "https://marketplace.visualstudio.com/items?itemName=SuvrtSharma.arqon",
+        kind: "live",
+      },
+    ],
+    featured: true,
+  },
+  {
     slug: "caresmartz-evv",
     title: "CareSmartz360 — EVV Microservices",
+    shortTitle: "CareSmartz360",
     tagline:
       "Migrating healthcare EVV from a monolith to event-driven .NET microservices.",
     description:

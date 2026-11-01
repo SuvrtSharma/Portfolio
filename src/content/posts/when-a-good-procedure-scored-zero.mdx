@@ -1,0 +1,110 @@
+Arqon, my SQL Server analysis tool, gives every stored procedure an architecture
+score: performance, risk, complexity, maintainability. Then someone ran it on a
+genuinely good production procedure (set-based, filtering early, using an
+indexed `NOT EXISTS`) and the performance score came back **0**.
+
+They were right to be annoyed. A score of zero on well-written SQL doesn't just
+look wrong. It teaches people to ignore the score, and a metric nobody trusts is
+worse than no metric at all.
+
+## The original formula
+
+The first version was as simple as it gets:
+
+```
+performance = 100 - sum(per-finding penalty)
+penalties: High -30, Warning -12, Info -4
+```
+
+Every detector that fired took a fixed bite. It was deterministic, easy to test,
+and easy to explain. It also had two flaws I hadn't thought through.
+
+**Flaw 1: penalties scaled with size, not with badness.** Several detectors fire
+once *per occurrence*: a non-sargable predicate, a correlated subquery, a
+leading-wildcard `LIKE`, repeated access to the same table. A large but perfectly
+reasonable procedure trips the same warning many times, and nine warnings at -12
+each is already past zero. The formula was measuring *length*.
+
+**Flaw 2: "sometimes expensive" cost the same as "definitely broken."** A cursor
+or an `UPDATE` with no `WHERE` clause is a problem, full stop. A non-sargable
+predicate *might* be a problem, depending on the data, the indexes, and the plan.
+The old formula couldn't tell the difference.
+
+## The fix: confidence, per-code caps, diminishing returns
+
+Every finding now carries a **confidence**, and it's a fixed property of the
+detector rule, not a judgment from an AI, and not a guess at runtime:
+
+- **High**: an unconditional problem, such as a cursor or an `UPDATE`/`DELETE` with no `WHERE`
+- **Medium**: a strong signal whose real cost depends on data, indexes, or the
+  plan, like a scalar UDF, a non-sargable predicate, `SELECT *`, a `WHILE` loop
+- **Low**: a heuristic that's often benign, like repeated table access or dirty reads
+
+Then the penalty is computed per finding *code*, not per occurrence:
+
+```
+basePenalty      = { High: 25, Warning: 10, Info: 4 }      by severity
+confidenceMul    = { High: 1.0, Medium: 0.6, Low: 0.35 }   by confidence
+occurrenceFactor = min(1 + 0.3 * (count - 1), 2.0)         repeats add at most +100%
+
+perCodePenalty   = round(basePenalty * confidenceMul * occurrenceFactor)
+score            = clamp(100 - min(sum of perCodePenalty, 100), 0, 100)
+```
+
+Two properties fall out of that:
+
+1. **The same warning repeated can never cost more than twice a single one.** Ten
+   non-sargable predicates are worth investigating, but they're one kind of
+   problem, not ten.
+2. **A low-confidence heuristic costs about a third of a high-confidence one.**
+
+The score can still reach zero, but only through several *distinct*,
+high-severity, high-confidence problems. Which is what zero should mean.
+
+## A worked example
+
+Take an illustrative procedure that trips one Medium-confidence warning six times,
+and one Low-confidence warning three times.
+
+**Old formula:** nine warnings × 12 = 108 points. Score: **0**.
+
+**New formula:**
+
+- Medium warning × 6: `10 × 0.6 × min(1 + 0.3 × 5, 2.0)` = `10 × 0.6 × 2.0` = **12**
+- Low warning × 3: `10 × 0.35 × min(1 + 0.3 × 2, 2.0)` = `10 × 0.35 × 1.6` = 5.6 → **6**
+
+Penalty 18. Score: **82**: a procedure worth a look, which is the truth.
+
+## The part that mattered most: showing the work
+
+The formula fixed the number. What fixed the *trust* was a breakdown. The scorer
+now emits a contribution for every code (which rule, how many times it fired, its
+severity and confidence, and exactly how many points it cost), and the UI shows it
+under **"Why this score"**. Each finding also carries a chip saying whether it's a
+*potential*, *likely*, or *confirmed* concern.
+
+A score you can audit is a score you can argue with. One you can't audit, you
+either blindly obey or ignore. And people ignore it.
+
+## What I rejected
+
+- **A hard floor ("never below 30").** Simple, but arbitrary, and it would hide
+  genuinely terrible procedures behind a fake minimum.
+- **Per-occurrence penalties with only a global cap.** One noisy rule could still
+  dominate everything else. Capping per code is fairer across rule types.
+- **Dropping numbers for confidence buckets.** The feedback praised the numbers for
+  complexity and maintainability. Keep the numbers; add the honesty alongside them.
+
+## What I took from it
+
+- **A metric is a product feature with users,** and its users will find the case
+  you didn't. That report was the most useful thing that happened to the scorer.
+- **Deterministic doesn't mean correct.** The old formula was perfectly
+  reproducible. It reproduced the wrong answer every time. Determinism makes
+  a bug *findable*; it doesn't prevent it.
+- **Confidence belongs in the data.** Putting it on the rule, rather than
+  inferring it later, kept the whole system explainable and testable.
+
+The natural next step is to let a captured execution plan promote or demote a
+finding's confidence, since the plan knows whether that predicate really caused a scan.
+That one is deliberately deferred until it can be done just as deterministically.

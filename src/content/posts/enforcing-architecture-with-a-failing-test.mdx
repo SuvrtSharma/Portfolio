@@ -1,0 +1,131 @@
+In January I wrote about
+[Clean Code vs Pragmatic Code](/blog/clean-code-vs-pragmatic-code) and a
+three-layer model (**Platform, Domain, Innovation**) that I was watching senior
+engineers plan. I ended that post with a question I couldn't answer:
+
+> Who decides the boundaries?
+
+A few months later I got to answer it for myself. When I started building
+**Arqon**, a visual architecture tool for SQL Server stored procedures, I built it
+on exactly those layers. And I learned that deciding the boundaries is the easy
+part. *Keeping* them is the hard part.
+
+## How layering actually dies
+
+Nobody wakes up and decides to wreck an architecture. It erodes one reasonable
+change at a time.
+
+You're in the Domain layer, you need one small thing from the database, the
+`ProjectReference` is one line away, and the deadline is real. The build passes.
+The PR is small. Nobody notices. Six months later the "pure" business core can't
+be tested without a running SQL Server.
+
+For Arqon the stakes were higher than tidiness. Its whole trust model depends on
+one rule: **the Domain layer produces every fact, deterministically, and the AI
+only explains.** (I wrote about that boundary
+[here](/blog/the-llm-is-not-allowed-to-state-facts).) If the Domain could ever
+quietly reference the LLM client, that promise would be worth nothing, and no
+reviewer would reliably catch the one-line change that broke it.
+
+So I stopped relying on reviewers.
+
+## The rule, written down
+
+Arqon's engine is split into projects that map onto the layers:
+
+- **Domain**: analyzers, models, scoring. Pure logic, references *nothing*.
+- **Platform**: SQL Server, the LLM providers, parsing, I/O. Implements
+  interfaces the Domain defines.
+- **Innovation**: simulation and the AI mentor. Depends on Domain, never the
+  other way round.
+- **Contracts** and **Cross-cutting abstractions**: shared shapes, no
+  dependencies.
+- **Host**: the one composition root that's allowed to see everything.
+
+That's the decision. On its own, it's a diagram in a doc. Diagrams don't fail
+builds.
+
+## The rule, enforced
+
+So the rule became a test. The whole thing is a map from each project to the
+projects it's *allowed* to reference:
+
+```csharp
+public static TheoryData<string, string[]> Layers() => new()
+{
+    { "Arqon.Domain", [] },
+    { "Arqon.CrossCutting.Abstractions", [] },
+    { "Arqon.Contracts", [] },
+    { "Arqon.Platform", ["Arqon.Domain", "Arqon.CrossCutting.Abstractions"] },
+    { "Arqon.Innovation", ["Arqon.Domain", "Arqon.CrossCutting.Abstractions"] },
+    {
+        "Arqon.Host",
+        ["Arqon.Domain", "Arqon.Platform", "Arqon.Innovation",
+         "Arqon.Contracts", "Arqon.CrossCutting.Abstractions"]
+    },
+    // The web host reaches the engine only through Arqon.Host,
+    // so both surfaces share one wiring.
+    { "Arqon.Web", ["Arqon.Host"] },
+};
+```
+
+And a test that reads each `.csproj` and compares what it *actually* references
+against that list:
+
+```csharp
+[Theory]
+[MemberData(nameof(Layers))]
+public void Project_references_only_allowed_layers(string project, string[] allowed)
+{
+    var actual = GetProjectReferences(project);
+    var violations = actual
+        .Where(reference => !allowed.Contains(reference))
+        .OrderBy(r => r)
+        .ToArray();
+
+    Assert.True(
+        violations.Length == 0,
+        $"{project} violates the dependency rule by referencing: " +
+        $"[{string.Join(", ", violations)}]. Allowed: [{string.Join(", ", allowed)}].");
+}
+```
+
+`GetProjectReferences` is a few lines of `XDocument`: load the project file, pull
+every `ProjectReference`'s `Include` attribute, keep the file name. That's it.
+
+Now the one-line shortcut fails CI, with a message that names the layer, the
+offending reference, and what *is* allowed. The argument about whether it's okay
+happens before the merge, not six months after.
+
+## Why the project file, and not the code
+
+There are libraries that inspect compiled types and assert on namespace
+dependencies, and they're great for fine-grained rules. For layer boundaries,
+though, the `.csproj` *is* the boundary: if the Domain project doesn't reference
+the Platform project, no code in the Domain can use it. The compiler guarantees
+the rest. Checking the project file is the smallest test that covers the whole
+rule, and it needs no extra dependency.
+
+The test is also documentation that can't go stale. If you want to know what the
+Web host may depend on, you don't hunt for a diagram. You read eight lines that CI
+runs on every push.
+
+## The honest footnote
+
+I can't point to a dramatic save, and that's rather the point: a rule like this
+works by making the shortcut unavailable, so the violation never gets written.
+The test's most memorable failure wasn't a layering violation at all: Windows Smart App Control once blocked the freshly
+built test DLL from *loading*, so the suite failed before it ran. Even an
+architecture test is still software running on a real machine, and a red build
+always deserves a look at *why* before you assume *what*.
+
+## So, who decides the boundaries?
+
+My answer now, ten months after asking:
+
+- **People decide them**, once, deliberately, and write the decision down. Arqon
+  keeps an architecture decision record for every significant choice.
+- **The build defends them**, every day, without getting tired or being in a hurry.
+
+A boundary that only lives in people's heads is a suggestion. One that fails the
+build is a rule.

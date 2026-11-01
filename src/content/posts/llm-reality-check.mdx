@@ -1,0 +1,137 @@
+This post is for engineers who use an LLM assistant every day (Copilot, Claude,
+ChatGPT, Cursor, whichever), especially if you feel both impressed by it and
+slightly uneasy about how confidently it behaves.
+
+I've been using AI coding assistants daily for well over a year. Like most people,
+I went through the familiar arc: initial awe, heavy reliance, and eventually a more
+grounded understanding of what these tools are actually good at, and what they
+decidedly are not.
+
+Here's the thesis up front, because everything that follows builds toward it:
+
+> **AI tools amplify intent and competence; they don't substitute for them.**
+
+An LLM can be a genuine productivity win. It eliminates boilerplate, mirrors
+patterns quickly, and often saves real time. But it also projects confidence far
+beyond its actual understanding. If you don't supply judgment, verification, and
+direction, it will happily manufacture a convincing illusion of correctness.
+
+Two real experiences made that clear for me. Both happened in GitHub Copilot Chat,
+but nothing about either one is specific to Copilot. They come from how
+LLM-based assistants work, and you will hit both with any of them.
+
+## Experience 1: the echo-based deployment "success"
+
+I was deploying a BPMN diagram into a local Camunda setup, and I asked the
+assistant to handle the deployment step.
+
+It responded confidently:
+
+> Let me wait a moment for the deployment to complete.
+
+Then it tried to run a command in the background terminal. Nothing happened. No
+output. No success message. No error. The command had failed silently. I
+confirmed it in the Camunda UI. No new deployment, no process definition. Nothing
+had changed.
+
+Instead of flagging uncertainty, the assistant told me to run:
+
+```bash
+echo "Deployment command executed"
+```
+
+I ran it, partly amused and partly curious. It immediately responded:
+
+> Great! The deployment has been executed successfully. The BPMN diagram has been
+> deployed to Camunda 🎉
+
+It then listed the process name, file details, and even a local URL, as if
+everything had worked exactly as planned.
+
+Nothing had been deployed. A string I echoed by hand was enough to trigger a full
+success narrative.
+
+**The principle here isn't "the AI hallucinated."** It's **unchecked trust
+combined with false confidence signals.**
+
+An LLM doesn't validate outcomes; it predicts what plausibly comes next. When the
+environment emits text that *looks like* success, the most plausible continuation
+is a success story, so that's what you get. Without explicit verification
+(checking logs, inspecting the engine, confirming state), you're trusting vibes
+over evidence.
+
+## Experience 2: architecture by tunnel vision
+
+The second pattern is less dramatic, but it shows up far more often.
+
+When I brainstormed deployment or architecture options, especially for production
+systems, the assistant tended to anchor early. It picked one plausible approach
+and committed to it hard.
+
+For example, when discussing scalable or serverless deployments, it routinely
+suggested App Services, VMs, or containers. Azure Functions never appeared unless
+I named them. Only after I asked "What about Azure Functions for this use case?"
+did it respond:
+
+> You're absolutely correct. Azure Functions would be an excellent fit here. Let
+> me revise my recommendation.
+
+**The principle here is anchoring bias and path dependency.**
+
+LLMs default to the first answer that satisfies the prompt. They don't naturally
+enumerate the solution space unless you force them to. Ask for "different
+options" and you often get variations of the same idea, not genuinely distinct
+architectural paths. And notice the other half of that reply: the instant you
+push back, it agrees with you. That eagerness to agree is the same trait that
+celebrated my fake deployment.
+
+## A power tool, not a decision maker
+
+The best mental model I've found is a power tool, and a very fast one. But speed only
+helps if someone competent is holding it.
+
+In software terms:
+
+- **You set the depth stop** by defining constraints and non-goals.
+- **You check alignment** by reviewing output against requirements and reality.
+- **You decide when not to drill at all** by knowing when a problem needs design
+  thinking, not code generation.
+
+An LLM can execute instructions at blinding speed. What it cannot do is decide
+what should be built, why it matters, or whether the result actually works.
+
+If you don't actively steer it by asking for alternatives, naming constraints,
+and verifying outcomes, it will confidently take you down a plausible but
+suboptimal, or outright broken, path.
+
+## How I work with LLMs now
+
+- **State intent and constraints first.** Include what you *don't* want.
+- **Ask for competing approaches explicitly.** "Give me three genuinely different
+  options and when each one wins" gets a very different answer from "what's the
+  best way to do this?"
+- **Verify outcomes independently.** Check the system's state, not the model's
+  report of it. A success message from the assistant is a claim, not evidence.
+- **Push back when it narrows too early**, and then be suspicious when it agrees
+  with you instantly.
+- **Let something deterministic be the judge.** Tests, type checkers, linters,
+  the actual UI. The model proposes; something that can't hallucinate disposes.
+
+That last habit is what I built into my own tool. In
+[Arqon](/blog/the-llm-is-not-allowed-to-state-facts), my SQL analyzer, the LLM
+never gets the final word: when it suggests a fix, the engine re-runs its own
+detectors on the rewrite and reports whether the problem is actually gone.
+
+## The bottom line
+
+Great tools make capable engineers faster. They don't turn uncertainty into
+expertise.
+
+An LLM isn't a senior architect or a verifier of truth. It's an extremely fast
+assistant that reflects the clarity (or the vagueness) of the person using it.
+Do the steering and the verifying, and it becomes a genuine multiplier. Skip them,
+and you'll occasionally find yourself celebrating deployments that never happened.
+
+**AI doesn't steer the ship. It just pulls the ropes faster.**
+
+The direction still matters.

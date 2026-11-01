@@ -2,6 +2,7 @@ import type {
   BugStory,
   IWorldDataProvider,
   LogEntry,
+  Post,
   Profile,
   Project,
   SkillGroup,
@@ -10,6 +11,7 @@ import type {
 import {
   bugStories,
   logEntries,
+  posts,
   profile,
   projects,
   skillGroups,
@@ -60,5 +62,20 @@ export class StaticWorldDataProvider implements IWorldDataProvider {
   getBugStoriesByIds(ids: string[]): BugStory[] {
     const wanted = new Set(ids);
     return bugStories.filter((story) => wanted.has(story.id));
+  }
+
+  getPosts(): Post[] {
+    const includeDrafts = process.env.NODE_ENV !== "production";
+    return posts
+      .filter((post) => includeDrafts || !post.draft)
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  getPostBySlug(slug: string): Post | undefined {
+    return this.getPosts().find((post) => post.slug === slug);
+  }
+
+  getPostsByProject(projectSlug: string): Post[] {
+    return this.getPosts().filter((post) => post.project === projectSlug);
   }
 }

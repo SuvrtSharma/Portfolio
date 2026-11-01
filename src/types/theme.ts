@@ -28,6 +28,7 @@ export interface ThemeVocabulary {
   logTitle: string;
   graveyardTitle: string;
   harborTitle: string;
+  journalTitle: string;
   mapPrompt: string;
 }
 

@@ -10,6 +10,7 @@ export const navItems: NavItem[] = [
   { label: "Log", href: "/#log" },
   { label: "Projects", href: "/#projects" },
   { label: "Skills", href: "/#skills" },
+  { label: "Blog", href: "/blog" },
   { label: "About", href: "/#about" },
   { label: "Contact", href: "/#contact" },
 ];

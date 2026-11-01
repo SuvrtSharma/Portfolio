@@ -24,6 +24,8 @@ export interface ProjectLink {
 export interface Project {
   slug: string;
   title: string;
+  /** Compact name for tight spots like blog labels ("Arqon"). Falls back to `title`. */
+  shortTitle?: string;
   tagline: string;
   description: string;
   highlights: string[];
@@ -93,4 +95,37 @@ export interface Profile {
   avatar?: MediaAsset;
   resumeUrl?: string;
   socials: SocialLink[];
+}
+
+/**
+ * A technical blog post. Structured metadata lives here; the prose lives in an
+ * MDX file registered under the same slug (same split as project stories).
+ */
+export interface Post {
+  slug: string;
+  title: string;
+  /** One or two sentences — shown on the index card and as the meta description. */
+  summary: string;
+  /** Publication date as ISO `YYYY-MM-DD`. Posts sort newest first. */
+  date: string;
+  tags: string[];
+  readingMinutes?: number;
+  /** Drafts render under `npm run dev` and are excluded from production builds. */
+  draft?: boolean;
+  /** Set when the post first appeared elsewhere. */
+  origin?: PostOrigin;
+  /** Slug of the project this post came out of. Posts sharing a project are
+   *  grouped on the blog index and linked from the project's page. */
+  project?: string;
+}
+
+/**
+ * Where a post first appeared. A `republished` post points its canonical URL at
+ * the original so search engines don't treat the copy as duplicate content; an
+ * `adapted` post is substantially rewritten and stays canonical here.
+ */
+export interface PostOrigin {
+  site: string;
+  url: string;
+  relation: "republished" | "adapted";
 }

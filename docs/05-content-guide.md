@@ -112,3 +112,37 @@ to it via "Read the story."
 The Hero and Harbor "Résumé" buttons link to `/resume.pdf`, which is served from
 `public/resume.pdf`. Your real résumé (`resume2025.pdf`) is already copied there.
 To update it, just replace that file.
+
+## Blog posts
+
+Technical writing lives at `/blog`. Same split as project stories: **metadata**
+is typed in `content/posts.ts`, the **prose** is an MDX file.
+
+To publish a post:
+
+1. Write `src/content/posts/<slug>.mdx` — plain Markdown, starting at `##` (the
+   page renders the title as the `<h1>`). Fenced code blocks work; the same MDX
+   gotchas apply (no bare `<` or `{` in prose).
+2. Register it in `src/content/posts/index.ts`:
+
+   ```ts
+   "<slug>": () => import("./<slug>.mdx"),
+   ```
+
+3. Add its metadata to `src/content/posts.ts`:
+
+   ```ts
+   {
+     slug: "<slug>",
+     title: "…",
+     summary: "One or two sentences — the card text and meta description.",
+     date: "2026-11-01",          // ISO; posts sort newest first
+     tags: ["Architecture", "AI"],
+     readingMinutes: 6,           // optional
+     draft: true,                 // optional — remove to publish
+   },
+   ```
+
+**Drafts** (`draft: true`) appear under `npm run dev` with a "Draft" badge and
+are excluded from production builds — no route, no sitemap entry. Delete the
+flag when the post is ready to go live.

@@ -5,6 +5,8 @@ export type {
   BugStory,
   LogEntry,
   MediaAsset,
+  Post,
+  PostOrigin,
   Profile,
   Project,
   ProjectLink,

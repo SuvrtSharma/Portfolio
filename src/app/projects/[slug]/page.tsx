@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { storyLoaders } from "@/content/stories";
+import { PostCard } from "@/features/blog/post-card";
 import { statusLabels, statusStyles } from "@/features/projects/project-status";
 import { getActiveVocabulary } from "@/lib/active-theme";
 import { getDataProvider } from "@/lib/data";
@@ -37,6 +38,7 @@ export default async function ProjectStoryPage({ params }: Params) {
   const vocab = getActiveVocabulary();
   const loadStory = storyLoaders[slug];
   const Story = loadStory ? (await loadStory()).default : null;
+  const posts = data.getPostsByProject(project.slug);
 
   return (
     <>
@@ -134,6 +136,24 @@ export default async function ProjectStoryPage({ params }: Params) {
             <div className="mt-10 border-t border-gold/10 pt-2">
               <Story />
             </div>
+          ) : null}
+
+          {posts.length ? (
+            <section className="mt-14 border-t border-gold/15 pt-8">
+              <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">
+                Writing
+              </p>
+              <h2 className="mt-1 font-display text-2xl text-foreground">
+                What I learned building this
+              </h2>
+              <ul className="mt-5 space-y-4">
+                {posts.map((post) => (
+                  <li key={post.slug}>
+                    <PostCard post={post} />
+                  </li>
+                ))}
+              </ul>
+            </section>
           ) : null}
         </article>
       </main>

@@ -4,3 +4,4 @@ export { projects } from "./projects";
 export { logEntries } from "./log";
 export { bugStories } from "./bugs";
 export { world } from "./world";
+export { posts } from "./posts";

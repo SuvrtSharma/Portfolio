@@ -60,7 +60,7 @@ const components: MDXComponents = {
   ),
   pre: (props) => (
     <pre
-      className="my-6 overflow-x-auto rounded-lg border border-gold/15 bg-ocean-deep p-4 text-sm"
+      className="my-6 overflow-x-auto rounded-lg border border-gold/15 bg-ocean-deep p-4 text-sm [&>code]:bg-transparent [&>code]:p-0"
       {...props}
     />
   ),

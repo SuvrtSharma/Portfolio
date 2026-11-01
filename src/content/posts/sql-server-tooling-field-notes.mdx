@@ -1,0 +1,122 @@
+Building **Arqon**, a VS Code extension with a .NET engine that analyzes SQL
+Server stored procedures, meant spending a lot of time at the boundaries between
+things: editor and engine, engine and database, my machine and everyone else's.
+That's where the surprises live.
+
+I keep a running log of every gotcha so I never debug the same thing twice. Here
+are the ones most likely to save you an afternoon.
+
+## 1. `GO` is not T-SQL
+
+Every SQL script you've seen uses `GO`. SQL Server has never heard of it.
+
+`GO` is a **batch separator** understood by client tools like SSMS and `sqlcmd`.
+They split the script on it and send each batch separately. Send a script
+containing `GO` straight to the server over ADO.NET and you get a syntax error.
+
+So when Arqon captures an estimated execution plan, it splits the text into
+batches itself and runs them one at a time, keeping the last batch that actually
+produces a plan. If you're building anything that executes user-supplied scripts,
+you need the same splitter, and it has to understand that a `GO` inside a string
+or a comment isn't a separator.
+
+## 2. `.sqlplan` files are UTF-16
+
+Execution plans saved from SSMS look like ordinary XML files. They're **UTF-16
+with a byte-order mark**. Read one as UTF-8 and the parser chokes on the very
+first character.
+
+The fix is small (detect the encoding, strip a leading BOM before parsing), but
+the error message never points anywhere near it.
+
+## 3. Partial selections cause cascading nonsense
+
+A very common user action is "select some SQL, run the command on the selection."
+A very common selection is *half a statement*.
+
+Forward that to the server and you get a confusing error from somewhere deep in
+the pipeline. Arqon now parses first, and if parsing fails it stops right there
+and reports the **location** of the parse error, instead of passing broken SQL
+along and surfacing a mystery from three layers down. Fail at the first layer that
+can explain the problem.
+
+## 4. Windows Smart App Control can block your own fresh DLLs
+
+This one cost real time. On a machine with Smart App Control enforced, a
+**freshly built, unsigned** assembly can be refused at load time:
+
+```
+FileLoadException ... An Application Control policy has blocked this file (0x800711C7)
+```
+
+The symptoms were maddening: the engine process died on launch before the
+JSON-RPC handshake, so my smoke test printed nothing and exited 0, and in the
+installed extension every view just said **"Connection is closed."** It even
+blocked a freshly built *test* DLL once, while the other test projects loaded fine.
+
+Things I learned:
+
+- **`Unblock-File` doesn't help.** That clears the mark-of-the-web; this is a
+  different mechanism.
+- It's an **environment** problem, not a code bug, and it's intermittent: a
+  rebuild often gets through.
+- Users can hit it too. So the extension now **detects that exact error code** and
+  shows an actionable message instead of an opaque RPC failure.
+- Long term, the real fix is code-signing the engine.
+
+If your .NET tool works everywhere except "some Windows machines," check this
+first.
+
+## 5. dagre needs `multigraph: true` for named edges
+
+Arqon draws control-flow graphs in the webview with dagre for layout. Add two
+named edges between the same pair of nodes (completely normal in control flow)
+without `multigraph: true` and you get `Cannot set a named edge`… which, in a
+React UI, renders as a **blank graph**. One option, and it's silent until you need
+it.
+
+## 6. Bump the version *and* the lockfile
+
+I bumped the extension's version in `package.json`, pushed, and CI failed on its
+first run: `npm ci` refuses to install when `package.json` and `package-lock.json`
+disagree. Locally, `npm install` had quietly papered over it.
+
+Now every version bump goes through `npm version` (or `npm install
+--package-lock-only`), so both files change together.
+
+## 7. Watch for mojibake in user-facing text
+
+An em-dash in my extension's display name turned into `â€"`, a UTF-8 character
+that had been decoded as Windows-1252 and re-encoded. It had crept into
+`package.json`, one publish away from becoming the name on the Marketplace
+listing. A pre-release audit caught it.
+
+Rule since then: user-facing files are **UTF-8 without a BOM**, and I read the
+rendered text, not just the source.
+
+## 8. Cold starts are a UX problem
+
+A .NET engine spawned on demand pays for JIT on the first request, about four
+seconds for Arqon's. That's an eternity when someone just clicked a button.
+
+The fix was to stop starting the engine on click. The extension now pre-warms it
+when a SQL file is first opened, so by the time anyone asks for a diagram, it's
+ready.
+
+## 9. Keep internal vocabulary out of the UI
+
+My codebase talks in ADR numbers and layer names. Users don't. Those leaked into
+setting descriptions and error messages early on. "Violates ADR-0016" means
+nothing to someone who just wants a diagram.
+
+Now internal references live in code comments and docs only. Anything a user can
+read gets read *as a user*.
+
+## The common thread
+
+Almost none of these were "hard" bugs. They were boundary bugs: the place where
+my assumptions met someone else's: a client tool's convention, a file format's
+encoding, an OS security policy, a package manager's strictness.
+
+That's the case for keeping the log. The fix is usually one line. Finding the line
+is the expensive part, and you only want to pay that once.

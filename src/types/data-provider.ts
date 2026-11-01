@@ -1,6 +1,7 @@
 import type {
   BugStory,
   LogEntry,
+  Post,
   Profile,
   Project,
   SkillGroup,
@@ -25,4 +26,9 @@ export interface IWorldDataProvider {
   getLogEntries(): LogEntry[];
   getBugStories(): BugStory[];
   getBugStoriesByIds(ids: string[]): BugStory[];
+  /** Published posts, newest first. Drafts are included only outside production. */
+  getPosts(): Post[];
+  getPostBySlug(slug: string): Post | undefined;
+  /** Published posts written about one project, newest first. */
+  getPostsByProject(projectSlug: string): Post[];
 }

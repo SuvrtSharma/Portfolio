@@ -254,3 +254,26 @@ Node was installed mid-session via `winget`, which updated the machine PATH but
 `.claude/dev.cmd` wrapper that does the same. Not an architecture decision — just
 a thing that will confuse you if you don't know it. (Also recorded in project
 memory.)
+
+---
+
+### ADR-15 — Blog posts as typed metadata + MDX, behind the data provider
+
+**Context.** The site needs a blog for technical writing, which is long-form
+prose — exactly what ADR-07 reserved MDX for.
+
+**Decision.** Mirror the project-story pattern: a `Post` type and metadata in
+`content/posts.ts`, prose in `content/posts/<slug>.mdx`, and an explicit loader
+registry. Pages read posts only through `getDataProvider().getPosts()`. Drafts
+are filtered out in production by the provider.
+
+**Why not frontmatter + a filesystem scan.** Reading the folder at build time
+would mean computed import paths (unfriendly to Turbopack) and untyped
+frontmatter. The registry keeps every import static, and the metadata gets the
+same compile-time checking as everything else in `content/`. Putting draft
+filtering in the provider keeps the rule in one place — routes, sitemap, and
+the index page all inherit it.
+
+**Trade-off.** Publishing a post touches three files (MDX, registry, metadata)
+instead of one. Acceptable for a handful of posts a month; a CMS provider could
+replace it later without touching the pages.
