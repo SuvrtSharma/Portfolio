@@ -26,7 +26,6 @@ export const posts: Post[] = [
     date: "2026-11-01",
     tags: ["Architecture", "AI", "SQL Server", "Arqon"],
     readingMinutes: 3,
-    draft: true,
   },
   {
     slug: "enforcing-architecture-with-a-failing-test",
@@ -37,7 +36,6 @@ export const posts: Post[] = [
     date: "2026-11-01",
     tags: ["Architecture", ".NET", "Testing", "Arqon"],
     readingMinutes: 4,
-    draft: true,
   },
   {
     slug: "when-a-good-procedure-scored-zero",
@@ -48,7 +46,6 @@ export const posts: Post[] = [
     date: "2026-11-01",
     tags: ["SQL Server", "Metrics", "Design", "Arqon"],
     readingMinutes: 4,
-    draft: true,
   },
   {
     slug: "sql-server-tooling-field-notes",
@@ -59,7 +56,6 @@ export const posts: Post[] = [
     date: "2026-11-01",
     tags: ["SQL Server", ".NET", "VS Code", "Debugging"],
     readingMinutes: 4,
-    draft: true,
   },
   {
     slug: "llm-reality-check",
@@ -69,7 +65,6 @@ export const posts: Post[] = [
     date: "2026-11-01",
     tags: ["AI", "LLMs", "Productivity"],
     readingMinutes: 4,
-    draft: true,
     origin: cs360(
       "ai/productivity/2025/12/12/the-tool-is-only-as-good-as-the-hands-on-the-keyboard-a-copilot-reality-check.html",
       "adapted",
