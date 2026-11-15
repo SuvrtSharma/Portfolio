@@ -1,0 +1,4 @@
+﻿nagle-on trial 1 rps 171.7 p50 49.631 | balance p50 47.473 open p50 2.529 payment p50 55.907
+nagle-on trial 2 rps 171.4 p50 48.767 | balance p50 47.576 open p50 2.155 payment p50 55.878
+nodelay trial 1 rps 241.3 p50 7.186 | balance p50 1.48 open p50 1.739 payment p50 10.07
+nodelay trial 2 rps 244.0 p50 7.331 | balance p50 1.517 open p50 1.8 payment p50 10.314

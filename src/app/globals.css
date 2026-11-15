@@ -31,6 +31,9 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  /* Outcome colours for evidence: a check passed / failed. Text-safe on cards. */
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
 
   --color-border: var(--border);
   --color-input: var(--input);
@@ -145,6 +148,8 @@
   --accent: #143449;
   --accent-foreground: #f3e8cd;
   --destructive: #c0492f;
+  --positive: #7cc0a8;
+  --negative: #e5806a;
 
   --border: rgba(212, 175, 55, 0.16);
   --input: rgba(212, 175, 55, 0.22);

@@ -1,0 +1,1250 @@
+{
+  "generated_at": "2026-11-14T21:23:07+00:00",
+  "environment": {
+    "python": "3.14.10",
+    "sqlite_library": "3.46.1",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+    "lean": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+    "sequences": 100
+  },
+  "spec_locked": true,
+  "seconds": 534.8,
+  "profile_baseline": "         24586 function calls in 1.607 seconds\n\n   Ordered by: internal time\n   List reduced from 45 to 12 due to restriction <12>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n     4263    1.468    0.000    1.468    0.000 {method 'execute' of 'sqlite3.Connection' objects}\n      400    0.039    0.000    0.051    0.000 {built-in method _sqlite3.connect}\n      400    0.029    0.000    0.029    0.000 {method 'close' of 'sqlite3.Connection' objects}\n      393    0.020    0.000    0.020    0.000 {method 'fetchall' of 'sqlite3.Cursor' objects}\n      400    0.006    0.000    0.009    0.000 /usr/local/lib/python3.14/random.py:460(choices)\n     3200    0.005    0.000    0.005    0.000 {built-in method builtins.getattr}\n      400    0.004    0.000    0.009    0.000 /usr/local/lib/python3.14/functools.py:35(update_wrapper)\n       65    0.003    0.000    0.058    0.001 /home/app/repo/reference/ledger/store.py:275(open_bills)\n      400    0.003    0.000    0.110    0.000 /home/app/repo/reference/ledger/store.py:123(_open)\n      164    0.002    0.000    0.090    0.001 /home/app/repo/reference/ledger/store.py:190(_settle)\n      400    0.002    0.000    0.011    0.000 /usr/local/lib/python3.14/functools.py:593(decorating_function)\n       91    0.002    0.000    0.074    0.001 /home/app/repo/reference/ledger/store.py:232(tx)\n\n\n",
+  "verdicts": [
+    {
+      "id": "OPT-CACHED-BALANCE",
+      "title": "Store a running balance per party instead of summing rows",
+      "kind": "unorthodox",
+      "agent_says": "Keep parties.balance up to date on every bill and payment, in the same transaction; reads become one row lookup.",
+      "config": {
+        "connection_per_request": true,
+        "journal_mode": "DELETE",
+        "synchronous": "EXTRA",
+        "index_party": false,
+        "cached_balance": true,
+        "settle_scan_cap": null
+      },
+      "declared_drops": [
+        "app.derived_balance"
+      ],
+      "verdict": "accept",
+      "reasons": [],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          }
+        },
+        "compensations": [
+          {
+            "statement": "Spec.cachedBalanceAgrees",
+            "proof": "Proofs.Ledger.cachedBalanceAgrees",
+            "accepted": true,
+            "violations": [],
+            "axioms": [
+              "Classical.choice",
+              "Quot.sound",
+              "propext"
+            ]
+          }
+        ],
+        "conformance": {
+          "config": {
+            "connection_per_request": true,
+            "journal_mode": "DELETE",
+            "synchronous": "EXTRA",
+            "index_party": false,
+            "cached_balance": true,
+            "settle_scan_cap": null
+          },
+          "sequences": 100,
+          "operations": 4738,
+          "mismatches": 0,
+          "counterexample": null,
+          "seed": 20261107,
+          "notes": []
+        }
+      },
+      "check_seconds": 60.3
+    },
+    {
+      "id": "OPT-CAP-SETTLE-SCAN",
+      "title": "Read at most 20 open bills when settling a payment",
+      "kind": "unorthodox",
+      "agent_says": "Payments are rarely larger than 20 bills, so LIMIT 20 on the open-bill query is safe and avoids long scans.",
+      "config": {
+        "connection_per_request": true,
+        "journal_mode": "DELETE",
+        "synchronous": "EXTRA",
+        "index_party": false,
+        "cached_balance": false,
+        "settle_scan_cap": 20
+      },
+      "declared_drops": [
+        "app.full_open_bill_scan"
+      ],
+      "verdict": "reject",
+      "reasons": [
+        {
+          "code": "compensation_unproved",
+          "detail": {
+            "statement": "Spec.cappedMatchAgrees",
+            "proof": "Proofs.Ledger.cappedMatchAgrees",
+            "accepted": false,
+            "violations": [
+              "proof_missing",
+              "vacuity_witness_missing"
+            ],
+            "axioms": []
+          }
+        },
+        {
+          "code": "refuted_in_lean",
+          "detail": {
+            "statement": "Spec.cappedMatchDisagrees",
+            "proof": "Proofs.Ledger.cappedMatchDisagrees",
+            "accepted": true,
+            "violations": [],
+            "axioms": [
+              "Quot.sound",
+              "propext"
+            ]
+          }
+        },
+        {
+          "code": "differs_from_model",
+          "detail": "27 of 100 sequences; shortest failing sequence has 22 operations"
+        }
+      ],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          }
+        },
+        "compensations": [
+          {
+            "statement": "Spec.cappedMatchAgrees",
+            "proof": "Proofs.Ledger.cappedMatchAgrees",
+            "accepted": false,
+            "violations": [
+              "proof_missing",
+              "vacuity_witness_missing"
+            ],
+            "axioms": []
+          }
+        ],
+        "refutation": {
+          "statement": "Spec.cappedMatchDisagrees",
+          "proof": "Proofs.Ledger.cappedMatchDisagrees",
+          "accepted": true,
+          "violations": [],
+          "axioms": [
+            "Quot.sound",
+            "propext"
+          ]
+        },
+        "conformance": {
+          "config": {
+            "connection_per_request": true,
+            "journal_mode": "DELETE",
+            "synchronous": "EXTRA",
+            "index_party": false,
+            "cached_balance": false,
+            "settle_scan_cap": 20
+          },
+          "sequences": 100,
+          "operations": 4630,
+          "mismatches": 27,
+          "counterexample": {
+            "sequence": 0,
+            "index": 29,
+            "ops": [
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 3
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 10
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 5
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 13
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 10
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 3,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 1
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 5,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 14
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 3,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 5,
+                "amount": 5
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 15
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 5,
+                "amount": 14
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 5,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 4
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 15
+              },
+              {
+                "op": "pay",
+                "party": 2,
+                "amount": 727
+              }
+            ],
+            "model": {
+              "advance": 422,
+              "allocations": [
+                {
+                  "amount": 5,
+                  "bill": 6,
+                  "payment": 1
+                },
+                {
+                  "amount": 10,
+                  "bill": 8,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 15,
+                  "payment": 1
+                },
+                {
+                  "amount": 15,
+                  "bill": 25,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 2,
+                  "payment": 1
+                },
+                {
+                  "amount": 3,
+                  "bill": 4,
+                  "payment": 1
+                },
+                {
+                  "amount": 13,
+                  "bill": 7,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 17,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 22,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 24,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 3,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 10,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 12,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 13,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 21,
+                  "payment": 1
+                },
+                {
+                  "amount": 10,
+                  "bill": 5,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 11,
+                  "payment": 1
+                },
+                {
+                  "amount": 14,
+                  "bill": 19,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 20,
+                  "payment": 1
+                },
+                {
+                  "amount": 4,
+                  "bill": 28,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 16,
+                  "payment": 1
+                },
+                {
+                  "amount": 5,
+                  "bill": 23,
+                  "payment": 1
+                },
+                {
+                  "amount": 14,
+                  "bill": 26,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 27,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 1,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 9,
+                  "payment": 1
+                },
+                {
+                  "amount": 1,
+                  "bill": 14,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 18,
+                  "payment": 1
+                },
+                {
+                  "amount": 15,
+                  "bill": 29,
+                  "payment": 1
+                }
+              ],
+              "payment": 1
+            },
+            "store": {
+              "payment": 1,
+              "allocations": [
+                {
+                  "payment": 1,
+                  "bill": 6,
+                  "amount": 5
+                },
+                {
+                  "payment": 1,
+                  "bill": 8,
+                  "amount": 10
+                },
+                {
+                  "payment": 1,
+                  "bill": 15,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 25,
+                  "amount": 15
+                },
+                {
+                  "payment": 1,
+                  "bill": 2,
+                  "amount": 20
+                },
+                {
+                  "payment": 1,
+                  "bill": 4,
+                  "amount": 3
+                },
+                {
+                  "payment": 1,
+                  "bill": 7,
+                  "amount": 13
+                },
+                {
+                  "payment": 1,
+                  "bill": 17,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 22,
+                  "amount": 20
+                },
+                {
+                  "payment": 1,
+                  "bill": 24,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 3,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 10,
+                  "amount": 6
+                },
+                {
+                  "payment": 1,
+                  "bill": 12,
+                  "amount": 6
+                },
+                {
+                  "payment": 1,
+                  "bill": 13,
+                  "amount": 20
+                },
+                {
+                  "payment": 1,
+                  "bill": 21,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 5,
+                  "amount": 10
+                },
+                {
+                  "payment": 1,
+                  "bill": 11,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 19,
+                  "amount": 14
+                },
+                {
+                  "payment": 1,
+                  "bill": 20,
+                  "amount": 2
+                },
+                {
+                  "payment": 1,
+                  "bill": 28,
+                  "amount": 4
+                }
+              ],
+              "advance": 504
+            }
+          },
+          "seed": 20261107,
+          "notes": [],
+          "shrunk_counterexample": {
+            "ops": [
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 3
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 10
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 5
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 13
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 10
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 2,
+                "amount": 6
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 3,
+                "amount": 20
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 1
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 0,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 5,
+                "amount": 17
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 1,
+                "amount": 8
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 6,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 14
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 4,
+                "amount": 2
+              },
+              {
+                "op": "bill",
+                "party": 2,
+                "date": 3,
+                "amount": 17
+              },
+              {
+                "op": "pay",
+                "party": 2,
+                "amount": 727
+              }
+            ],
+            "index": 21,
+            "model": {
+              "advance": 532,
+              "allocations": [
+                {
+                  "amount": 5,
+                  "bill": 6,
+                  "payment": 1
+                },
+                {
+                  "amount": 10,
+                  "bill": 8,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 15,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 2,
+                  "payment": 1
+                },
+                {
+                  "amount": 3,
+                  "bill": 4,
+                  "payment": 1
+                },
+                {
+                  "amount": 13,
+                  "bill": 7,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 17,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 3,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 10,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 12,
+                  "payment": 1
+                },
+                {
+                  "amount": 20,
+                  "bill": 13,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 21,
+                  "payment": 1
+                },
+                {
+                  "amount": 10,
+                  "bill": 5,
+                  "payment": 1
+                },
+                {
+                  "amount": 8,
+                  "bill": 11,
+                  "payment": 1
+                },
+                {
+                  "amount": 14,
+                  "bill": 19,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 20,
+                  "payment": 1
+                },
+                {
+                  "amount": 17,
+                  "bill": 16,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 1,
+                  "payment": 1
+                },
+                {
+                  "amount": 6,
+                  "bill": 9,
+                  "payment": 1
+                },
+                {
+                  "amount": 1,
+                  "bill": 14,
+                  "payment": 1
+                },
+                {
+                  "amount": 2,
+                  "bill": 18,
+                  "payment": 1
+                }
+              ],
+              "payment": 1
+            },
+            "store": {
+              "payment": 1,
+              "allocations": [
+                {
+                  "payment": 1,
+                  "bill": 6,
+                  "amount": 5
+                },
+                {
+                  "payment": 1,
+                  "bill": 8,
+                  "amount": 10
+                },
+                {
+                  "payment": 1,
+                  "bill": 15,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 2,
+                  "amount": 20
+                },
+                {
+                  "payment": 1,
+                  "bill": 4,
+                  "amount": 3
+                },
+                {
+                  "payment": 1,
+                  "bill": 7,
+                  "amount": 13
+                },
+                {
+                  "payment": 1,
+                  "bill": 17,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 3,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 10,
+                  "amount": 6
+                },
+                {
+                  "payment": 1,
+                  "bill": 12,
+                  "amount": 6
+                },
+                {
+                  "payment": 1,
+                  "bill": 13,
+                  "amount": 20
+                },
+                {
+                  "payment": 1,
+                  "bill": 21,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 5,
+                  "amount": 10
+                },
+                {
+                  "payment": 1,
+                  "bill": 11,
+                  "amount": 8
+                },
+                {
+                  "payment": 1,
+                  "bill": 19,
+                  "amount": 14
+                },
+                {
+                  "payment": 1,
+                  "bill": 20,
+                  "amount": 2
+                },
+                {
+                  "payment": 1,
+                  "bill": 16,
+                  "amount": 17
+                },
+                {
+                  "payment": 1,
+                  "bill": 1,
+                  "amount": 2
+                },
+                {
+                  "payment": 1,
+                  "bill": 9,
+                  "amount": 6
+                },
+                {
+                  "payment": 1,
+                  "bill": 14,
+                  "amount": 1
+                }
+              ],
+              "advance": 534
+            }
+          }
+        }
+      },
+      "check_seconds": 141.7
+    },
+    {
+      "id": "OPT-INDEX-PARTY",
+      "title": "Index bills(party_id, id) and payments(party_id)",
+      "kind": "orthodox",
+      "agent_says": "Balance sums and oldest-first settlement scan every bill; an index on party avoids the scan and the sort. Indexes never change results.",
+      "config": {
+        "connection_per_request": true,
+        "journal_mode": "DELETE",
+        "synchronous": "EXTRA",
+        "index_party": true,
+        "cached_balance": false,
+        "settle_scan_cap": null
+      },
+      "declared_drops": [],
+      "verdict": "accept",
+      "reasons": [],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          }
+        },
+        "compensations": [],
+        "conformance": {
+          "config": {
+            "connection_per_request": true,
+            "journal_mode": "DELETE",
+            "synchronous": "EXTRA",
+            "index_party": true,
+            "cached_balance": false,
+            "settle_scan_cap": null
+          },
+          "sequences": 100,
+          "operations": 4738,
+          "mismatches": 0,
+          "counterexample": null,
+          "seed": 20261107,
+          "notes": []
+        }
+      },
+      "check_seconds": 70.4
+    },
+    {
+      "id": "OPT-REUSE-CONNECTION",
+      "title": "Keep one SQLite connection per server thread instead of one per request",
+      "kind": "orthodox",
+      "agent_says": "Opening a connection and setting pragmas on every request is wasted work; results are unchanged.",
+      "config": {
+        "connection_per_request": false,
+        "journal_mode": "DELETE",
+        "synchronous": "EXTRA",
+        "index_party": false,
+        "cached_balance": false,
+        "settle_scan_cap": null
+      },
+      "declared_drops": [],
+      "verdict": "accept",
+      "reasons": [],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          }
+        },
+        "compensations": [],
+        "conformance": {
+          "config": {
+            "connection_per_request": false,
+            "journal_mode": "DELETE",
+            "synchronous": "EXTRA",
+            "index_party": false,
+            "cached_balance": false,
+            "settle_scan_cap": null
+          },
+          "sequences": 100,
+          "operations": 4738,
+          "mismatches": 0,
+          "counterexample": null,
+          "seed": 20261107,
+          "notes": []
+        }
+      },
+      "check_seconds": 116.3
+    },
+    {
+      "id": "OPT-WAL-NORMAL",
+      "title": "WAL with synchronous=NORMAL",
+      "kind": "unorthodox",
+      "agent_says": "Widely recommended: WAL is always consistent with synchronous=NORMAL, and it is much faster.",
+      "config": {
+        "connection_per_request": true,
+        "journal_mode": "WAL",
+        "synchronous": "NORMAL",
+        "index_party": false,
+        "cached_balance": false,
+        "settle_scan_cap": null
+      },
+      "declared_drops": [],
+      "verdict": "reject",
+      "reasons": [
+        {
+          "code": "undeclared_drop",
+          "detail": {
+            "guarantees": [
+              "sqlite.durable_commit"
+            ],
+            "breaks_rules": [
+              "LEDGER-DURABLE-MONEY"
+            ]
+          }
+        },
+        {
+          "code": "drop_without_compensation",
+          "detail": {
+            "guarantee": "sqlite.durable_commit",
+            "rule": "LEDGER-DURABLE-MONEY"
+          }
+        }
+      ],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "wal",
+              "synchronous": 1,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": false
+            }
+          }
+        },
+        "compensations": [],
+        "conformance": {
+          "config": {
+            "connection_per_request": true,
+            "journal_mode": "WAL",
+            "synchronous": "NORMAL",
+            "index_party": false,
+            "cached_balance": false,
+            "settle_scan_cap": null
+          },
+          "sequences": 100,
+          "operations": 4738,
+          "mismatches": 0,
+          "counterexample": null,
+          "seed": 20261107,
+          "notes": []
+        }
+      },
+      "check_seconds": 51.7
+    },
+    {
+      "id": "OPT-WAL",
+      "title": "WAL journal, keeping synchronous=EXTRA (same as FULL in WAL)",
+      "kind": "orthodox",
+      "agent_says": "WAL commits need fewer syncs than a rollback journal and stay durable at FULL or above.",
+      "config": {
+        "connection_per_request": true,
+        "journal_mode": "WAL",
+        "synchronous": "EXTRA",
+        "index_party": false,
+        "cached_balance": false,
+        "settle_scan_cap": null
+      },
+      "declared_drops": [],
+      "verdict": "accept",
+      "reasons": [],
+      "evidence": {
+        "observed": {
+          "baseline": {
+            "pragmas": {
+              "journal_mode": "delete",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          },
+          "candidate": {
+            "pragmas": {
+              "journal_mode": "wal",
+              "synchronous": 3,
+              "sqlite_version": "3.46.1"
+            },
+            "held": {
+              "sqlite.durable_commit": true
+            }
+          }
+        },
+        "compensations": [],
+        "conformance": {
+          "config": {
+            "connection_per_request": true,
+            "journal_mode": "WAL",
+            "synchronous": "EXTRA",
+            "index_party": false,
+            "cached_balance": false,
+            "settle_scan_cap": null
+          },
+          "sequences": 100,
+          "operations": 4738,
+          "mismatches": 0,
+          "counterexample": null,
+          "seed": 20261107,
+          "notes": []
+        }
+      },
+      "check_seconds": 94.4
+    }
+  ]
+}

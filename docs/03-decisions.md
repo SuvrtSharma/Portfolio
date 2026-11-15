@@ -277,3 +277,45 @@ the index page all inherit it.
 **Trade-off.** Publishing a post touches three files (MDX, registry, metadata)
 instead of one. Acceptable for a handful of posts a month; a CMS provider could
 replace it later without touching the pages.
+
+---
+
+### ADR-16 — Results dashboards read raw evidence at build time, one route per view
+
+**Context.** Experiments (the first is God's Hand) produce evidence files: JSON,
+XML and text written by the tools that ran them. The site should show those
+results as dashboards, link them from the blog, and let a reader pick which
+dashboard to open. Every number must trace back to a raw file, because the
+audience distrusts summaries.
+
+**Decision.**
+- **Evidence is hosted, byte for byte.** `scripts/results/sync-gods-hand.mjs`
+  copies the files into `public/results/<slug>/` under their original paths and
+  records each file's SHA-256 and the source commit in `source.json`.
+  `.gitattributes` stops git from rewriting their line endings. Readers can
+  download exactly what the page read.
+- **The page reads them at build time.** `features/results/<slug>/evidence.ts`
+  parses the files with no arithmetic. Every computed figure is a named function
+  in `derive.ts`, and the Method tab lists those names. Prose that states a count
+  computes it, so it can't drift from the data. The Provenance tab re-hashes
+  each hosted file during the build and shows whether it still matches.
+- **Selectable dashboards.** Metadata lives in `content/results.ts` behind the
+  data provider, with the same draft rule as posts. Implementations live in
+  `features/results/registry.ts` under the same slug. `/results` lists them, and
+  a switcher in each dashboard's header moves between them.
+- **One route per view.** `/results/<slug>` is the overview, and each other tab
+  is `/results/<slug>/<view>`. Tabs are links, not client state: every view is
+  static HTML, shareable and crawlable, and needs no JavaScript to show its
+  content.
+- **No chart library.** Charts are HTML positioned in percentages, plus SVG with
+  non-scaling strokes, so labels stay at their real size on a phone. Colours come
+  from theme tokens. `--positive` and `--negative` were added for outcomes.
+
+**Why not embed the hosted dashboard, or use a chart library.** An embed is
+private to its owner and outside the site's theme. A chart library adds weight
+for what amounts to dots, ranges and lines, and still needs the data reshaped.
+
+**Trade-off.** Each new experiment needs its own `evidence.ts`, `derive.ts` and
+views, because the evidence differs. The frame (routes, index, switcher, tabs,
+cards, tables, charts) is shared, so the per-experiment work is the part that is
+genuinely different.

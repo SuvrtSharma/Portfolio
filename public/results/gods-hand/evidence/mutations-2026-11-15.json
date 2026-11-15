@@ -1,0 +1,150 @@
+{
+  "rows": [
+    {
+      "mutation": "M1 no kernel replay",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 29.73s"
+    },
+    {
+      "mutation": "M2 axiom allowlist ignored",
+      "result": "BITES",
+      "summary": "4 failed, 94 deselected in 23.25s"
+    },
+    {
+      "mutation": "M3 allowlist emptied",
+      "result": "BITES",
+      "summary": "2 failed, 5 passed, 91 deselected in 22.34s"
+    },
+    {
+      "mutation": "M4 implemented_by not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 11.30s"
+    },
+    {
+      "mutation": "M5 extern not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 9.75s"
+    },
+    {
+      "mutation": "M6 proof type not compared",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 10.15s"
+    },
+    {
+      "mutation": "M7 statement module not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 10.82s"
+    },
+    {
+      "mutation": "M8 statement deps not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 8.61s"
+    },
+    {
+      "mutation": "M9 lock not verified by pipeline",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 12.76s"
+    },
+    {
+      "mutation": "M10 hashing broken",
+      "result": "BITES",
+      "summary": "3 failed, 5 passed, 90 deselected in 0.28s"
+    },
+    {
+      "mutation": "M11 lakefile not locked",
+      "result": "BITES",
+      "summary": "2 failed, 96 deselected in 0.20s"
+    },
+    {
+      "mutation": "N1 vacuity guard off",
+      "result": "BITES",
+      "summary": "4 failed, 94 deselected in 22.91s"
+    },
+    {
+      "mutation": "N2 witness type not compared",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 9.65s"
+    },
+    {
+      "mutation": "N3 witness hygiene ignored",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 10.30s"
+    },
+    {
+      "mutation": "N4 no second kernel",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 9.30s"
+    },
+    {
+      "mutation": "N5 statement type not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 8.31s"
+    },
+    {
+      "mutation": "N6 proof module root not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 8.33s"
+    },
+    {
+      "mutation": "N7 theorem kind not checked",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 8.02s"
+    },
+    {
+      "mutation": "N8 build failure ignored",
+      "result": "BITES",
+      "summary": "2 failed, 96 deselected in 8.15s"
+    },
+    {
+      "mutation": "R1 refutation exemption removed",
+      "result": "BITES",
+      "summary": "2 failed, 2 passed, 94 deselected in 13.21s"
+    },
+    {
+      "mutation": "D1 differential never compares",
+      "result": "BITES",
+      "summary": "3 failed, 2 passed, 93 deselected in 33.16s"
+    },
+    {
+      "mutation": "D2 durability rule always true",
+      "result": "BITES",
+      "summary": "2 failed, 96 deselected in 13.75s"
+    },
+    {
+      "mutation": "D3 undeclared drop ignored",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 7.77s"
+    },
+    {
+      "mutation": "D4 unproved compensation ignored",
+      "result": "BITES",
+      "summary": "1 failed, 1 skipped, 96 deselected in 32.39s"
+    },
+    {
+      "mutation": "D5 server answers balance wrongly",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 0.98s"
+    },
+    {
+      "mutation": "D6 money validation off",
+      "result": "BITES",
+      "summary": "5 failed, 1 passed, 92 deselected in 1.43s"
+    },
+    {
+      "mutation": "D8 percentile rank rounded down",
+      "result": "BITES",
+      "summary": "1 failed, 1 passed, 96 deselected in 0.17s"
+    },
+    {
+      "mutation": "D9 errors counted as successes",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 0.17s"
+    },
+    {
+      "mutation": "D7 Nagle left on",
+      "result": "BITES",
+      "summary": "1 failed, 97 deselected in 0.21s"
+    }
+  ],
+  "restored": true
+}

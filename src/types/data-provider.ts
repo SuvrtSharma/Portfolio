@@ -6,6 +6,7 @@ import type {
   Project,
   SkillGroup,
 } from "./content";
+import type { ResultSet } from "./results";
 import type { World } from "./world";
 
 /**
@@ -31,4 +32,7 @@ export interface IWorldDataProvider {
   getPostBySlug(slug: string): Post | undefined;
   /** Published posts written about one project, newest first. */
   getPostsByProject(projectSlug: string): Post[];
+  /** Published result sets, newest first. Drafts are included only outside production. */
+  getResultSets(): ResultSet[];
+  getResultSetBySlug(slug: string): ResultSet | undefined;
 }

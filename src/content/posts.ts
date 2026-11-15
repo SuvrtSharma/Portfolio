@@ -18,6 +18,26 @@ function cs360(
  */
 export const posts: Post[] = [
   {
+    slug: "how-the-claim-checker-is-built",
+    title: "How the claim checker is built, whether it works, and whether it can be a skill",
+    summary:
+      "The engineering half of making agents prove their claims: the Lean pipeline, the optimisation checker and the benchmark harness, an honest verdict, what could ship as an agent skill, and what you need to know to use it.",
+    date: "2026-11-15",
+    tags: ["AI", "Lean 4", "Formal Methods", "Agent Skills", "Benchmarking"],
+    readingMinutes: 10,
+    draft: true,
+  },
+  {
+    slug: "making-ai-agents-prove-their-claims",
+    title: "I made AI agents prove their claims. The benchmark lied first.",
+    summary:
+      "Lean 4 proofs, a live guarantee check and an executable spec judge what an agent's optimisation means before anything is timed. A forged theorem, a 40 ms TCP artefact and a drifting disk taught me more than the speed-ups did.",
+    date: "2026-11-07",
+    tags: ["AI", "Lean 4", "Formal Methods", "SQLite", "Benchmarking"],
+    readingMinutes: 8,
+    draft: true,
+  },
+  {
     slug: "the-llm-is-not-allowed-to-state-facts",
     project: "arqon",
     title: "The LLM in my SQL analyzer isn't allowed to state facts",

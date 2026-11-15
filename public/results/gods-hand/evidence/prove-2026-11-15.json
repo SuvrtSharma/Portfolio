@@ -1,0 +1,388 @@
+[
+  {
+    "id": "LEDGER-ADVANCES-ALWAYS-APPLIED",
+    "accepted": true,
+    "seconds": 12.2,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.advancesAlwaysApplied",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.advancesAlwaysApplied",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.advancesAlwaysApplied_witness"
+  },
+  {
+    "id": "LEDGER-CACHED-BALANCE-AGREES",
+    "accepted": true,
+    "seconds": 3.1,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.cachedBalanceAgrees",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.cachedBalanceAgrees",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.cachedBalanceAgrees_witness"
+  },
+  {
+    "id": "LEDGER-CAPPED-SCAN-REFUTED",
+    "accepted": true,
+    "seconds": 2.4,
+    "axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.cappedMatchDisagrees",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.cappedMatchDisagrees",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": null
+  },
+  {
+    "id": "LEDGER-MATCH-OLDEST-FIRST",
+    "accepted": true,
+    "seconds": 1.9,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.matchPaysOldestFirst",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.matchPaysOldestFirst",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.matchPaysOldestFirst_witness"
+  },
+  {
+    "id": "LEDGER-MATCH-SETTLES-MAXIMUM",
+    "accepted": true,
+    "seconds": 2.7,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.matchSettlesMaximum",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.matchSettlesMaximum",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.matchSettlesMaximum_witness"
+  },
+  {
+    "id": "LEDGER-MATCH-WITHIN-LIMITS",
+    "accepted": true,
+    "seconds": 3.0,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.matchWithinLimits",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.matchWithinLimits",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.matchWithinLimits_witness"
+  },
+  {
+    "id": "LEDGER-NEVER-OVER-APPLIED",
+    "accepted": true,
+    "seconds": 2.8,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.neverOverApplied",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.neverOverApplied",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.neverOverApplied_witness"
+  },
+  {
+    "id": "LEDGER-NEVER-OVER-SETTLED",
+    "accepted": true,
+    "seconds": 2.6,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.neverOverSettled",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.neverOverSettled",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.neverOverSettled_witness"
+  },
+  {
+    "id": "LEDGER-PARTIES-ISOLATED",
+    "accepted": true,
+    "seconds": 3.3,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.partiesIsolated",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.partiesIsolated",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.partiesIsolated_witness"
+  },
+  {
+    "id": "LEDGER-REACHABLE-INVARIANTS",
+    "accepted": true,
+    "seconds": 2.9,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.reachableInvariants",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.reachableInvariants",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.reachableInvariants_witness"
+  },
+  {
+    "id": "LEDGER-REJECTS-NON-POSITIVE",
+    "accepted": true,
+    "seconds": 2.1,
+    "axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.rejectsNonPositive",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.rejectsNonPositive",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.rejectsNonPositive_witness"
+  },
+  {
+    "id": "LEDGER-REVERSAL-RESTORES-BALANCE",
+    "accepted": true,
+    "seconds": 2.9,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.reversalRestoresBalance",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.reversalRestoresBalance",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.reversalRestoresBalance_witness"
+  },
+  {
+    "id": "LEDGER-SETTLES-OLDEST-FIRST",
+    "accepted": true,
+    "seconds": 2.1,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.settlesOldestFirst",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.settlesOldestFirst",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.settlesOldestFirst_witness"
+  },
+  {
+    "id": "LEDGER-VIEWS-AGREE",
+    "accepted": true,
+    "seconds": 2.9,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "lock_sha256": "2d231ba2c57f13c9e1ceef531c07d685ab995e5a3c046d35321d2db4983c2834",
+    "module": "Proofs.Ledger",
+    "proof": "Proofs.Ledger.viewsAgree",
+    "proof_file_sha256": "53a61b1f61d969e2247b441b7570a15120085906387bcfb599ed205fcc50dc9c",
+    "replay_reused": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "replayed_modules": [
+      "Proofs.Ledger",
+      "Spec",
+      "Spec.Ledger"
+    ],
+    "statement": "Spec.viewsAgree",
+    "toolchain": "leanprover/lean4:v4.35.0",
+    "violations": [],
+    "witness": "Proofs.Ledger.viewsAgree_witness"
+  }
+]

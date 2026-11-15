@@ -5,6 +5,7 @@ import type {
   Post,
   Profile,
   Project,
+  ResultSet,
   SkillGroup,
   World,
 } from "@/types";
@@ -14,6 +15,7 @@ import {
   posts,
   profile,
   projects,
+  resultSets,
   skillGroups,
   world,
 } from "@/content";
@@ -77,5 +79,16 @@ export class StaticWorldDataProvider implements IWorldDataProvider {
 
   getPostsByProject(projectSlug: string): Post[] {
     return this.getPosts().filter((post) => post.project === projectSlug);
+  }
+
+  getResultSets(): ResultSet[] {
+    const includeDrafts = process.env.NODE_ENV !== "production";
+    return resultSets
+      .filter((set) => includeDrafts || !set.draft)
+      .sort((a, b) => b.date.localeCompare(a.date));
+  }
+
+  getResultSetBySlug(slug: string): ResultSet | undefined {
+    return this.getResultSets().find((set) => set.slug === slug);
   }
 }

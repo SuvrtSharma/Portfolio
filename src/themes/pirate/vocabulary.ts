@@ -12,5 +12,6 @@ export const pirateVocabulary: ThemeVocabulary = {
   graveyardTitle: "Graveyard of Bugs",
   harborTitle: "Harbor",
   journalTitle: "Ship's Journal",
+  resultsTitle: "Soundings",
   mapPrompt: "Choose your destination",
 };

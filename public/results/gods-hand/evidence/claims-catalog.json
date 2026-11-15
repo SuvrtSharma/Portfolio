@@ -1,0 +1,547 @@
+{
+ "generated_by": "python tools/claims_catalog.py",
+ "git_commit": "4adc4b862cc27af27982802cfa31fd8087938e18",
+ "sources_dirty": false,
+ "sources": {
+  "Spec/Ledger.lean": "45b30e058576360bf50ac35fbeb87a77c200ca28852cb2c02b49ce1c78b8401c",
+  "claims/lean/LEDGER-ADVANCES-ALWAYS-APPLIED.toml": "799f5374f3332b2b70d3f99aac2d97220f6656ee6047c275120273c8ed0490d7",
+  "claims/lean/LEDGER-CACHED-BALANCE-AGREES.toml": "5dd12479ad5bd0f1bcad2e669a625efa694041d08b4ba397b86ca6d173f768fe",
+  "claims/lean/LEDGER-CAPPED-SCAN-REFUTED.toml": "ecc49e103cbf130532643f2ea47801cabbd63f4471b848b2eecb5566065065fa",
+  "claims/lean/LEDGER-MATCH-OLDEST-FIRST.toml": "3c6031c004596fe095f6068a729cbd03be195c826a8be981eb985cca78e22ae9",
+  "claims/lean/LEDGER-MATCH-SETTLES-MAXIMUM.toml": "73d34332ec550849a8e8113068d79a97ea3995e184b81a4fffb2bb7992c63c62",
+  "claims/lean/LEDGER-MATCH-WITHIN-LIMITS.toml": "e3b1ee24cad0150945b160394dd852ddc04e0a2e4c319557cb7712b90f22f044",
+  "claims/lean/LEDGER-NEVER-OVER-APPLIED.toml": "29103f7ac5b385e4601641bd98642933e087864b757748fd1318d6d95dcef34d",
+  "claims/lean/LEDGER-NEVER-OVER-SETTLED.toml": "bdb4f1037b3f706528bdd82fc6357d1601700758eb93a5aed5fdbd421ba6f0d3",
+  "claims/lean/LEDGER-PARTIES-ISOLATED.toml": "880e4be06a5f8750cb474d8b72908d24ed58719b632c4021b820f59ba2ba9ce1",
+  "claims/lean/LEDGER-REACHABLE-INVARIANTS.toml": "87e40fbd54290ac78867e7572976102e2c94efe3012be706d826a2ffb24a3fd3",
+  "claims/lean/LEDGER-REJECTS-NON-POSITIVE.toml": "5f7e4eabd2a248b7e9d73be48924b9ee09faa9f2f6d34dd6cd85fa69599456da",
+  "claims/lean/LEDGER-REVERSAL-RESTORES-BALANCE.toml": "043c69272510db47350773f660f3623f64d920eb0dcdc4188b8ff87dd727875d",
+  "claims/lean/LEDGER-SETTLES-OLDEST-FIRST.toml": "9ae62909fd8159be3418c8ae5226b05be13af78b929f22f45d02c21c320fd1d9",
+  "claims/lean/LEDGER-VIEWS-AGREE.toml": "54e7a231291c6ea88f4ed8a04a26574025762428d8b14a9f5ef786c35035ac92",
+  "claims/optimisations/OPT-CACHED-BALANCE.toml": "6236f2926ad110716abf8e8652419c49dfb4be887cad884f32274f3583f3d67f",
+  "claims/optimisations/OPT-CAP-SETTLE-SCAN.toml": "a4871ec0decfbd89c07760cbbed1e62403872ddfd2616f49b914f432eac8848f",
+  "claims/optimisations/OPT-INDEX-PARTY.toml": "8a5391f950d97e5e9ea5a73dce3fac6bc69efd4d7dadac879147c8e5a03de331",
+  "claims/optimisations/OPT-REUSE-CONNECTION.toml": "376e76200750e6e8077e10fea02a0e4be95789ccf9852c86129b1ef67106dff4",
+  "claims/optimisations/OPT-WAL-NORMAL.toml": "a97055646af1f0f1645cc633bd74452e792414d64739b6e7deb3c5ec65b3cf5a",
+  "claims/optimisations/OPT-WAL.toml": "f8721178c54e522df7b91abdb3d9b7da06da1ef674e5bb89ce019c23e56e3a26",
+  "tools/mutate.py": "88966026e30f9a90c95a401979e964b38355c75a71ed9ff939f7f4307eeaba3e"
+ },
+ "lean_claims": [
+  {
+   "id": "LEDGER-ADVANCES-ALWAYS-APPLIED",
+   "kind": "invariant",
+   "says": "Advances are applied automatically: a party never has an open bill and an unapplied advance at the same time.",
+   "statement": "Spec.advancesAlwaysApplied",
+   "proof": "Proofs.Ledger.advancesAlwaysApplied",
+   "spec_version": 2,
+   "doc": "Advances are applied automatically: a party never has an open bill and an unapplied advance at the same time.",
+   "lean": "def advancesAlwaysApplied : Prop :=\n  ∀ (ops : List Op) (q : Nat), openBills (run ops) q = [] ∨ advances (run ops) q = []",
+   "spec_lines": [
+    256,
+    257
+   ],
+   "file": "claims/lean/LEDGER-ADVANCES-ALWAYS-APPLIED.toml"
+  },
+  {
+   "id": "LEDGER-CACHED-BALANCE-AGREES",
+   "kind": "invariant",
+   "says": "A running balance kept per party always equals the balance worked out from the facts, through bills, payments and reversals.",
+   "statement": "Spec.cachedBalanceAgrees",
+   "proof": "Proofs.Ledger.cachedBalanceAgrees",
+   "spec_version": 2,
+   "doc": "The running balance always equals the balance worked out from the facts.",
+   "lean": "def cachedBalanceAgrees : Prop :=\n  ∀ (ops : List Op) (q : Nat), (run ops).cache q = balance (run ops) q",
+   "spec_lines": [
+    280,
+    281
+   ],
+   "file": "claims/lean/LEDGER-CACHED-BALANCE-AGREES.toml"
+  },
+  {
+   "id": "LEDGER-CAPPED-SCAN-REFUTED",
+   "kind": "refutation",
+   "says": "Reading only the first k open bills does NOT settle like reading all of them (a concrete counterexample).",
+   "statement": "Spec.cappedMatchDisagrees",
+   "proof": "Proofs.Ledger.cappedMatchDisagrees",
+   "spec_version": 2,
+   "doc": "The refutation of `cappedMatchAgrees`.",
+   "lean": "def cappedMatchDisagrees : Prop := ¬ cappedMatchAgrees",
+   "spec_lines": [
+    288,
+    288
+   ],
+   "file": "claims/lean/LEDGER-CAPPED-SCAN-REFUTED.toml"
+  },
+  {
+   "id": "LEDGER-MATCH-OLDEST-FIRST",
+   "kind": "invariant",
+   "says": "Settlement pays oldest first: a bill receives anything only if every bill before it in the order is paid in full.",
+   "statement": "Spec.matchPaysOldestFirst",
+   "proof": "Proofs.Ledger.matchPaysOldestFirst",
+   "spec_version": 2,
+   "doc": "Oldest first: a bill receives anything only if every bill before it in the order is paid in full.",
+   "lean": "def matchPaysOldestFirst : Prop :=\n  ∀ (owed adv : List (Nat × Int)), wellFormed owed → wellFormed adv →\n    ∀ (i j : Nat) (hi : i < owed.length) (hj : j < owed.length), i < j →\n      0 < paidTo (matchUp owed adv) owed[j].1 → paidTo (matchUp owed adv) owed[i].1 = owed[i].2",
+   "spec_lines": [
+    202,
+    205
+   ],
+   "file": "claims/lean/LEDGER-MATCH-OLDEST-FIRST.toml"
+  },
+  {
+   "id": "LEDGER-MATCH-SETTLES-MAXIMUM",
+   "kind": "invariant",
+   "says": "Settlement settles as much as possible: the total applied is the smaller of everything owed and every advance. (Allocating nothing does not satisfy this.)",
+   "statement": "Spec.matchSettlesMaximum",
+   "proof": "Proofs.Ledger.matchSettlesMaximum",
+   "spec_version": 2,
+   "doc": "As much debt as possible is settled: the total matched is the smaller of everything owed and every advance. (Allocating nothing does not satisfy this.)",
+   "lean": "def matchSettlesMaximum : Prop :=\n  ∀ (owed adv : List (Nat × Int)), wellFormed owed → wellFormed adv →\n    ((matchUp owed adv).map (·.amount)).sum = min (total owed) (total adv)",
+   "spec_lines": [
+    196,
+    198
+   ],
+   "file": "claims/lean/LEDGER-MATCH-SETTLES-MAXIMUM.toml"
+  },
+  {
+   "id": "LEDGER-MATCH-WITHIN-LIMITS",
+   "kind": "invariant",
+   "says": "Settlement never pays a bill more than it owes or takes more from a payment than its advance, and every allocation is positive and names an offered bill and payment.",
+   "statement": "Spec.matchWithinLimits",
+   "proof": "Proofs.Ledger.matchWithinLimits",
+   "spec_version": 2,
+   "doc": "Every allocation is positive, goes to an offered bill from an offered payment, and no bill or payment receives or gives more than offered.",
+   "lean": "def matchWithinLimits : Prop :=\n  ∀ (owed adv : List (Nat × Int)), wellFormed owed → wellFormed adv →\n    (∀ x ∈ matchUp owed adv, 0 < x.amount ∧ x.bill ∈ owed.map (·.1) ∧ x.payment ∈ adv.map (·.1)) ∧\n    (∀ b ∈ owed, paidTo (matchUp owed adv) b.1 ≤ b.2) ∧\n    (∀ p ∈ adv, takenFrom (matchUp owed adv) p.1 ≤ p.2)",
+   "spec_lines": [
+    188,
+    192
+   ],
+   "file": "claims/lean/LEDGER-MATCH-WITHIN-LIMITS.toml"
+  },
+  {
+   "id": "LEDGER-NEVER-OVER-APPLIED",
+   "kind": "invariant",
+   "says": "No payment is ever applied beyond its amount.",
+   "statement": "Spec.neverOverApplied",
+   "proof": "Proofs.Ledger.neverOverApplied",
+   "spec_version": 2,
+   "doc": "No payment is ever applied beyond its amount.",
+   "lean": "def neverOverApplied : Prop :=\n  ∀ (ops : List Op), ∀ p ∈ (run ops).payments,\n    0 ≤ advance (run ops) p ∧ advance (run ops) p ≤ p.amount",
+   "spec_lines": [
+    250,
+    252
+   ],
+   "file": "claims/lean/LEDGER-NEVER-OVER-APPLIED.toml"
+  },
+  {
+   "id": "LEDGER-NEVER-OVER-SETTLED",
+   "kind": "invariant",
+   "says": "No bill is ever settled beyond what it owes, and none is ever owed more than its amount.",
+   "statement": "Spec.neverOverSettled",
+   "proof": "Proofs.Ledger.neverOverSettled",
+   "spec_version": 2,
+   "doc": "No bill is ever settled beyond what it owes, and none is owed more than its amount.",
+   "lean": "def neverOverSettled : Prop :=\n  ∀ (ops : List Op), ∀ b ∈ (run ops).bills,\n    0 ≤ outstanding (run ops) b ∧ outstanding (run ops) b ≤ b.amount",
+   "spec_lines": [
+    245,
+    247
+   ],
+   "file": "claims/lean/LEDGER-NEVER-OVER-SETTLED.toml"
+  },
+  {
+   "id": "LEDGER-PARTIES-ISOLATED",
+   "kind": "access",
+   "says": "An operation about one party changes nothing about any other party: not its bills, what they owe, its payments, their advances, or its balance.",
+   "statement": "Spec.partiesIsolated",
+   "proof": "Proofs.Ledger.partiesIsolated",
+   "spec_version": 2,
+   "doc": "Parties are isolated: an operation about one party changes nothing about any other party.",
+   "lean": "def partiesIsolated : Prop :=\n  ∀ (ops : List Op) (op : Op) (r : Nat), opParty (run ops) op ≠ some r →\n    partyView (run (ops ++ [op])) r = partyView (run ops) r",
+   "spec_lines": [
+    234,
+    236
+   ],
+   "file": "claims/lean/LEDGER-PARTIES-ISOLATED.toml"
+  },
+  {
+   "id": "LEDGER-REACHABLE-INVARIANTS",
+   "kind": "invariant",
+   "says": "In every state the ledger can reach: ids are unique, increasing and below the next id; every amount is positive; every allocation is positive and links a recorded bill and payment of the same party.",
+   "statement": "Spec.reachableInvariants",
+   "proof": "Proofs.Ledger.reachableInvariants",
+   "spec_version": 2,
+   "doc": "Ids are unique, increasing in recording order and below the next id; every bill and payment amount is positive; every allocation is positive and refers to a recorded bill and payment of the same party.",
+   "lean": "def reachableInvariants : Prop :=\n  ∀ (ops : List Op), let s := run ops\n    (s.bills.map (·.id)).Pairwise (· < ·) ∧ (∀ b ∈ s.bills, b.id < s.nextBill ∧ 0 < b.amount) ∧\n    (s.payments.map (·.id)).Pairwise (· < ·) ∧ (∀ p ∈ s.payments, p.id < s.nextPayment ∧ 0 < p.amount) ∧\n    (∀ a ∈ s.allocs, 0 < a.amount ∧ ∃ b ∈ s.bills, ∃ p ∈ s.payments, b.id = a.bill ∧ p.id = a.payment ∧ b.party = p.party)",
+   "spec_lines": [
+    212,
+    216
+   ],
+   "file": "claims/lean/LEDGER-REACHABLE-INVARIANTS.toml"
+  },
+  {
+   "id": "LEDGER-REJECTS-NON-POSITIVE",
+   "kind": "invariant",
+   "says": "A bill or payment of zero or a negative amount is rejected and changes nothing.",
+   "statement": "Spec.rejectsNonPositive",
+   "proof": "Proofs.Ledger.rejectsNonPositive",
+   "spec_version": 2,
+   "doc": "Bills and payments must be positive; anything else is rejected and changes nothing.",
+   "lean": "def rejectsNonPositive : Prop :=\n  ∀ (s : State) (q d : Nat) (a : Int), a ≤ 0 → step s (.bill q d a) = s ∧ step s (.pay q a) = s",
+   "spec_lines": [
+    241,
+    242
+   ],
+   "file": "claims/lean/LEDGER-REJECTS-NON-POSITIVE.toml"
+  },
+  {
+   "id": "LEDGER-REVERSAL-RESTORES-BALANCE",
+   "kind": "invariant",
+   "says": "Reversing a live payment raises its party's balance by exactly its amount and changes no other party's balance.",
+   "statement": "Spec.reversalRestoresBalance",
+   "proof": "Proofs.Ledger.reversalRestoresBalance",
+   "spec_version": 2,
+   "doc": "Reversing a live payment raises its party's balance by exactly its amount, and changes no other party's balance.",
+   "lean": "def reversalRestoresBalance : Prop :=\n  ∀ (ops : List Op) (p : Payment), p ∈ (run ops).payments → p.reversed = false →\n    balance (run (ops ++ [.reverse p.id])) p.party = balance (run ops) p.party + p.amount ∧\n    ∀ q, q ≠ p.party → balance (run (ops ++ [.reverse p.id])) q = balance (run ops) q",
+   "spec_lines": [
+    269,
+    272
+   ],
+   "file": "claims/lean/LEDGER-REVERSAL-RESTORES-BALANCE.toml"
+  },
+  {
+   "id": "LEDGER-SETTLES-OLDEST-FIRST",
+   "kind": "invariant",
+   "says": "Open bills are always in a fixed order, oldest date first with ties broken by bill id, so the same data always settles the same way (KT bug pattern 4).",
+   "statement": "Spec.settlesOldestFirst",
+   "proof": "Proofs.Ledger.settlesOldestFirst",
+   "spec_version": 2,
+   "doc": "Bills are always settled in a fixed order: oldest date first, ties broken by bill id, so the same data always settles the same way (KT bug pattern 4).",
+   "lean": "def settlesOldestFirst : Prop :=\n  ∀ (ops : List Op) (q : Nat), (openBills (run ops) q).Pairwise fun a b => billBefore a b = true",
+   "spec_lines": [
+    276,
+    277
+   ],
+   "file": "claims/lean/LEDGER-SETTLES-OLDEST-FIRST.toml"
+  },
+  {
+   "id": "LEDGER-VIEWS-AGREE",
+   "kind": "invariant",
+   "says": "Every view of a balance agrees: billed minus paid equals what the bills still owe minus the unapplied advances (KT bug pattern 3).",
+   "statement": "Spec.viewsAgree",
+   "proof": "Proofs.Ledger.viewsAgree",
+   "spec_version": 2,
+   "doc": "Every view of a balance agrees: billed minus paid equals what the bills still owe minus what the payments have left as advances (KT bug pattern 3).",
+   "lean": "def viewsAgree : Prop :=\n  ∀ (ops : List Op) (q : Nat),\n    balance (run ops) q =\n      (((run ops).bills.filter (·.party == q)).map (outstanding (run ops))).sum\n        - (((run ops).payments.filter (·.party == q)).map (advance (run ops))).sum",
+   "spec_lines": [
+    261,
+    265
+   ],
+   "file": "claims/lean/LEDGER-VIEWS-AGREE.toml"
+  }
+ ],
+ "optimisations": [
+  {
+   "id": "OPT-CACHED-BALANCE",
+   "kind": "unorthodox",
+   "title": "Store a running balance per party instead of summing rows",
+   "agent_says": "Keep parties.balance up to date on every bill and payment, in the same transaction; reads become one row lookup.",
+   "config": {
+    "cached_balance": true
+   },
+   "drops": [
+    "app.derived_balance"
+   ],
+   "compensated_by": [
+    {
+     "rule": "LEDGER-BALANCE-IS-DERIVED",
+     "statement": "Spec.cachedBalanceAgrees",
+     "lean": "def cachedBalanceAgrees : Prop :=\n  ∀ (ops : List Op) (q : Nat), (run ops).cache q = balance (run ops) q"
+    }
+   ],
+   "refuted_by": "",
+   "file": "claims/optimisations/OPT-CACHED-BALANCE.toml"
+  },
+  {
+   "id": "OPT-CAP-SETTLE-SCAN",
+   "kind": "unorthodox",
+   "title": "Read at most 20 open bills when settling a payment",
+   "agent_says": "Payments are rarely larger than 20 bills, so LIMIT 20 on the open-bill query is safe and avoids long scans.",
+   "config": {
+    "settle_scan_cap": 20
+   },
+   "drops": [
+    "app.full_open_bill_scan"
+   ],
+   "compensated_by": [
+    {
+     "rule": "LEDGER-SETTLE-OLDEST-FIRST",
+     "statement": "Spec.cappedMatchAgrees",
+     "lean": "def cappedMatchAgrees : Prop :=\n  ∀ (k : Nat) (bills advs : List (Nat × Int)), matchUpCapped k bills advs = matchUp bills advs"
+    }
+   ],
+   "refuted_by": {
+    "statement": "Spec.cappedMatchDisagrees",
+    "proof": "Proofs.Ledger.cappedMatchDisagrees",
+    "module": "Proofs.Ledger"
+   },
+   "file": "claims/optimisations/OPT-CAP-SETTLE-SCAN.toml"
+  },
+  {
+   "id": "OPT-INDEX-PARTY",
+   "kind": "orthodox",
+   "title": "Index bills(party_id, id) and payments(party_id)",
+   "agent_says": "Balance sums and oldest-first settlement scan every bill; an index on party avoids the scan and the sort. Indexes never change results.",
+   "config": {
+    "index_party": true
+   },
+   "drops": [],
+   "compensated_by": [],
+   "refuted_by": "",
+   "file": "claims/optimisations/OPT-INDEX-PARTY.toml"
+  },
+  {
+   "id": "OPT-REUSE-CONNECTION",
+   "kind": "orthodox",
+   "title": "Keep one SQLite connection per server thread instead of one per request",
+   "agent_says": "Opening a connection and setting pragmas on every request is wasted work; results are unchanged.",
+   "config": {
+    "connection_per_request": false
+   },
+   "drops": [],
+   "compensated_by": [],
+   "refuted_by": "",
+   "file": "claims/optimisations/OPT-REUSE-CONNECTION.toml"
+  },
+  {
+   "id": "OPT-WAL-NORMAL",
+   "kind": "unorthodox",
+   "title": "WAL with synchronous=NORMAL",
+   "agent_says": "Widely recommended: WAL is always consistent with synchronous=NORMAL, and it is much faster.",
+   "config": {
+    "journal_mode": "WAL",
+    "synchronous": "NORMAL"
+   },
+   "drops": [],
+   "compensated_by": [],
+   "refuted_by": "",
+   "file": "claims/optimisations/OPT-WAL-NORMAL.toml"
+  },
+  {
+   "id": "OPT-WAL",
+   "kind": "orthodox",
+   "title": "WAL journal, keeping synchronous=EXTRA (same as FULL in WAL)",
+   "agent_says": "WAL commits need fewer syncs than a rollback journal and stay durable at FULL or above.",
+   "config": {
+    "journal_mode": "WAL"
+   },
+   "drops": [],
+   "compensated_by": [],
+   "refuted_by": "",
+   "file": "claims/optimisations/OPT-WAL.toml"
+  }
+ ],
+ "mutations": [
+  {
+   "mutation": "M1 no kernel replay",
+   "file": "godshand/leancheck.py",
+   "find": "    for failure in failures:\n",
+   "replace": "    for failure in []:\n",
+   "tests": "forged"
+  },
+  {
+   "mutation": "M2 axiom allowlist ignored",
+   "file": "tools/leancheck/Main.lean",
+   "find": "let bad := axs.filter fun a => !allowedAxioms.contains a",
+   "replace": "let bad := axs.filter fun _ => false",
+   "tests": "Sorry or Axiom or NativeDecide or v_witness"
+  },
+  {
+   "mutation": "M3 allowlist emptied",
+   "file": "tools/leancheck/Main.lean",
+   "find": "def allowedAxioms : List Name := [``propext, ``Classical.choice, ``Quot.sound]",
+   "replace": "def allowedAxioms : List Name := []",
+   "tests": "honest"
+  },
+  {
+   "mutation": "M4 implemented_by not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if let some impl := Compiler.getImplementedBy? env n then",
+   "replace": "if let some impl := (none : Option Name) then",
+   "tests": "ImplementedBy"
+  },
+  {
+   "mutation": "M5 extern not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if isExtern env n then",
+   "replace": "if false then",
+   "tests": "Extern"
+  },
+  {
+   "mutation": "M6 proof type not compared",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if pci.type != mkConst stmt then",
+   "replace": "if false then",
+   "tests": "proof_statement_mismatch"
+  },
+  {
+   "mutation": "M7 statement module not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if rootOf env stmt != `Spec then",
+   "replace": "if false then",
+   "tests": "statement_not_in_spec"
+  },
+  {
+   "mutation": "M8 statement deps not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "unless outside.isEmpty do",
+   "replace": "unless true do",
+   "tests": "statement_uses_outside_spec"
+  },
+  {
+   "mutation": "M9 lock not verified by pipeline",
+   "file": "godshand/leancheck.py",
+   "find": "    if not lock.ok:\n",
+   "replace": "    if False:\n",
+   "tests": "edited_spec_is_rejected"
+  },
+  {
+   "mutation": "M10 hashing broken",
+   "file": "godshand/speclock.py",
+   "find": "return hashlib.sha256(path.read_bytes()).hexdigest()",
+   "replace": "return \"0\" * 64",
+   "tests": "test_speclock"
+  },
+  {
+   "mutation": "M11 lakefile not locked",
+   "file": "godshand/speclock.py",
+   "find": "for name in (\"Spec.lean\", \"lakefile.toml\", \"lean-toolchain\"):",
+   "replace": "for name in (\"Spec.lean\", \"lean-toolchain\"):",
+   "tests": "lakefile"
+  },
+  {
+   "mutation": "N1 vacuity guard off",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if let some expected := expectedWitness then",
+   "replace": "if let some expected := (none : Option Expr) then",
+   "tests": "Vacuous or witness_is_required"
+  },
+  {
+   "mutation": "N2 witness type not compared",
+   "file": "tools/leancheck/Main.lean",
+   "find": "unless ← runMeta env (isDefEq wci.type expected) do",
+   "replace": "unless true do",
+   "tests": "vacuity_witness_mismatch"
+  },
+  {
+   "mutation": "N3 witness hygiene ignored",
+   "file": "tools/leancheck/Main.lean",
+   "find": "      vs := vs ++ wvs\n",
+   "replace": "      vs := vs\n",
+   "tests": "v_witness"
+  },
+  {
+   "mutation": "N4 no second kernel",
+   "file": "godshand/leancheck.py",
+   "find": "failure = second_kernel(lake, project, module, decls)",
+   "replace": "failure = None",
+   "tests": "forged"
+  },
+  {
+   "mutation": "N5 statement type not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if !sci.isDefinition || !sci.levelParams.isEmpty || sci.type != .sort .zero then",
+   "replace": "if false then",
+   "tests": "statement_not_prop"
+  },
+  {
+   "mutation": "N6 proof module root not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if rootOf env thm != `Proofs then",
+   "replace": "if false then",
+   "tests": "proof_not_in_proofs"
+  },
+  {
+   "mutation": "N7 theorem kind not checked",
+   "file": "tools/leancheck/Main.lean",
+   "find": "| _ => vs := vs.push (v \"proof_not_theorem\" s!\"{thm} is not a theorem\")",
+   "replace": "| _ => pure ()",
+   "tests": "proof_not_theorem"
+  },
+  {
+   "mutation": "N8 build failure ignored",
+   "file": "godshand/leancheck.py",
+   "find": "    if proc.returncode != 0:\n        return reject(\"build_failed\"",
+   "replace": "    if False:\n        return reject(\"build_failed\"",
+   "tests": "does_not_build"
+  },
+  {
+   "mutation": "R1 refutation exemption removed",
+   "file": "tools/leancheck/Main.lean",
+   "find": "if xs.isEmpty || conclusion.isConstOf ``False then",
+   "replace": "if xs.isEmpty then",
+   "tests": "refute or witness_is_required"
+  },
+  {
+   "mutation": "D1 differential never compares",
+   "file": "godshand/differential.py",
+   "find": "                    if want != got:\n",
+   "replace": "                    if False:\n",
+   "tests": "planted or capped"
+  },
+  {
+   "mutation": "D2 durability rule always true",
+   "file": "godshand/optcheck.py",
+   "find": "durable = (mode == \"wal\" and sync >= 2) or (mode in ROLLBACK_MODES and sync >= 3)",
+   "replace": "durable = True",
+   "tests": "wal_normal or durable_baseline"
+  },
+  {
+   "mutation": "D3 undeclared drop ignored",
+   "file": "godshand/optcheck.py",
+   "find": "    if undeclared:\n",
+   "replace": "    if False:\n",
+   "tests": "wal_normal"
+  },
+  {
+   "mutation": "D4 unproved compensation ignored",
+   "file": "godshand/optcheck.py",
+   "find": "                if not v[\"accepted\"]:\n",
+   "replace": "                if False:\n",
+   "tests": "without_a_locked_spec or three_ways"
+  },
+  {
+   "mutation": "D5 server answers balance wrongly",
+   "file": "reference/ledger/server.py",
+   "find": "return self._send(200, ledger.balance(party))",
+   "replace": "return self._send(200, ledger.open_bills(party))",
+   "tests": "http_api"
+  },
+  {
+   "mutation": "D6 money validation off",
+   "file": "reference/ledger/store.py",
+   "find": "if type(value) is not int or value <= 0:",
+   "replace": "if value is None:",
+   "tests": "money"
+  },
+  {
+   "mutation": "D8 percentile rank rounded down",
+   "file": "bench/loadgen.py",
+   "find": "rank = max(1, -(-len(sorted_ns) * q // 100))",
+   "replace": "rank = max(1, len(sorted_ns) * q // 100)",
+   "tests": "percentile"
+  },
+  {
+   "mutation": "D9 errors counted as successes",
+   "file": "bench/loadgen.py",
+   "find": "ok = sorted(s.ns for s in group if 200 <= s.status < 300)",
+   "replace": "ok = sorted(s.ns for s in group)",
+   "tests": "only_2xx"
+  },
+  {
+   "mutation": "D7 Nagle left on",
+   "file": "reference/ledger/server.py",
+   "find": "        disable_nagle_algorithm = nodelay\n",
+   "replace": "        disable_nagle_algorithm = False\n",
+   "tests": "nagle"
+  }
+ ]
+}

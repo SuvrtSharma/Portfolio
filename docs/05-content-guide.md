@@ -146,3 +146,30 @@ To publish a post:
 **Drafts** (`draft: true`) appear under `npm run dev` with a "Draft" badge and
 are excluded from production builds — no route, no sitemap entry. Delete the
 flag when the post is ready to go live.
+
+**Screenshots** go in `public/blog/<topic>/` and are written as Markdown images,
+`![What it shows](/blog/<topic>/name.png)`. Each one renders framed, with its alt
+text as a caption, and opens full size on click, so wide terminal captures stay
+readable.
+
+## Results dashboards
+
+Measured results live at `/results`, one dashboard per experiment (see
+[ADR-16](./03-decisions.md#adr-16--results-dashboards-read-raw-evidence-at-build-time-one-route-per-view)).
+
+- **Metadata:** `src/content/results.ts`, with the same `draft` rule as posts.
+- **The evidence files:** `public/results/<slug>/`, copied by a script that
+  records their hashes. For God's Hand:
+
+  ```bash
+  node scripts/results/sync-gods-hand.mjs "D:\God's Hand"
+  ```
+
+  Commit the God's Hand repository first. The script records its commit, and
+  whether any copied file had uncommitted changes.
+- **The dashboard:** `src/features/results/<slug>/`, registered in
+  `src/features/results/registry.ts`.
+
+To publish a new run of God's Hand, change `RUN` in the sync script, run it, and
+rebuild. Every figure, chart and hash check updates from the new files. Nothing
+on the dashboard is typed in by hand.

@@ -1,0 +1,20 @@
+{
+  "repository": "God's Hand (private)",
+  "commit": "a051f52c5002c7bfa7b93588d3230674d6297fe9",
+  "uncommitted_changes": [],
+  "run": "20261114T210922Z",
+  "copied_by": "node scripts/results/sync-gods-hand.mjs",
+  "files": {
+    "evidence/20261114T210922Z/benchmark.json": "c4aa7b263aeb997efc2a1607c5f0430c413a43c6298a98bf4d7966abd17fed41",
+    "evidence/20261114T210922Z/verdicts.json": "462f6c1bc38bf858f12d54f6af2100020b1702bf1aabda0a2efea121dc379356",
+    "evidence/20261114T210922Z/tests.xml": "f6a1f6492fe6e31fec6f0f459c1dcd49b9bedceef4a8bfb63225cd0ff23aef71",
+    "evidence/20261114T210922Z/manifest.json": "313754acf26d947891dac2cb1d800437d6668e1eee29c317c39f4ad2eadb25a0",
+    "evidence/prove-2026-11-15.json": "20eb707d1f2dfc3148bfac9c48f024f3cf34dd6a56c3523ef93c6a835d1f87aa",
+    "evidence/mutations-2026-11-15.json": "0f8041d13483ccbdc551526d46f4934c070f655aaba1eddbaa4efa1666ab79e2",
+    "evidence/claims-catalog.json": "da94aa154615f4e574d94dae08ff495fc0f1dca0a9e8a5d1f3c3e99a818a577a",
+    "evidence/findings.json": "e8737faac5776e0721b21f866f0827ed62fdcea0d6459b6e419f54ee98f532e7",
+    "evidence/nagle-experiment-2026-11-07.txt": "f7d99b3955e6a16a8547f432c48c9c44916926e070dbba432ee324787cd3bcd1",
+    "evidence/fsync-probe-2026-11-07.txt": "7c140e65d071b3acea27fa739c659b122b0b96d783ddb0c8cf28dcbcb3253fbf",
+    "evidence/20261107T090049Z/benchmark.json": "9216e47e786b81ffd19715349c1f8434e34e85f3acaf42bfea9a214928e2a390"
+  }
+}

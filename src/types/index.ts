@@ -31,3 +31,4 @@ export type {
   ThemeVocabulary,
 } from "./theme";
 export type { IWorldDataProvider } from "./data-provider";
+export type { ResultSet, ResultSource } from "./results";

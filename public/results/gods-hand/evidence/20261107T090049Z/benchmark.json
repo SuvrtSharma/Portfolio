@@ -1,0 +1,3128 @@
+{
+  "run_id": "20261107T090049Z",
+  "started_at": "2026-11-07T09:00:49+00:00",
+  "expires": "2027-02-05",
+  "git": {
+    "commit": "91552918cf557b48d119380be3e8de975e7b0a9b",
+    "dirty": true,
+    "dirty_files": [
+      "M bench/loadgen.py",
+      " M bench/run.py",
+      " M docs/adr/0019-reference-ledger-api.md",
+      " M docs/adr/README.md",
+      " M godshand/differential.py",
+      "?? .dockerignore",
+      "?? bench/docker_run.py",
+      "?? bench/verdicts.py",
+      "?? dashboard/",
+      "?? docker/",
+      "?? docs/adr/0021-isolated-environment-wsl-docker.md",
+      "?? evidence/"
+    ]
+  },
+  "environment": {
+    "host": "WSL2 6.18.54.1-microsoft-standard-WSL2",
+    "cpu_model": "Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz",
+    "vm_cpus": 8,
+    "vm_memory_kib": 3897028,
+    "docker": "29.9.3",
+    "images": {
+      "godshand/ledger:dev": "sha256:10f467fed2aee04cdade8f887b9dd2be09bdd36dc2b24c97772d2ca24c16bdc8",
+      "godshand/checker:dev": "sha256:f03bcd054c10904d3496278982a521f01316a90919fc1f17476c40d470f00af2"
+    },
+    "container_python_sqlite": "3.14.10 3.46.1",
+    "server_cpuset": "0-3",
+    "client_cpuset": "4-7",
+    "storage": "named Docker volume (ext4 in the WSL2 VM)"
+  },
+  "baseline_config": {
+    "connection_per_request": true,
+    "journal_mode": "DELETE",
+    "synchronous": "EXTRA",
+    "index_party": false,
+    "cached_balance": false,
+    "settle_scan_cap": null
+  },
+  "load": {
+    "threads": 8,
+    "seconds": 20.0,
+    "reps": 3,
+    "warmup_seconds": 3.0,
+    "parties": 200,
+    "bills_per_party": 100
+  },
+  "tests": {
+    "exit_code": 0,
+    "summary": "50 passed, 2 skipped in 282.97s (0:04:42)"
+  },
+  "runs": [
+    {
+      "label": "baseline",
+      "config_changes": {},
+      "warmup": {
+        "seconds": 3.112254020000023,
+        "ok": 402
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 3355,
+            "ok": 3355,
+            "errors": 0,
+            "throughput_rps": 167.4,
+            "p50_ms": 47.987,
+            "p95_ms": 82.699,
+            "p99_ms": 148.026,
+            "max_ms": 531.291,
+            "latency_histogram_log2_us": {
+              "10": 290,
+              "11": 67,
+              "12": 52,
+              "13": 52,
+              "14": 18,
+              "15": 2536,
+              "16": 289,
+              "17": 47,
+              "18": 3,
+              "19": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1442,
+              "ok": 1442,
+              "errors": 0,
+              "throughput_rps": 71.9,
+              "p50_ms": 44.571,
+              "p95_ms": 78.182,
+              "p99_ms": 147.948,
+              "max_ms": 272.037,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 1344,
+                "16": 81,
+                "17": 14,
+                "18": 2
+              }
+            },
+            "open_bills": {
+              "requests": 502,
+              "ok": 502,
+              "errors": 0,
+              "throughput_rps": 25.0,
+              "p50_ms": 1.85,
+              "p95_ms": 22.85,
+              "p99_ms": 80.936,
+              "max_ms": 531.291,
+              "latency_histogram_log2_us": {
+                "10": 290,
+                "11": 67,
+                "12": 52,
+                "13": 51,
+                "14": 17,
+                "15": 17,
+                "16": 5,
+                "17": 2,
+                "19": 1
+              }
+            },
+            "bill": {
+              "requests": 673,
+              "ok": 673,
+              "errors": 0,
+              "throughput_rps": 33.6,
+              "p50_ms": 51.957,
+              "p95_ms": 99.51,
+              "p99_ms": 140.488,
+              "max_ms": 338.971,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 555,
+                "16": 103,
+                "17": 13,
+                "18": 1
+              }
+            },
+            "payment": {
+              "requests": 738,
+              "ok": 738,
+              "errors": 0,
+              "throughput_rps": 36.8,
+              "p50_ms": 51.983,
+              "p95_ms": 96.021,
+              "p99_ms": 155.99,
+              "max_ms": 228.288,
+              "latency_histogram_log2_us": {
+                "15": 620,
+                "16": 100,
+                "17": 18
+              }
+            }
+          },
+          "status_counts": {
+            "200": 1944,
+            "201": 1411
+          },
+          "ok_per_second": [
+            137,
+            145,
+            122,
+            130,
+            125,
+            183,
+            173,
+            173,
+            179,
+            201,
+            183,
+            174,
+            183,
+            182,
+            182,
+            175,
+            172,
+            181,
+            171,
+            184,
+            0
+          ],
+          "seconds": 20.04311213299991,
+          "samples_file": "baseline-rep1.csv.gz",
+          "samples_sha256": "33035fd6ea7daf7956ceabb3d14889a1c523345551a6d23dd8758bbdb65c2cc5"
+        },
+        {
+          "overall": {
+            "requests": 3482,
+            "ok": 3482,
+            "errors": 0,
+            "throughput_rps": 173.6,
+            "p50_ms": 47.967,
+            "p95_ms": 75.591,
+            "p99_ms": 127.82,
+            "max_ms": 619.377,
+            "latency_histogram_log2_us": {
+              "10": 270,
+              "11": 90,
+              "12": 80,
+              "13": 41,
+              "14": 34,
+              "15": 2693,
+              "16": 250,
+              "17": 21,
+              "18": 2,
+              "19": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1576,
+              "ok": 1576,
+              "errors": 0,
+              "throughput_rps": 78.6,
+              "p50_ms": 44.349,
+              "p95_ms": 64.612,
+              "p99_ms": 123.863,
+              "max_ms": 375.732,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "14": 1,
+                "15": 1496,
+                "16": 68,
+                "17": 8,
+                "18": 1
+              }
+            },
+            "open_bills": {
+              "requests": 538,
+              "ok": 538,
+              "errors": 0,
+              "throughput_rps": 26.8,
+              "p50_ms": 2.039,
+              "p95_ms": 34.606,
+              "p99_ms": 56.11,
+              "max_ms": 181.31,
+              "latency_histogram_log2_us": {
+                "10": 270,
+                "11": 90,
+                "12": 80,
+                "13": 39,
+                "14": 32,
+                "15": 24,
+                "16": 2,
+                "17": 1
+              }
+            },
+            "bill": {
+              "requests": 670,
+              "ok": 670,
+              "errors": 0,
+              "throughput_rps": 33.4,
+              "p50_ms": 51.929,
+              "p95_ms": 83.851,
+              "p99_ms": 139.842,
+              "max_ms": 295.874,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 587,
+                "16": 75,
+                "17": 6,
+                "18": 1
+              }
+            },
+            "payment": {
+              "requests": 698,
+              "ok": 698,
+              "errors": 0,
+              "throughput_rps": 34.8,
+              "p50_ms": 52.006,
+              "p95_ms": 101.571,
+              "p99_ms": 131.645,
+              "max_ms": 619.377,
+              "latency_histogram_log2_us": {
+                "15": 586,
+                "16": 105,
+                "17": 6,
+                "19": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2114,
+            "201": 1368
+          },
+          "ok_per_second": [
+            182,
+            182,
+            177,
+            185,
+            172,
+            191,
+            181,
+            187,
+            177,
+            181,
+            176,
+            184,
+            182,
+            181,
+            183,
+            191,
+            154,
+            144,
+            146,
+            126,
+            0
+          ],
+          "seconds": 20.062356404999946,
+          "samples_file": "baseline-rep2.csv.gz",
+          "samples_sha256": "9aad354ff9a96cf8f8b5a8b990675f958d4b901095653d7d9429906c4adb972f"
+        },
+        {
+          "overall": {
+            "requests": 2575,
+            "ok": 2575,
+            "errors": 0,
+            "throughput_rps": 128.3,
+            "p50_ms": 51.946,
+            "p95_ms": 129.757,
+            "p99_ms": 275.995,
+            "max_ms": 973.898,
+            "latency_histogram_log2_us": {
+              "10": 129,
+              "11": 48,
+              "12": 38,
+              "13": 48,
+              "14": 52,
+              "15": 1514,
+              "16": 620,
+              "17": 95,
+              "18": 25,
+              "19": 6
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1135,
+              "ok": 1135,
+              "errors": 0,
+              "throughput_rps": 56.6,
+              "p50_ms": 47.979,
+              "p95_ms": 121.686,
+              "p99_ms": 271.734,
+              "max_ms": 973.898,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 936,
+                "16": 162,
+                "17": 24,
+                "18": 10,
+                "19": 2
+              }
+            },
+            "open_bills": {
+              "requests": 380,
+              "ok": 380,
+              "errors": 0,
+              "throughput_rps": 18.9,
+              "p50_ms": 4.749,
+              "p95_ms": 80.399,
+              "p99_ms": 230.965,
+              "max_ms": 430.69,
+              "latency_histogram_log2_us": {
+                "10": 129,
+                "11": 48,
+                "12": 38,
+                "13": 47,
+                "14": 51,
+                "15": 39,
+                "16": 21,
+                "17": 6,
+                "18": 1
+              }
+            },
+            "bill": {
+              "requests": 533,
+              "ok": 533,
+              "errors": 0,
+              "throughput_rps": 26.6,
+              "p50_ms": 64.014,
+              "p95_ms": 155.873,
+              "p99_ms": 291.949,
+              "max_ms": 704.015,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 289,
+                "16": 204,
+                "17": 31,
+                "18": 5,
+                "19": 3
+              }
+            },
+            "payment": {
+              "requests": 527,
+              "ok": 527,
+              "errors": 0,
+              "throughput_rps": 26.3,
+              "p50_ms": 67.862,
+              "p95_ms": 159.922,
+              "p99_ms": 295.753,
+              "max_ms": 595.807,
+              "latency_histogram_log2_us": {
+                "15": 250,
+                "16": 233,
+                "17": 34,
+                "18": 9,
+                "19": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 1515,
+            "201": 1060
+          },
+          "ok_per_second": [
+            120,
+            129,
+            129,
+            118,
+            103,
+            129,
+            128,
+            125,
+            109,
+            114,
+            123,
+            127,
+            143,
+            128,
+            135,
+            138,
+            143,
+            143,
+            160,
+            131,
+            0
+          ],
+          "seconds": 20.067891719000045,
+          "samples_file": "baseline-rep3.csv.gz",
+          "samples_sha256": "47a92af66c41e69db28cbc18f9570752c2cbbd17c1a1b6a927d32bdf940f6896"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-CACHED-BALANCE",
+      "config_changes": {
+        "cached_balance": true
+      },
+      "warmup": {
+        "seconds": 3.042931655000075,
+        "ok": 375
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 1264,
+            "ok": 1264,
+            "errors": 0,
+            "throughput_rps": 61.9,
+            "p50_ms": 75.94,
+            "p95_ms": 375.463,
+            "p99_ms": 1271.923,
+            "max_ms": 2723.841,
+            "latency_histogram_log2_us": {
+              "10": 48,
+              "11": 20,
+              "12": 12,
+              "13": 11,
+              "14": 15,
+              "15": 436,
+              "16": 435,
+              "17": 191,
+              "18": 51,
+              "19": 27,
+              "20": 16,
+              "21": 2
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 539,
+              "ok": 539,
+              "errors": 0,
+              "throughput_rps": 26.4,
+              "p50_ms": 59.81,
+              "p95_ms": 371.854,
+              "p99_ms": 1271.923,
+              "max_ms": 1871.954,
+              "latency_histogram_log2_us": {
+                "15": 322,
+                "16": 129,
+                "17": 49,
+                "18": 22,
+                "19": 8,
+                "20": 9
+              }
+            },
+            "open_bills": {
+              "requests": 185,
+              "ok": 185,
+              "errors": 0,
+              "throughput_rps": 9.1,
+              "p50_ms": 19.74,
+              "p95_ms": 230.734,
+              "p99_ms": 831.432,
+              "max_ms": 1531.91,
+              "latency_histogram_log2_us": {
+                "10": 48,
+                "11": 20,
+                "12": 12,
+                "13": 11,
+                "14": 15,
+                "15": 39,
+                "16": 23,
+                "17": 9,
+                "18": 3,
+                "19": 4,
+                "20": 1
+              }
+            },
+            "bill": {
+              "requests": 264,
+              "ok": 264,
+              "errors": 0,
+              "throughput_rps": 12.9,
+              "p50_ms": 95.927,
+              "p95_ms": 508.847,
+              "p99_ms": 1495.675,
+              "max_ms": 2723.841,
+              "latency_histogram_log2_us": {
+                "15": 43,
+                "16": 134,
+                "17": 61,
+                "18": 14,
+                "19": 7,
+                "20": 4,
+                "21": 1
+              }
+            },
+            "payment": {
+              "requests": 276,
+              "ok": 276,
+              "errors": 0,
+              "throughput_rps": 13.5,
+              "p50_ms": 96.03,
+              "p95_ms": 416.059,
+              "p99_ms": 1272.295,
+              "max_ms": 2643.973,
+              "latency_histogram_log2_us": {
+                "15": 32,
+                "16": 149,
+                "17": 72,
+                "18": 12,
+                "19": 8,
+                "20": 2,
+                "21": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 724,
+            "201": 540
+          },
+          "ok_per_second": [
+            109,
+            118,
+            63,
+            69,
+            48,
+            56,
+            69,
+            71,
+            50,
+            44,
+            44,
+            58,
+            72,
+            57,
+            71,
+            61,
+            63,
+            58,
+            46,
+            37,
+            0
+          ],
+          "seconds": 20.426957646999995,
+          "samples_file": "OPT-CACHED-BALANCE-rep1.csv.gz",
+          "samples_sha256": "bffcb6bd90101f9e53528cd3e7fdb94f2dfdd36b298bf02c839363010afda4a9"
+        },
+        {
+          "overall": {
+            "requests": 1294,
+            "ok": 1294,
+            "errors": 0,
+            "throughput_rps": 64.5,
+            "p50_ms": 50.55,
+            "p95_ms": 372.319,
+            "p99_ms": 1619.931,
+            "max_ms": 3652.107,
+            "latency_histogram_log2_us": {
+              "10": 88,
+              "11": 27,
+              "12": 20,
+              "13": 18,
+              "14": 8,
+              "15": 761,
+              "16": 173,
+              "17": 104,
+              "18": 42,
+              "19": 24,
+              "20": 19,
+              "21": 10
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 550,
+              "ok": 550,
+              "errors": 0,
+              "throughput_rps": 27.4,
+              "p50_ms": 46.756,
+              "p95_ms": 223.722,
+              "p99_ms": 1272.011,
+              "max_ms": 3475.328,
+              "latency_histogram_log2_us": {
+                "11": 1,
+                "13": 2,
+                "15": 427,
+                "16": 78,
+                "17": 18,
+                "18": 11,
+                "19": 3,
+                "20": 6,
+                "21": 4
+              }
+            },
+            "open_bills": {
+              "requests": 209,
+              "ok": 209,
+              "errors": 0,
+              "throughput_rps": 10.4,
+              "p50_ms": 2.702,
+              "p95_ms": 231.449,
+              "p99_ms": 1433.121,
+              "max_ms": 1534.276,
+              "latency_histogram_log2_us": {
+                "10": 88,
+                "11": 26,
+                "12": 20,
+                "13": 16,
+                "14": 8,
+                "15": 29,
+                "16": 5,
+                "17": 9,
+                "18": 2,
+                "19": 2,
+                "20": 4
+              }
+            },
+            "bill": {
+              "requests": 260,
+              "ok": 260,
+              "errors": 0,
+              "throughput_rps": 13.0,
+              "p50_ms": 55.957,
+              "p95_ms": 539.542,
+              "p99_ms": 2072.143,
+              "max_ms": 3159.722,
+              "latency_histogram_log2_us": {
+                "15": 151,
+                "16": 46,
+                "17": 34,
+                "18": 14,
+                "19": 10,
+                "20": 3,
+                "21": 2
+              }
+            },
+            "payment": {
+              "requests": 275,
+              "ok": 275,
+              "errors": 0,
+              "throughput_rps": 13.7,
+              "p50_ms": 59.954,
+              "p95_ms": 744.284,
+              "p99_ms": 2359.692,
+              "max_ms": 3652.107,
+              "latency_histogram_log2_us": {
+                "15": 154,
+                "16": 44,
+                "17": 43,
+                "18": 15,
+                "19": 9,
+                "20": 6,
+                "21": 4
+              }
+            }
+          },
+          "status_counts": {
+            "200": 759,
+            "201": 535
+          },
+          "ok_per_second": [
+            47,
+            38,
+            19,
+            27,
+            33,
+            36,
+            16,
+            24,
+            32,
+            38,
+            28,
+            35,
+            30,
+            22,
+            28,
+            114,
+            181,
+            186,
+            177,
+            183,
+            0
+          ],
+          "seconds": 20.04676706300006,
+          "samples_file": "OPT-CACHED-BALANCE-rep2.csv.gz",
+          "samples_sha256": "f55d806b140fdf8fdc165b793b3ded34f1a38d3eceedb106c3158d6dc81644ec"
+        },
+        {
+          "overall": {
+            "requests": 3679,
+            "ok": 3679,
+            "errors": 0,
+            "throughput_rps": 183.6,
+            "p50_ms": 47.94,
+            "p95_ms": 63.956,
+            "p99_ms": 88.486,
+            "max_ms": 228.128,
+            "latency_histogram_log2_us": {
+              "10": 349,
+              "11": 53,
+              "12": 81,
+              "13": 46,
+              "14": 11,
+              "15": 2973,
+              "16": 160,
+              "17": 6
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1633,
+              "ok": 1633,
+              "errors": 0,
+              "throughput_rps": 81.5,
+              "p50_ms": 44.121,
+              "p95_ms": 56.01,
+              "p99_ms": 75.956,
+              "max_ms": 123.982,
+              "latency_histogram_log2_us": {
+                "12": 2,
+                "15": 1598,
+                "16": 33
+              }
+            },
+            "open_bills": {
+              "requests": 544,
+              "ok": 544,
+              "errors": 0,
+              "throughput_rps": 27.1,
+              "p50_ms": 1.69,
+              "p95_ms": 10.343,
+              "p99_ms": 34.828,
+              "max_ms": 80.33,
+              "latency_histogram_log2_us": {
+                "10": 349,
+                "11": 53,
+                "12": 79,
+                "13": 46,
+                "14": 8,
+                "15": 7,
+                "16": 2
+              }
+            },
+            "bill": {
+              "requests": 753,
+              "ok": 753,
+              "errors": 0,
+              "throughput_rps": 37.6,
+              "p50_ms": 51.594,
+              "p95_ms": 71.915,
+              "p99_ms": 103.791,
+              "max_ms": 228.128,
+              "latency_histogram_log2_us": {
+                "14": 3,
+                "15": 689,
+                "16": 57,
+                "17": 4
+              }
+            },
+            "payment": {
+              "requests": 749,
+              "ok": 749,
+              "errors": 0,
+              "throughput_rps": 37.4,
+              "p50_ms": 51.962,
+              "p95_ms": 72.135,
+              "p99_ms": 104.015,
+              "max_ms": 159.967,
+              "latency_histogram_log2_us": {
+                "15": 679,
+                "16": 68,
+                "17": 2
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2177,
+            "201": 1502
+          },
+          "ok_per_second": [
+            183,
+            194,
+            179,
+            180,
+            183,
+            175,
+            180,
+            188,
+            192,
+            174,
+            181,
+            180,
+            190,
+            190,
+            184,
+            187,
+            180,
+            194,
+            176,
+            189,
+            0
+          ],
+          "seconds": 20.040923566999936,
+          "samples_file": "OPT-CACHED-BALANCE-rep3.csv.gz",
+          "samples_sha256": "91b7946f5fbef62120044f75c5f72ba1aab98de6028324bcef71d814b84dde22"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-CAP-SETTLE-SCAN",
+      "config_changes": {
+        "settle_scan_cap": 20
+      },
+      "warmup": {
+        "seconds": 3.0325152479999815,
+        "ok": 515
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 3691,
+            "ok": 3691,
+            "errors": 0,
+            "throughput_rps": 184.1,
+            "p50_ms": 47.957,
+            "p95_ms": 62.158,
+            "p99_ms": 88.434,
+            "max_ms": 178.097,
+            "latency_histogram_log2_us": {
+              "10": 344,
+              "11": 68,
+              "12": 71,
+              "13": 45,
+              "14": 18,
+              "15": 3001,
+              "16": 142,
+              "17": 2
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1596,
+              "ok": 1596,
+              "errors": 0,
+              "throughput_rps": 79.6,
+              "p50_ms": 44.16,
+              "p95_ms": 56.34,
+              "p99_ms": 95.943,
+              "max_ms": 126.465,
+              "latency_histogram_log2_us": {
+                "14": 2,
+                "15": 1559,
+                "16": 35
+              }
+            },
+            "open_bills": {
+              "requests": 549,
+              "ok": 549,
+              "errors": 0,
+              "throughput_rps": 27.4,
+              "p50_ms": 1.684,
+              "p95_ms": 10.59,
+              "p99_ms": 35.349,
+              "max_ms": 82.327,
+              "latency_histogram_log2_us": {
+                "10": 344,
+                "11": 68,
+                "12": 71,
+                "13": 45,
+                "14": 15,
+                "15": 5,
+                "16": 1
+              }
+            },
+            "bill": {
+              "requests": 733,
+              "ok": 733,
+              "errors": 0,
+              "throughput_rps": 36.6,
+              "p50_ms": 51.727,
+              "p95_ms": 67.7,
+              "p99_ms": 83.964,
+              "max_ms": 132.086,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 691,
+                "16": 40,
+                "17": 1
+              }
+            },
+            "payment": {
+              "requests": 813,
+              "ok": 813,
+              "errors": 0,
+              "throughput_rps": 40.6,
+              "p50_ms": 51.868,
+              "p95_ms": 71.938,
+              "p99_ms": 103.941,
+              "max_ms": 178.097,
+              "latency_histogram_log2_us": {
+                "15": 746,
+                "16": 66,
+                "17": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2145,
+            "201": 1546
+          },
+          "ok_per_second": [
+            184,
+            187,
+            183,
+            187,
+            183,
+            186,
+            184,
+            193,
+            195,
+            175,
+            181,
+            196,
+            181,
+            177,
+            196,
+            177,
+            182,
+            180,
+            188,
+            176,
+            0
+          ],
+          "seconds": 20.043509137,
+          "samples_file": "OPT-CAP-SETTLE-SCAN-rep1.csv.gz",
+          "samples_sha256": "804a88b3fe094a4120680fc8b59c241a710f324edd23c12dae59f1b0f232b584"
+        },
+        {
+          "overall": {
+            "requests": 3686,
+            "ok": 3686,
+            "errors": 0,
+            "throughput_rps": 184.0,
+            "p50_ms": 47.942,
+            "p95_ms": 63.666,
+            "p99_ms": 96.449,
+            "max_ms": 230.138,
+            "latency_histogram_log2_us": {
+              "10": 313,
+              "11": 87,
+              "12": 88,
+              "13": 52,
+              "14": 15,
+              "15": 2981,
+              "16": 146,
+              "17": 4
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1671,
+              "ok": 1671,
+              "errors": 0,
+              "throughput_rps": 83.4,
+              "p50_ms": 44.153,
+              "p95_ms": 54.73,
+              "p99_ms": 79.163,
+              "max_ms": 121.15,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1640,
+                "16": 29
+              }
+            },
+            "open_bills": {
+              "requests": 569,
+              "ok": 569,
+              "errors": 0,
+              "throughput_rps": 28.4,
+              "p50_ms": 1.857,
+              "p95_ms": 18.416,
+              "p99_ms": 55.683,
+              "max_ms": 230.138,
+              "latency_histogram_log2_us": {
+                "10": 313,
+                "11": 87,
+                "12": 88,
+                "13": 50,
+                "14": 15,
+                "15": 14,
+                "16": 1,
+                "17": 1
+              }
+            },
+            "bill": {
+              "requests": 712,
+              "ok": 712,
+              "errors": 0,
+              "throughput_rps": 35.5,
+              "p50_ms": 51.882,
+              "p95_ms": 72.09,
+              "p99_ms": 107.765,
+              "max_ms": 227.839,
+              "latency_histogram_log2_us": {
+                "15": 648,
+                "16": 63,
+                "17": 1
+              }
+            },
+            "payment": {
+              "requests": 734,
+              "ok": 734,
+              "errors": 0,
+              "throughput_rps": 36.6,
+              "p50_ms": 51.952,
+              "p95_ms": 71.853,
+              "p99_ms": 103.933,
+              "max_ms": 156.11,
+              "latency_histogram_log2_us": {
+                "15": 679,
+                "16": 53,
+                "17": 2
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2240,
+            "201": 1446
+          },
+          "ok_per_second": [
+            187,
+            187,
+            178,
+            189,
+            177,
+            192,
+            183,
+            185,
+            184,
+            175,
+            177,
+            188,
+            180,
+            178,
+            193,
+            187,
+            176,
+            186,
+            197,
+            187,
+            0
+          ],
+          "seconds": 20.035479696999914,
+          "samples_file": "OPT-CAP-SETTLE-SCAN-rep2.csv.gz",
+          "samples_sha256": "22e9700c9093748687e0505716314e3b6869ac5b722b4faa4698d1b67e858030"
+        },
+        {
+          "overall": {
+            "requests": 3624,
+            "ok": 3624,
+            "errors": 0,
+            "throughput_rps": 180.7,
+            "p50_ms": 47.959,
+            "p95_ms": 65.912,
+            "p99_ms": 103.835,
+            "max_ms": 278.449,
+            "latency_histogram_log2_us": {
+              "10": 344,
+              "11": 70,
+              "12": 73,
+              "13": 30,
+              "14": 12,
+              "15": 2911,
+              "16": 167,
+              "17": 15,
+              "18": 2
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1607,
+              "ok": 1607,
+              "errors": 0,
+              "throughput_rps": 80.1,
+              "p50_ms": 44.27,
+              "p95_ms": 60.005,
+              "p99_ms": 95.989,
+              "max_ms": 274.338,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1567,
+                "16": 30,
+                "17": 7,
+                "18": 1
+              }
+            },
+            "open_bills": {
+              "requests": 535,
+              "ok": 535,
+              "errors": 0,
+              "throughput_rps": 26.7,
+              "p50_ms": 1.729,
+              "p95_ms": 10.271,
+              "p99_ms": 35.363,
+              "max_ms": 130.489,
+              "latency_histogram_log2_us": {
+                "10": 344,
+                "11": 70,
+                "12": 73,
+                "13": 28,
+                "14": 11,
+                "15": 8,
+                "16": 1
+              }
+            },
+            "bill": {
+              "requests": 743,
+              "ok": 743,
+              "errors": 0,
+              "throughput_rps": 37.0,
+              "p50_ms": 51.753,
+              "p95_ms": 71.991,
+              "p99_ms": 104.099,
+              "max_ms": 278.449,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 671,
+                "16": 68,
+                "17": 2,
+                "18": 1
+              }
+            },
+            "payment": {
+              "requests": 739,
+              "ok": 739,
+              "errors": 0,
+              "throughput_rps": 36.8,
+              "p50_ms": 51.899,
+              "p95_ms": 75.95,
+              "p99_ms": 127.983,
+              "max_ms": 231.897,
+              "latency_histogram_log2_us": {
+                "15": 665,
+                "16": 68,
+                "17": 6
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2142,
+            "201": 1482
+          },
+          "ok_per_second": [
+            168,
+            192,
+            180,
+            183,
+            185,
+            178,
+            182,
+            186,
+            191,
+            176,
+            175,
+            185,
+            179,
+            181,
+            174,
+            179,
+            186,
+            184,
+            172,
+            188,
+            0
+          ],
+          "seconds": 20.058490126000038,
+          "samples_file": "OPT-CAP-SETTLE-SCAN-rep3.csv.gz",
+          "samples_sha256": "666756b779ce8e88068acce88b73c69f5bd7e5997fd05c51113953cc8513c755"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-INDEX-PARTY",
+      "config_changes": {
+        "index_party": true
+      },
+      "warmup": {
+        "seconds": 3.045604446000084,
+        "ok": 552
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 2703,
+            "ok": 2703,
+            "errors": 0,
+            "throughput_rps": 134.9,
+            "p50_ms": 51.79,
+            "p95_ms": 127.917,
+            "p99_ms": 230.391,
+            "max_ms": 779.688,
+            "latency_histogram_log2_us": {
+              "9": 100,
+              "10": 77,
+              "11": 33,
+              "12": 51,
+              "13": 46,
+              "14": 52,
+              "15": 1635,
+              "16": 580,
+              "17": 109,
+              "18": 15,
+              "19": 5
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1137,
+              "ok": 1137,
+              "errors": 0,
+              "throughput_rps": 56.8,
+              "p50_ms": 47.954,
+              "p95_ms": 120.647,
+              "p99_ms": 271.936,
+              "max_ms": 772.038,
+              "latency_histogram_log2_us": {
+                "14": 2,
+                "15": 952,
+                "16": 142,
+                "17": 27,
+                "18": 11,
+                "19": 3
+              }
+            },
+            "open_bills": {
+              "requests": 416,
+              "ok": 416,
+              "errors": 0,
+              "throughput_rps": 20.8,
+              "p50_ms": 3.836,
+              "p95_ms": 55.174,
+              "p99_ms": 130.082,
+              "max_ms": 729.986,
+              "latency_histogram_log2_us": {
+                "9": 100,
+                "10": 77,
+                "11": 33,
+                "12": 51,
+                "13": 46,
+                "14": 49,
+                "15": 41,
+                "16": 15,
+                "17": 3,
+                "19": 1
+              }
+            },
+            "bill": {
+              "requests": 559,
+              "ok": 559,
+              "errors": 0,
+              "throughput_rps": 27.9,
+              "p50_ms": 63.773,
+              "p95_ms": 148.03,
+              "p99_ms": 227.956,
+              "max_ms": 779.688,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 328,
+                "16": 192,
+                "17": 35,
+                "18": 2,
+                "19": 1
+              }
+            },
+            "payment": {
+              "requests": 591,
+              "ok": 591,
+              "errors": 0,
+              "throughput_rps": 29.5,
+              "p50_ms": 63.993,
+              "p95_ms": 151.96,
+              "p99_ms": 239.929,
+              "max_ms": 291.905,
+              "latency_histogram_log2_us": {
+                "15": 314,
+                "16": 231,
+                "17": 44,
+                "18": 2
+              }
+            }
+          },
+          "status_counts": {
+            "200": 1553,
+            "201": 1150
+          },
+          "ok_per_second": [
+            183,
+            148,
+            127,
+            143,
+            132,
+            120,
+            120,
+            115,
+            122,
+            125,
+            142,
+            151,
+            142,
+            132,
+            132,
+            152,
+            132,
+            131,
+            127,
+            127,
+            0
+          ],
+          "seconds": 20.035000965999984,
+          "samples_file": "OPT-INDEX-PARTY-rep1.csv.gz",
+          "samples_sha256": "b5f1f559977f66600569d78ea57bd74b00ffffd9ae19b43b9039cef3c90b633e"
+        },
+        {
+          "overall": {
+            "requests": 3494,
+            "ok": 3494,
+            "errors": 0,
+            "throughput_rps": 174.3,
+            "p50_ms": 47.939,
+            "p95_ms": 75.617,
+            "p99_ms": 130.355,
+            "max_ms": 819.957,
+            "latency_histogram_log2_us": {
+              "9": 182,
+              "10": 164,
+              "11": 49,
+              "12": 63,
+              "13": 48,
+              "14": 21,
+              "15": 2715,
+              "16": 218,
+              "17": 27,
+              "18": 4,
+              "19": 3
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1583,
+              "ok": 1583,
+              "errors": 0,
+              "throughput_rps": 79.0,
+              "p50_ms": 44.205,
+              "p95_ms": 63.83,
+              "p99_ms": 123.901,
+              "max_ms": 572.114,
+              "latency_histogram_log2_us": {
+                "13": 3,
+                "15": 1513,
+                "16": 54,
+                "17": 11,
+                "19": 2
+              }
+            },
+            "open_bills": {
+              "requests": 539,
+              "ok": 539,
+              "errors": 0,
+              "throughput_rps": 26.9,
+              "p50_ms": 1.37,
+              "p95_ms": 19.566,
+              "p99_ms": 79.63,
+              "max_ms": 330.245,
+              "latency_histogram_log2_us": {
+                "9": 182,
+                "10": 164,
+                "11": 49,
+                "12": 63,
+                "13": 45,
+                "14": 20,
+                "15": 10,
+                "16": 5,
+                "18": 1
+              }
+            },
+            "bill": {
+              "requests": 672,
+              "ok": 672,
+              "errors": 0,
+              "throughput_rps": 33.5,
+              "p50_ms": 51.887,
+              "p95_ms": 87.819,
+              "p99_ms": 154.182,
+              "max_ms": 496.19,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 575,
+                "16": 87,
+                "17": 7,
+                "18": 2
+              }
+            },
+            "payment": {
+              "requests": 700,
+              "ok": 700,
+              "errors": 0,
+              "throughput_rps": 34.9,
+              "p50_ms": 51.934,
+              "p95_ms": 83.521,
+              "p99_ms": 152.171,
+              "max_ms": 819.957,
+              "latency_histogram_log2_us": {
+                "15": 617,
+                "16": 72,
+                "17": 9,
+                "18": 1,
+                "19": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2122,
+            "201": 1372
+          },
+          "ok_per_second": [
+            147,
+            123,
+            113,
+            143,
+            181,
+            185,
+            190,
+            179,
+            193,
+            174,
+            184,
+            179,
+            185,
+            186,
+            194,
+            189,
+            189,
+            185,
+            184,
+            191,
+            0
+          ],
+          "seconds": 20.042678550999995,
+          "samples_file": "OPT-INDEX-PARTY-rep2.csv.gz",
+          "samples_sha256": "9023067d019acc03b73b0af7f8b370276041f96910f4303654809e0d7ddd64e5"
+        },
+        {
+          "overall": {
+            "requests": 3485,
+            "ok": 3485,
+            "errors": 0,
+            "throughput_rps": 173.2,
+            "p50_ms": 47.952,
+            "p95_ms": 75.96,
+            "p99_ms": 119.956,
+            "max_ms": 674.647,
+            "latency_histogram_log2_us": {
+              "9": 183,
+              "10": 145,
+              "11": 40,
+              "12": 59,
+              "13": 46,
+              "14": 17,
+              "15": 2696,
+              "16": 274,
+              "17": 22,
+              "18": 1,
+              "19": 2
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1551,
+              "ok": 1551,
+              "errors": 0,
+              "throughput_rps": 77.1,
+              "p50_ms": 44.203,
+              "p95_ms": 64.655,
+              "p99_ms": 100.132,
+              "max_ms": 674.647,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1473,
+                "16": 68,
+                "17": 6,
+                "18": 1,
+                "19": 1
+              }
+            },
+            "open_bills": {
+              "requests": 507,
+              "ok": 507,
+              "errors": 0,
+              "throughput_rps": 25.2,
+              "p50_ms": 1.355,
+              "p95_ms": 19.78,
+              "p99_ms": 79.349,
+              "max_ms": 179.687,
+              "latency_histogram_log2_us": {
+                "9": 183,
+                "10": 145,
+                "11": 40,
+                "12": 59,
+                "13": 44,
+                "14": 14,
+                "15": 16,
+                "16": 5,
+                "17": 1
+              }
+            },
+            "bill": {
+              "requests": 716,
+              "ok": 716,
+              "errors": 0,
+              "throughput_rps": 35.6,
+              "p50_ms": 51.938,
+              "p95_ms": 83.977,
+              "p99_ms": 140.026,
+              "max_ms": 175.887,
+              "latency_histogram_log2_us": {
+                "14": 3,
+                "15": 607,
+                "16": 98,
+                "17": 8
+              }
+            },
+            "payment": {
+              "requests": 711,
+              "ok": 711,
+              "errors": 0,
+              "throughput_rps": 35.3,
+              "p50_ms": 51.939,
+              "p95_ms": 83.917,
+              "p99_ms": 131.57,
+              "max_ms": 607.415,
+              "latency_histogram_log2_us": {
+                "15": 600,
+                "16": 103,
+                "17": 7,
+                "19": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2058,
+            "201": 1427
+          },
+          "ok_per_second": [
+            187,
+            198,
+            183,
+            178,
+            179,
+            175,
+            188,
+            183,
+            193,
+            175,
+            177,
+            184,
+            196,
+            192,
+            174,
+            166,
+            129,
+            155,
+            135,
+            138,
+            0
+          ],
+          "seconds": 20.126034940000068,
+          "samples_file": "OPT-INDEX-PARTY-rep3.csv.gz",
+          "samples_sha256": "02543a1fa46029e509f87d3fa0c3ba9c4900129b4b41e5a8ed4e0df92a8144c2"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-REUSE-CONNECTION",
+      "config_changes": {
+        "connection_per_request": false
+      },
+      "warmup": {
+        "seconds": 3.104801135999992,
+        "ok": 377
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 2563,
+            "ok": 2563,
+            "errors": 0,
+            "throughput_rps": 127.0,
+            "p50_ms": 51.898,
+            "p95_ms": 144.132,
+            "p99_ms": 272.017,
+            "max_ms": 1398.647,
+            "latency_histogram_log2_us": {
+              "9": 7,
+              "10": 170,
+              "11": 32,
+              "12": 40,
+              "13": 47,
+              "14": 43,
+              "15": 1489,
+              "16": 587,
+              "17": 121,
+              "18": 17,
+              "19": 9,
+              "20": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1077,
+              "ok": 1077,
+              "errors": 0,
+              "throughput_rps": 53.4,
+              "p50_ms": 47.958,
+              "p95_ms": 120.305,
+              "p99_ms": 224.0,
+              "max_ms": 472.191,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 906,
+                "16": 127,
+                "17": 37,
+                "18": 5
+              }
+            },
+            "open_bills": {
+              "requests": 392,
+              "ok": 392,
+              "errors": 0,
+              "throughput_rps": 19.4,
+              "p50_ms": 2.425,
+              "p95_ms": 56.174,
+              "p99_ms": 130.037,
+              "max_ms": 230.611,
+              "latency_histogram_log2_us": {
+                "9": 7,
+                "10": 170,
+                "11": 32,
+                "12": 40,
+                "13": 45,
+                "14": 43,
+                "15": 38,
+                "16": 15,
+                "17": 2
+              }
+            },
+            "bill": {
+              "requests": 533,
+              "ok": 533,
+              "errors": 0,
+              "throughput_rps": 26.4,
+              "p50_ms": 64.027,
+              "p95_ms": 168.038,
+              "p99_ms": 577.449,
+              "max_ms": 996.21,
+              "latency_histogram_log2_us": {
+                "15": 287,
+                "16": 193,
+                "17": 42,
+                "18": 5,
+                "19": 6
+              }
+            },
+            "payment": {
+              "requests": 561,
+              "ok": 561,
+              "errors": 0,
+              "throughput_rps": 27.8,
+              "p50_ms": 67.856,
+              "p95_ms": 171.461,
+              "p99_ms": 395.957,
+              "max_ms": 1398.647,
+              "latency_histogram_log2_us": {
+                "15": 258,
+                "16": 252,
+                "17": 40,
+                "18": 7,
+                "19": 3,
+                "20": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 1469,
+            "201": 1094
+          },
+          "ok_per_second": [
+            129,
+            135,
+            113,
+            121,
+            119,
+            134,
+            123,
+            142,
+            130,
+            115,
+            135,
+            145,
+            132,
+            130,
+            130,
+            151,
+            132,
+            134,
+            104,
+            109,
+            0
+          ],
+          "seconds": 20.187395129999913,
+          "samples_file": "OPT-REUSE-CONNECTION-rep1.csv.gz",
+          "samples_sha256": "170bbd11dae864c269eeaa59a1a30b6bc744bca510fd9ece51da779b5bdfbf71"
+        },
+        {
+          "overall": {
+            "requests": 3725,
+            "ok": 3725,
+            "errors": 0,
+            "throughput_rps": 185.9,
+            "p50_ms": 47.921,
+            "p95_ms": 60.418,
+            "p99_ms": 98.644,
+            "max_ms": 180.941,
+            "latency_histogram_log2_us": {
+              "9": 9,
+              "10": 388,
+              "11": 32,
+              "12": 80,
+              "13": 37,
+              "14": 17,
+              "15": 3016,
+              "16": 136,
+              "17": 10
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1687,
+              "ok": 1687,
+              "errors": 0,
+              "throughput_rps": 84.2,
+              "p50_ms": 44.133,
+              "p95_ms": 54.523,
+              "p99_ms": 75.978,
+              "max_ms": 124.044,
+              "latency_histogram_log2_us": {
+                "15": 1662,
+                "16": 25
+              }
+            },
+            "open_bills": {
+              "requests": 574,
+              "ok": 574,
+              "errors": 0,
+              "throughput_rps": 28.7,
+              "p50_ms": 1.47,
+              "p95_ms": 19.421,
+              "p99_ms": 54.924,
+              "max_ms": 81.545,
+              "latency_histogram_log2_us": {
+                "9": 9,
+                "10": 388,
+                "11": 32,
+                "12": 80,
+                "13": 36,
+                "14": 17,
+                "15": 9,
+                "16": 3
+              }
+            },
+            "bill": {
+              "requests": 721,
+              "ok": 721,
+              "errors": 0,
+              "throughput_rps": 36.0,
+              "p50_ms": 50.465,
+              "p95_ms": 71.928,
+              "p99_ms": 103.707,
+              "max_ms": 180.0,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 664,
+                "16": 53,
+                "17": 3
+              }
+            },
+            "payment": {
+              "requests": 743,
+              "ok": 743,
+              "errors": 0,
+              "throughput_rps": 37.1,
+              "p50_ms": 51.859,
+              "p95_ms": 71.196,
+              "p99_ms": 129.496,
+              "max_ms": 180.941,
+              "latency_histogram_log2_us": {
+                "15": 681,
+                "16": 55,
+                "17": 7
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2261,
+            "201": 1464
+          },
+          "ok_per_second": [
+            178,
+            194,
+            182,
+            187,
+            186,
+            187,
+            180,
+            193,
+            184,
+            185,
+            175,
+            187,
+            183,
+            203,
+            182,
+            188,
+            186,
+            191,
+            187,
+            187,
+            0
+          ],
+          "seconds": 20.033233396000014,
+          "samples_file": "OPT-REUSE-CONNECTION-rep2.csv.gz",
+          "samples_sha256": "f88a9bb1d5a87cb83d8b7bab6084df8123b538d7d07370f5cd1cea63ca4fc15e"
+        },
+        {
+          "overall": {
+            "requests": 3454,
+            "ok": 3454,
+            "errors": 0,
+            "throughput_rps": 171.8,
+            "p50_ms": 47.959,
+            "p95_ms": 75.44,
+            "p99_ms": 128.003,
+            "max_ms": 873.29,
+            "latency_histogram_log2_us": {
+              "9": 8,
+              "10": 319,
+              "11": 34,
+              "12": 56,
+              "13": 49,
+              "14": 19,
+              "15": 2676,
+              "16": 262,
+              "17": 26,
+              "18": 4,
+              "19": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1535,
+              "ok": 1535,
+              "errors": 0,
+              "throughput_rps": 76.4,
+              "p50_ms": 44.183,
+              "p95_ms": 63.986,
+              "p99_ms": 100.012,
+              "max_ms": 873.29,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1466,
+                "16": 56,
+                "17": 8,
+                "18": 2,
+                "19": 1
+              }
+            },
+            "open_bills": {
+              "requests": 502,
+              "ok": 502,
+              "errors": 0,
+              "throughput_rps": 25.0,
+              "p50_ms": 1.476,
+              "p95_ms": 20.285,
+              "p99_ms": 56.062,
+              "max_ms": 105.269,
+              "latency_histogram_log2_us": {
+                "9": 8,
+                "10": 319,
+                "11": 34,
+                "12": 56,
+                "13": 47,
+                "14": 17,
+                "15": 16,
+                "16": 5
+              }
+            },
+            "bill": {
+              "requests": 715,
+              "ok": 715,
+              "errors": 0,
+              "throughput_rps": 35.6,
+              "p50_ms": 51.905,
+              "p95_ms": 99.872,
+              "p99_ms": 172.09,
+              "max_ms": 479.828,
+              "latency_histogram_log2_us": {
+                "14": 2,
+                "15": 604,
+                "16": 97,
+                "17": 10,
+                "18": 2
+              }
+            },
+            "payment": {
+              "requests": 702,
+              "ok": 702,
+              "errors": 0,
+              "throughput_rps": 34.9,
+              "p50_ms": 51.951,
+              "p95_ms": 83.843,
+              "p99_ms": 143.985,
+              "max_ms": 227.802,
+              "latency_histogram_log2_us": {
+                "15": 590,
+                "16": 104,
+                "17": 8
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2037,
+            "201": 1417
+          },
+          "ok_per_second": [
+            180,
+            201,
+            181,
+            182,
+            188,
+            167,
+            187,
+            184,
+            183,
+            171,
+            193,
+            178,
+            192,
+            193,
+            180,
+            162,
+            124,
+            143,
+            132,
+            133,
+            0
+          ],
+          "seconds": 20.101778885000044,
+          "samples_file": "OPT-REUSE-CONNECTION-rep3.csv.gz",
+          "samples_sha256": "f5dfc5ddf39d5217e709c8c02f53a4eb76035467d45fff3400a4373ec22a5dd5"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-WAL-NORMAL",
+      "config_changes": {
+        "journal_mode": "WAL",
+        "synchronous": "NORMAL"
+      },
+      "warmup": {
+        "seconds": 3.0375949700001,
+        "ok": 539
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 3577,
+            "ok": 3577,
+            "errors": 0,
+            "throughput_rps": 178.6,
+            "p50_ms": 47.81,
+            "p95_ms": 68.177,
+            "p99_ms": 83.913,
+            "max_ms": 143.981,
+            "latency_histogram_log2_us": {
+              "10": 263,
+              "11": 90,
+              "12": 79,
+              "13": 37,
+              "14": 51,
+              "15": 2776,
+              "16": 280,
+              "17": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1545,
+              "ok": 1545,
+              "errors": 0,
+              "throughput_rps": 77.1,
+              "p50_ms": 44.237,
+              "p95_ms": 63.989,
+              "p99_ms": 76.329,
+              "max_ms": 120.272,
+              "latency_histogram_log2_us": {
+                "12": 1,
+                "13": 1,
+                "15": 1494,
+                "16": 49
+              }
+            },
+            "open_bills": {
+              "requests": 534,
+              "ok": 534,
+              "errors": 0,
+              "throughput_rps": 26.7,
+              "p50_ms": 2.062,
+              "p95_ms": 24.111,
+              "p99_ms": 55.148,
+              "max_ms": 55.904,
+              "latency_histogram_log2_us": {
+                "10": 263,
+                "11": 90,
+                "12": 78,
+                "13": 35,
+                "14": 50,
+                "15": 18
+              }
+            },
+            "bill": {
+              "requests": 718,
+              "ok": 718,
+              "errors": 0,
+              "throughput_rps": 35.9,
+              "p50_ms": 51.916,
+              "p95_ms": 72.275,
+              "p99_ms": 95.436,
+              "max_ms": 143.981,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 608,
+                "16": 108,
+                "17": 1
+              }
+            },
+            "payment": {
+              "requests": 780,
+              "ok": 780,
+              "errors": 0,
+              "throughput_rps": 38.9,
+              "p50_ms": 52.003,
+              "p95_ms": 71.984,
+              "p99_ms": 87.967,
+              "max_ms": 119.95,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 656,
+                "16": 123
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2079,
+            "201": 1498
+          },
+          "ok_per_second": [
+            188,
+            179,
+            177,
+            191,
+            172,
+            168,
+            162,
+            192,
+            176,
+            185,
+            171,
+            190,
+            187,
+            170,
+            174,
+            183,
+            180,
+            182,
+            172,
+            178,
+            0
+          ],
+          "seconds": 20.027608720000103,
+          "samples_file": "OPT-WAL-NORMAL-rep1.csv.gz",
+          "samples_sha256": "397ac569a7b23559958dade7758914968f6bd827069c633576d4cdcf9f882a44"
+        },
+        {
+          "overall": {
+            "requests": 3753,
+            "ok": 3753,
+            "errors": 0,
+            "throughput_rps": 187.2,
+            "p50_ms": 47.709,
+            "p95_ms": 64.073,
+            "p99_ms": 79.962,
+            "max_ms": 111.861,
+            "latency_histogram_log2_us": {
+              "10": 295,
+              "11": 143,
+              "12": 80,
+              "13": 35,
+              "14": 29,
+              "15": 3016,
+              "16": 155
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1699,
+              "ok": 1699,
+              "errors": 0,
+              "throughput_rps": 84.8,
+              "p50_ms": 44.297,
+              "p95_ms": 56.111,
+              "p99_ms": 75.971,
+              "max_ms": 96.221,
+              "latency_histogram_log2_us": {
+                "13": 3,
+                "15": 1664,
+                "16": 32
+              }
+            },
+            "open_bills": {
+              "requests": 582,
+              "ok": 582,
+              "errors": 0,
+              "throughput_rps": 29.0,
+              "p50_ms": 2.029,
+              "p95_ms": 18.167,
+              "p99_ms": 23.436,
+              "max_ms": 36.131,
+              "latency_histogram_log2_us": {
+                "10": 295,
+                "11": 143,
+                "12": 80,
+                "13": 31,
+                "14": 29,
+                "15": 4
+              }
+            },
+            "bill": {
+              "requests": 723,
+              "ok": 723,
+              "errors": 0,
+              "throughput_rps": 36.1,
+              "p50_ms": 48.571,
+              "p95_ms": 67.969,
+              "p99_ms": 83.956,
+              "max_ms": 101.845,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 673,
+                "16": 49
+              }
+            },
+            "payment": {
+              "requests": 749,
+              "ok": 749,
+              "errors": 0,
+              "throughput_rps": 37.4,
+              "p50_ms": 51.733,
+              "p95_ms": 68.271,
+              "p99_ms": 87.771,
+              "max_ms": 111.861,
+              "latency_histogram_log2_us": {
+                "15": 675,
+                "16": 74
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2281,
+            "201": 1472
+          },
+          "ok_per_second": [
+            194,
+            187,
+            169,
+            193,
+            181,
+            185,
+            180,
+            176,
+            180,
+            174,
+            150,
+            192,
+            195,
+            204,
+            201,
+            197,
+            189,
+            204,
+            204,
+            198,
+            0
+          ],
+          "seconds": 20.04600794199996,
+          "samples_file": "OPT-WAL-NORMAL-rep2.csv.gz",
+          "samples_sha256": "c7047970c6f00e87a86a00b80ac216a26e1ffe23708e19501de005e803a56548"
+        },
+        {
+          "overall": {
+            "requests": 3900,
+            "ok": 3900,
+            "errors": 0,
+            "throughput_rps": 194.5,
+            "p50_ms": 47.728,
+            "p95_ms": 52.994,
+            "p99_ms": 63.896,
+            "max_ms": 104.058,
+            "latency_histogram_log2_us": {
+              "10": 347,
+              "11": 124,
+              "12": 98,
+              "13": 11,
+              "14": 5,
+              "15": 3288,
+              "16": 27
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1720,
+              "ok": 1720,
+              "errors": 0,
+              "throughput_rps": 85.8,
+              "p50_ms": 44.128,
+              "p95_ms": 50.603,
+              "p99_ms": 52.42,
+              "max_ms": 80.628,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1716,
+                "16": 2
+              }
+            },
+            "open_bills": {
+              "requests": 579,
+              "ok": 579,
+              "errors": 0,
+              "throughput_rps": 28.9,
+              "p50_ms": 1.857,
+              "p95_ms": 5.396,
+              "p99_ms": 12.672,
+              "max_ms": 21.05,
+              "latency_histogram_log2_us": {
+                "10": 347,
+                "11": 124,
+                "12": 98,
+                "13": 7,
+                "14": 3
+              }
+            },
+            "bill": {
+              "requests": 796,
+              "ok": 796,
+              "errors": 0,
+              "throughput_rps": 39.7,
+              "p50_ms": 48.014,
+              "p95_ms": 55.971,
+              "p99_ms": 68.037,
+              "max_ms": 83.346,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "14": 2,
+                "15": 782,
+                "16": 10
+              }
+            },
+            "payment": {
+              "requests": 805,
+              "ok": 805,
+              "errors": 0,
+              "throughput_rps": 40.1,
+              "p50_ms": 48.823,
+              "p95_ms": 59.235,
+              "p99_ms": 67.931,
+              "max_ms": 104.058,
+              "latency_histogram_log2_us": {
+                "15": 790,
+                "16": 15
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2299,
+            "201": 1601
+          },
+          "ok_per_second": [
+            196,
+            207,
+            194,
+            198,
+            189,
+            181,
+            208,
+            197,
+            194,
+            186,
+            193,
+            196,
+            201,
+            190,
+            193,
+            187,
+            199,
+            192,
+            202,
+            197,
+            0
+          ],
+          "seconds": 20.050719443000048,
+          "samples_file": "OPT-WAL-NORMAL-rep3.csv.gz",
+          "samples_sha256": "0f7d3e9621dad2b43760fe3dd01caba6e3400a3653739f2b6d99f2f672b18cba"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "OPT-WAL",
+      "config_changes": {
+        "journal_mode": "WAL"
+      },
+      "warmup": {
+        "seconds": 3.0484267030000183,
+        "ok": 579
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 3877,
+            "ok": 3877,
+            "errors": 0,
+            "throughput_rps": 193.5,
+            "p50_ms": 47.043,
+            "p95_ms": 55.952,
+            "p99_ms": 67.885,
+            "max_ms": 124.014,
+            "latency_histogram_log2_us": {
+              "10": 393,
+              "11": 136,
+              "12": 36,
+              "13": 5,
+              "14": 5,
+              "15": 3245,
+              "16": 57
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1684,
+              "ok": 1684,
+              "errors": 0,
+              "throughput_rps": 84.1,
+              "p50_ms": 44.022,
+              "p95_ms": 48.149,
+              "p99_ms": 51.948,
+              "max_ms": 59.428,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1682
+              }
+            },
+            "open_bills": {
+              "requests": 572,
+              "ok": 572,
+              "errors": 0,
+              "throughput_rps": 28.5,
+              "p50_ms": 1.717,
+              "p95_ms": 4.706,
+              "p99_ms": 14.268,
+              "max_ms": 22.562,
+              "latency_histogram_log2_us": {
+                "10": 393,
+                "11": 136,
+                "12": 36,
+                "13": 3,
+                "14": 4
+              }
+            },
+            "bill": {
+              "requests": 770,
+              "ok": 770,
+              "errors": 0,
+              "throughput_rps": 38.4,
+              "p50_ms": 48.013,
+              "p95_ms": 60.021,
+              "p99_ms": 72.151,
+              "max_ms": 104.162,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 748,
+                "16": 21
+              }
+            },
+            "payment": {
+              "requests": 851,
+              "ok": 851,
+              "errors": 0,
+              "throughput_rps": 42.5,
+              "p50_ms": 50.46,
+              "p95_ms": 63.767,
+              "p99_ms": 79.854,
+              "max_ms": 124.014,
+              "latency_histogram_log2_us": {
+                "15": 815,
+                "16": 36
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2256,
+            "201": 1621
+          },
+          "ok_per_second": [
+            192,
+            196,
+            195,
+            199,
+            188,
+            194,
+            197,
+            202,
+            199,
+            191,
+            196,
+            202,
+            186,
+            190,
+            198,
+            187,
+            196,
+            197,
+            188,
+            184,
+            0
+          ],
+          "seconds": 20.03508096600001,
+          "samples_file": "OPT-WAL-rep1.csv.gz",
+          "samples_sha256": "89e642396bd565aad8eaa56ff5fcf69b88de06f6988e214b322b9d0bbd8af89c"
+        },
+        {
+          "overall": {
+            "requests": 3755,
+            "ok": 3755,
+            "errors": 0,
+            "throughput_rps": 187.2,
+            "p50_ms": 46.174,
+            "p95_ms": 64.466,
+            "p99_ms": 87.855,
+            "max_ms": 279.695,
+            "latency_histogram_log2_us": {
+              "10": 386,
+              "11": 144,
+              "12": 27,
+              "13": 13,
+              "14": 12,
+              "15": 2996,
+              "16": 166,
+              "17": 10,
+              "18": 1
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1698,
+              "ok": 1698,
+              "errors": 0,
+              "throughput_rps": 84.7,
+              "p50_ms": 44.037,
+              "p95_ms": 48.341,
+              "p99_ms": 52.174,
+              "max_ms": 80.065,
+              "latency_histogram_log2_us": {
+                "13": 3,
+                "15": 1694,
+                "16": 1
+              }
+            },
+            "open_bills": {
+              "requests": 581,
+              "ok": 581,
+              "errors": 0,
+              "throughput_rps": 29.0,
+              "p50_ms": 1.81,
+              "p95_ms": 5.881,
+              "p99_ms": 26.122,
+              "max_ms": 38.819,
+              "latency_histogram_log2_us": {
+                "10": 386,
+                "11": 144,
+                "12": 27,
+                "13": 10,
+                "14": 11,
+                "15": 3
+              }
+            },
+            "bill": {
+              "requests": 726,
+              "ok": 726,
+              "errors": 0,
+              "throughput_rps": 36.2,
+              "p50_ms": 49.108,
+              "p95_ms": 79.758,
+              "p99_ms": 103.495,
+              "max_ms": 151.86,
+              "latency_histogram_log2_us": {
+                "14": 1,
+                "15": 649,
+                "16": 75,
+                "17": 1
+              }
+            },
+            "payment": {
+              "requests": 750,
+              "ok": 750,
+              "errors": 0,
+              "throughput_rps": 37.4,
+              "p50_ms": 51.94,
+              "p95_ms": 79.959,
+              "p99_ms": 143.811,
+              "max_ms": 279.695,
+              "latency_histogram_log2_us": {
+                "15": 650,
+                "16": 90,
+                "17": 9,
+                "18": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2279,
+            "201": 1476
+          },
+          "ok_per_second": [
+            204,
+            192,
+            189,
+            200,
+            197,
+            169,
+            201,
+            190,
+            189,
+            187,
+            194,
+            181,
+            179,
+            187,
+            185,
+            177,
+            182,
+            189,
+            181,
+            182,
+            0
+          ],
+          "seconds": 20.0585064710001,
+          "samples_file": "OPT-WAL-rep2.csv.gz",
+          "samples_sha256": "c2445e600290d40be990cf9b195824231b1b05eba5b6f1b3be47e910c8ff5e43"
+        },
+        {
+          "overall": {
+            "requests": 3576,
+            "ok": 3576,
+            "errors": 0,
+            "throughput_rps": 178.4,
+            "p50_ms": 46.454,
+            "p95_ms": 70.064,
+            "p99_ms": 103.132,
+            "max_ms": 227.779,
+            "latency_histogram_log2_us": {
+              "10": 370,
+              "11": 96,
+              "12": 20,
+              "13": 16,
+              "14": 19,
+              "15": 2733,
+              "16": 311,
+              "17": 11
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1586,
+              "ok": 1586,
+              "errors": 0,
+              "throughput_rps": 79.1,
+              "p50_ms": 44.03,
+              "p95_ms": 49.572,
+              "p99_ms": 64.308,
+              "max_ms": 99.977,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1577,
+                "16": 7
+              }
+            },
+            "open_bills": {
+              "requests": 520,
+              "ok": 520,
+              "errors": 0,
+              "throughput_rps": 25.9,
+              "p50_ms": 1.765,
+              "p95_ms": 10.913,
+              "p99_ms": 23.023,
+              "max_ms": 38.462,
+              "latency_histogram_log2_us": {
+                "10": 370,
+                "11": 96,
+                "12": 20,
+                "13": 14,
+                "14": 17,
+                "15": 3
+              }
+            },
+            "bill": {
+              "requests": 739,
+              "ok": 739,
+              "errors": 0,
+              "throughput_rps": 36.9,
+              "p50_ms": 52.188,
+              "p95_ms": 83.98,
+              "p99_ms": 120.136,
+              "max_ms": 227.779,
+              "latency_histogram_log2_us": {
+                "14": 2,
+                "15": 593,
+                "16": 138,
+                "17": 6
+              }
+            },
+            "payment": {
+              "requests": 731,
+              "ok": 731,
+              "errors": 0,
+              "throughput_rps": 36.5,
+              "p50_ms": 52.986,
+              "p95_ms": 83.948,
+              "p99_ms": 123.937,
+              "max_ms": 195.977,
+              "latency_histogram_log2_us": {
+                "15": 560,
+                "16": 166,
+                "17": 5
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2106,
+            "201": 1470
+          },
+          "ok_per_second": [
+            177,
+            190,
+            176,
+            165,
+            174,
+            159,
+            165,
+            180,
+            186,
+            181,
+            179,
+            185,
+            181,
+            192,
+            185,
+            170,
+            184,
+            186,
+            176,
+            185,
+            0
+          ],
+          "seconds": 20.043891514999927,
+          "samples_file": "OPT-WAL-rep3.csv.gz",
+          "samples_sha256": "4ff99e920d1e2302d8a931a6ea6f270cd394f4d13e664d80e4e7b6d9e8fba8aa"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    },
+    {
+      "label": "ALL-ACCEPTED",
+      "config_changes": {
+        "index_party": true,
+        "connection_per_request": false,
+        "journal_mode": "WAL"
+      },
+      "warmup": {
+        "seconds": 3.04767988399999,
+        "ok": 532
+      },
+      "reps": [
+        {
+          "overall": {
+            "requests": 4199,
+            "ok": 4199,
+            "errors": 0,
+            "throughput_rps": 209.5,
+            "p50_ms": 43.97,
+            "p95_ms": 47.992,
+            "p99_ms": 51.96,
+            "max_ms": 79.748,
+            "latency_histogram_log2_us": {
+              "8": 10,
+              "9": 405,
+              "10": 185,
+              "11": 13,
+              "12": 2,
+              "13": 3,
+              "14": 3,
+              "15": 3574,
+              "16": 4
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1821,
+              "ok": 1821,
+              "errors": 0,
+              "throughput_rps": 90.9,
+              "p50_ms": 43.986,
+              "p95_ms": 47.971,
+              "p99_ms": 48.228,
+              "max_ms": 50.693,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1819
+              }
+            },
+            "open_bills": {
+              "requests": 618,
+              "ok": 618,
+              "errors": 0,
+              "throughput_rps": 30.8,
+              "p50_ms": 0.795,
+              "p95_ms": 1.809,
+              "p99_ms": 3.525,
+              "max_ms": 22.48,
+              "latency_histogram_log2_us": {
+                "8": 10,
+                "9": 405,
+                "10": 185,
+                "11": 13,
+                "12": 2,
+                "14": 3
+              }
+            },
+            "bill": {
+              "requests": 833,
+              "ok": 833,
+              "errors": 0,
+              "throughput_rps": 41.6,
+              "p50_ms": 43.982,
+              "p95_ms": 48.159,
+              "p99_ms": 59.619,
+              "max_ms": 79.748,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 830,
+                "16": 2
+              }
+            },
+            "payment": {
+              "requests": 927,
+              "ok": 927,
+              "errors": 0,
+              "throughput_rps": 46.3,
+              "p50_ms": 43.988,
+              "p95_ms": 48.19,
+              "p99_ms": 63.487,
+              "max_ms": 75.553,
+              "latency_histogram_log2_us": {
+                "15": 925,
+                "16": 2
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2439,
+            "201": 1760
+          },
+          "ok_per_second": [
+            209,
+            213,
+            214,
+            208,
+            213,
+            209,
+            216,
+            217,
+            210,
+            210,
+            217,
+            200,
+            215,
+            204,
+            209,
+            204,
+            213,
+            195,
+            207,
+            216,
+            0
+          ],
+          "seconds": 20.042543539999997,
+          "samples_file": "ALL-ACCEPTED-rep1.csv.gz",
+          "samples_sha256": "c682f75182897676b8418aa4194c2d373a213dd2ccbbb4a46a229882b90e92e8"
+        },
+        {
+          "overall": {
+            "requests": 4107,
+            "ok": 4107,
+            "errors": 0,
+            "throughput_rps": 205.0,
+            "p50_ms": 43.958,
+            "p95_ms": 47.994,
+            "p99_ms": 55.506,
+            "max_ms": 479.782,
+            "latency_histogram_log2_us": {
+              "8": 10,
+              "9": 340,
+              "10": 238,
+              "11": 34,
+              "12": 4,
+              "13": 6,
+              "14": 1,
+              "15": 3454,
+              "16": 6,
+              "17": 3,
+              "18": 11
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1876,
+              "ok": 1876,
+              "errors": 0,
+              "throughput_rps": 93.6,
+              "p50_ms": 43.983,
+              "p95_ms": 47.955,
+              "p99_ms": 48.229,
+              "max_ms": 51.35,
+              "latency_histogram_log2_us": {
+                "13": 3,
+                "15": 1873
+              }
+            },
+            "open_bills": {
+              "requests": 632,
+              "ok": 632,
+              "errors": 0,
+              "throughput_rps": 31.5,
+              "p50_ms": 0.943,
+              "p95_ms": 2.256,
+              "p99_ms": 5.654,
+              "max_ms": 42.623,
+              "latency_histogram_log2_us": {
+                "8": 10,
+                "9": 340,
+                "10": 238,
+                "11": 34,
+                "12": 4,
+                "13": 2,
+                "14": 1,
+                "15": 3
+              }
+            },
+            "bill": {
+              "requests": 794,
+              "ok": 794,
+              "errors": 0,
+              "throughput_rps": 39.6,
+              "p50_ms": 43.975,
+              "p95_ms": 48.203,
+              "p99_ms": 372.083,
+              "max_ms": 479.782,
+              "latency_histogram_log2_us": {
+                "13": 1,
+                "15": 778,
+                "16": 4,
+                "17": 1,
+                "18": 10
+              }
+            },
+            "payment": {
+              "requests": 805,
+              "ok": 805,
+              "errors": 0,
+              "throughput_rps": 40.2,
+              "p50_ms": 43.983,
+              "p95_ms": 48.156,
+              "p99_ms": 63.208,
+              "max_ms": 387.725,
+              "latency_histogram_log2_us": {
+                "15": 800,
+                "16": 2,
+                "17": 2,
+                "18": 1
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2508,
+            "201": 1599
+          },
+          "ok_per_second": [
+            217,
+            213,
+            207,
+            220,
+            208,
+            209,
+            213,
+            208,
+            205,
+            113,
+            216,
+            204,
+            223,
+            217,
+            204,
+            209,
+            224,
+            175,
+            219,
+            203,
+            0
+          ],
+          "seconds": 20.03684275700016,
+          "samples_file": "ALL-ACCEPTED-rep2.csv.gz",
+          "samples_sha256": "a834813af9c263da62bf57db55debabde1882570d9feb693ca48b9eafe15841d"
+        },
+        {
+          "overall": {
+            "requests": 4201,
+            "ok": 4201,
+            "errors": 0,
+            "throughput_rps": 209.6,
+            "p50_ms": 43.966,
+            "p95_ms": 48.001,
+            "p99_ms": 51.867,
+            "max_ms": 124.135,
+            "latency_histogram_log2_us": {
+              "8": 20,
+              "9": 394,
+              "10": 187,
+              "11": 16,
+              "12": 1,
+              "13": 6,
+              "14": 2,
+              "15": 3570,
+              "16": 5
+            }
+          },
+          "by_op": {
+            "balance": {
+              "requests": 1867,
+              "ok": 1867,
+              "errors": 0,
+              "throughput_rps": 93.2,
+              "p50_ms": 43.986,
+              "p95_ms": 47.97,
+              "p99_ms": 48.222,
+              "max_ms": 53.905,
+              "latency_histogram_log2_us": {
+                "13": 2,
+                "15": 1865
+              }
+            },
+            "open_bills": {
+              "requests": 623,
+              "ok": 623,
+              "errors": 0,
+              "throughput_rps": 31.1,
+              "p50_ms": 0.82,
+              "p95_ms": 1.866,
+              "p99_ms": 4.025,
+              "max_ms": 44.445,
+              "latency_histogram_log2_us": {
+                "8": 20,
+                "9": 394,
+                "10": 187,
+                "11": 16,
+                "12": 1,
+                "13": 4,
+                "15": 1
+              }
+            },
+            "bill": {
+              "requests": 855,
+              "ok": 855,
+              "errors": 0,
+              "throughput_rps": 42.7,
+              "p50_ms": 43.985,
+              "p95_ms": 48.23,
+              "p99_ms": 60.011,
+              "max_ms": 68.372,
+              "latency_histogram_log2_us": {
+                "14": 2,
+                "15": 850,
+                "16": 3
+              }
+            },
+            "payment": {
+              "requests": 856,
+              "ok": 856,
+              "errors": 0,
+              "throughput_rps": 42.7,
+              "p50_ms": 43.982,
+              "p95_ms": 48.247,
+              "p99_ms": 56.225,
+              "max_ms": 124.135,
+              "latency_histogram_log2_us": {
+                "15": 854,
+                "16": 2
+              }
+            }
+          },
+          "status_counts": {
+            "200": 2490,
+            "201": 1711
+          },
+          "ok_per_second": [
+            211,
+            218,
+            214,
+            215,
+            198,
+            208,
+            211,
+            212,
+            203,
+            210,
+            209,
+            211,
+            209,
+            207,
+            215,
+            206,
+            209,
+            223,
+            206,
+            206,
+            0
+          ],
+          "seconds": 20.041552331000048,
+          "samples_file": "ALL-ACCEPTED-rep3.csv.gz",
+          "samples_sha256": "24922fb64388657cc2804fae126162e150b3f1fc63e88f986c63435c478943f7"
+        }
+      ],
+      "server_log": "listening on http://0.0.0.0:8080"
+    }
+  ]
+}

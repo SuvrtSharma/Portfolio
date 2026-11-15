@@ -1,0 +1,375 @@
+{
+  "about": "Everything learned, including failures, dead ends and the agent's own mistakes. Figures are copied from tool output recorded at the time; 'evidence' says where to re-check them. Kinds: finding (something true we learned), failure (something that didn't work), mistake (an error by the agent), caught (a wrong claim the tooling rejected).",
+  "findings": [
+    {
+      "id": "F-001",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "A forged proof of a false theorem passes the build, #print axioms and environment inspection",
+      "expected": "The KT design's checks (axiom allowlist plus a green build) would reject any false proof.",
+      "observed": "A theorem of `∀ a : Int, a = a + 1`, added via `addDecl` under `set_option debug.skipKernelTC true`, built successfully. `#print axioms` reported that it 'does not depend on any axioms'. Only kernel replay (leanchecker) rejected it: 'declaration type mismatch'.",
+      "impact": "Kernel replay became a required step (ADR-0017); a second independent kernel was added later (ADR-0018).",
+      "evidence": [
+        "tests/fixtures/lean_project/Proofs/Forged.lean",
+        "tests/test_leancheck.py::test_forged_proof_is_caught_only_by_the_kernels",
+        "docs/adr/0017-lean-check-pipeline-as-built.md"
+      ]
+    },
+    {
+      "id": "F-002",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "`lean` exits 0 on a file that contains `sorry`",
+      "expected": "",
+      "observed": "Only a warning, 'declaration uses `sorry`'; exit code 0 (Lean 4.35.0).",
+      "impact": "A passing build is never treated as evidence.",
+      "evidence": [
+        "docs/journal/2026-11-07.md"
+      ]
+    },
+    {
+      "id": "F-003",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "native_decide appears as a generated auxiliary axiom, not Lean.ofReduceBool",
+      "expected": "Older documentation: `Lean.ofReduceBool`.",
+      "observed": "`cheatNative._native.native_decide.ax_1_1` on Lean 4.35.0.",
+      "impact": "The axiom check must be an allowlist; a blocklist keyed on the old name would miss it.",
+      "evidence": [
+        "docs/adr/0006-lean-check-pipeline-no-escape-hatches.md",
+        "tests/fixtures/lean_project/Proofs/NativeDecide.lean"
+      ]
+    },
+    {
+      "id": "F-004",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "Kernel replay costs about 4.9 s per module whatever its size; caching cut the suite from 208 s to 75 s",
+      "expected": "",
+      "observed": "Per-step timing of one check: build 0.25 s, inspect 0.98 s, replay 13.03 s (3 modules). Single modules: 4.88 s, 4.88 s, 4.85 s. `--fresh` replay: 74.96 s. The first cache key reached only 142 s, because it was too narrow.",
+      "impact": "Clean replays are cached in memory per process; a cache on disk was rejected because it could be forged.",
+      "evidence": [
+        "godshand/leancheck.py (replay)",
+        "docs/journal/2026-11-07.md"
+      ]
+    },
+    {
+      "id": "F-005",
+      "date": "2026-11-07",
+      "kind": "failure",
+      "title": "lean4lean, shipped in the toolchain, could not read the toolchain's own .olean files",
+      "expected": "A usable independent checker.",
+      "observed": "'failed to read file ... Std.olean, incompatible header' for every module.",
+      "impact": "con-leche was used as the second kernel instead.",
+      "evidence": [
+        "docs/journal/2026-11-07.md"
+      ]
+    },
+    {
+      "id": "F-006",
+      "date": "2026-11-07",
+      "kind": "failure",
+      "title": "Exporting a whole environment for the second kernel was too heavy",
+      "expected": "",
+      "observed": "A full export was 741,748,640 bytes and took 71 s. Exporting only the named declarations: 3,704,297 bytes in 5 s; con-leche then accepted 1260 declarations in 1 s.",
+      "impact": "Only the proof and witness, with their dependencies, are exported.",
+      "evidence": [
+        "godshand/leancheck.py (second_kernel)"
+      ]
+    },
+    {
+      "id": "F-007",
+      "date": "2026-11-07",
+      "kind": "failure",
+      "title": "omega can't see through `abbrev Money := Int`",
+      "expected": "An abbrev is transparent to tactics.",
+      "observed": "'omega could not prove the goal: No usable constraints found' on `(x y : M) (h : x ≤ y) : x - 1 < y` with `abbrev M := Int`; the same goal over `Int` was proved.",
+      "impact": "The spec uses `Int` directly.",
+      "evidence": [
+        "Spec/Ledger.lean (header comment)"
+      ]
+    },
+    {
+      "id": "F-008",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "The agent's first baseline was not durable",
+      "expected": "synchronous=FULL with a rollback journal is durable.",
+      "observed": "SQLite documents FULL in rollback mode as 'not necessarily durable across a power loss'. The guarantee check reported durable=False for DELETE+FULL and True for DELETE+EXTRA and WAL+EXTRA.",
+      "impact": "Baseline changed to synchronous=EXTRA; optcheck rejects any baseline that lacks the guarantee.",
+      "evidence": [
+        "claims/guarantees.toml (source quote)",
+        "tests/test_optcheck.py::test_rollback_journal_with_full_is_not_a_durable_baseline",
+        "https://www.sqlite.org/pragma.html#pragma_synchronous"
+      ]
+    },
+    {
+      "id": "F-009",
+      "date": "2026-11-07",
+      "kind": "caught",
+      "title": "Capping the open-bill scan at 20 changes settlement",
+      "expected": "The agent claimed: 'payments are rarely larger than 20 bills, so LIMIT 20 is safe'.",
+      "observed": "Shrunk counterexample: 21 bills, then one payment of 342. The spec settles all 21 bills and leaves an advance of 159; the capped store settles 20 bills, keeps 169 as an advance, and bill 21 stays open. Lean refutation: with a cap of 1 and bills of 5 and 5, a payment of 8 gives ([(1, 5)], 3) instead of ([(1, 5), (2, 3)], 0) (#eval).",
+      "impact": "Rejected: differs_from_model, compensation_unproved (and refuted_in_lean once the spec is locked).",
+      "evidence": [
+        "claims/optimisations/OPT-CAP-SETTLE-SCAN.toml",
+        "Proofs/Ledger.lean (cappedSettleDisagrees)",
+        "tests/test_optcheck.py"
+      ]
+    },
+    {
+      "id": "F-010",
+      "date": "2026-11-07",
+      "kind": "caught",
+      "title": "WAL with synchronous=NORMAL silently drops durability",
+      "expected": "The agent claimed: 'WAL is always consistent with synchronous=NORMAL'. True for consistency, but it is not durable.",
+      "observed": "Observed pragmas journal_mode=wal, synchronous=1; durable=False. Results are identical to the spec, so only the guarantee check catches it.",
+      "impact": "Rejected: undeclared_drop of sqlite.durable_commit, which breaks LEDGER-DURABLE-MONEY.",
+      "evidence": [
+        "claims/optimisations/OPT-WAL-NORMAL.toml",
+        "tests/test_optcheck.py::test_wal_normal_is_rejected_for_an_undeclared_durability_drop"
+      ]
+    },
+    {
+      "id": "F-011",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "Three different SQLite versions on one machine",
+      "expected": "",
+      "observed": "Windows Python 3.14.10: SQLite 3.50.4. sqlite3 CLI: 3.54.1. Docker python:3.14-slim: 3.46.1.",
+      "impact": "Every measurement records the SQLite library it ran on; conformance runs on the same build as the benchmark.",
+      "evidence": [
+        "docs/adr/0014-databases-sqlite-then-postgres.md",
+        "docker/ledger.Dockerfile"
+      ]
+    },
+    {
+      "id": "F-012",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "The agent tried to lock its own draft spec",
+      "expected": "",
+      "observed": "The auto-mode safety check blocked `speclock update`, correctly: ADR-0004 says only the owner locks the spec.",
+      "impact": "Lean evidence about the ledger doesn't count until the owner reviews and locks Spec/Ledger.lean; two tests skip with that reason.",
+      "evidence": [
+        "tests/test_optcheck.py (needs_locked_spec)",
+        "docs/open-questions.md Q15"
+      ]
+    },
+    {
+      "id": "F-013",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "The agent ran the system natively without asking about Docker or WSL",
+      "expected": "",
+      "observed": "The owner said isolation through Docker/WSL would have been better, and that they should have been asked.",
+      "impact": "Moved to WSL2 + Docker; the agent now asks before choosing an environment.",
+      "evidence": [
+        "docker/",
+        "bench/docker_run.py"
+      ]
+    },
+    {
+      "id": "F-014",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "Small agent errors along the way",
+      "expected": "",
+      "observed": "A journal entry was dated 2026-11-08 instead of 2026-11-07 (fixed in fb6a48b). A mutation script had a broken string literal and failed before mutating anything (git status confirmed no change). The first benchmark command broke on PowerShell-to-bash quoting.",
+      "impact": "None reached results; listed for completeness.",
+      "evidence": [
+        "git log"
+      ]
+    },
+    {
+      "id": "F-015",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "Every test is shown to bite: 26 mutations, all caught",
+      "expected": "",
+      "observed": "19 mutations of the Lean pipeline and 7 of the optimisation tooling. Each one removed a check, and each made the guarding tests fail. Files were restored byte-for-byte, and the suite passed again (50 passed, 2 skipped).",
+      "impact": "",
+      "evidence": [
+        "evidence/mutations-2026-11-07.json"
+      ]
+    },
+    {
+      "id": "F-016",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "The first benchmark run measured a TCP artefact, not the database",
+      "expected": "Throughput and latency reflect SQLite and the optimisations.",
+      "observed": "In run 20261107T090049Z, median latency was 44-48 ms for almost every operation in every configuration (balance p50 44.571 ms in baseline rep 1), while the one large response (open bills) was about 1.8 ms. A controlled experiment, two trials each: with Nagle on, balance p50 was 47.473 / 47.576 ms at 171.7 / 171.4 req/s; with TCP_NODELAY, 1.48 / 1.517 ms at 241.3 / 244.0 req/s. The server wrote headers and body as two small writes, and the second waited for the client's delayed ACK.",
+      "impact": "Run 1 is marked invalid and kept. The server sets TCP_NODELAY (disable_nagle_algorithm) by default; a test fails if that is removed. An agent reading run 1 could have reported 'WAL is 10% faster' from noise around a 40 ms floor.",
+      "evidence": [
+        "evidence/20261107T090049Z/benchmark.json",
+        "evidence/nagle-experiment-2026-11-07.txt",
+        "reference/ledger/server.py (disable_nagle_algorithm)"
+      ]
+    },
+    {
+      "id": "F-017",
+      "date": "2026-11-07",
+      "kind": "failure",
+      "title": "Large spread between repetitions in run 1",
+      "expected": "Repetitions of one configuration agree within a few percent.",
+      "observed": "Baseline reps: 167.4, 173.6, 128.3 req/s. OPT-CACHED-BALANCE reps: 61.9, 64.5, 183.6 req/s, with p99 up to 1619.931 ms; rep 1's per-second count fell from 109-118 to 37-72. The cause wasn't identified in run 1.",
+      "impact": "Report every repetition next to the median and treat a difference smaller than the spread as no result. Re-checked in run 2.",
+      "evidence": [
+        "evidence/20261107T090049Z/benchmark.json"
+      ]
+    },
+    {
+      "id": "F-018",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "The WSL2 virtual disk's fsync rate drifts about 4x on its own, so durable writes inherit the noise",
+      "expected": "Repetitions of one configuration agree closely once the Nagle artefact is removed.",
+      "observed": "Run 20261107T092243Z still varied: OPT-INDEX-PARTY reps 227.4, 138.1, 261.5 req/s; write p99 between 535 and 1839.796 ms. A bare append-plus-fsync probe on a Docker volume, no database, two 30 s trials: median 1.833 / 1.678 ms, max 246.395 / 80.187 ms, and completed syncs per second varying from 145 to 600.",
+      "impact": "Configurations are now measured interleaved in shuffled rounds, with the baseline re-measured in the same window, so drift affects every configuration alike. A difference smaller than the spread between repetitions is reported as no result.",
+      "evidence": [
+        "evidence/fsync-probe-2026-11-07.txt",
+        "bench/fsync_probe.py",
+        "evidence/20261107T092243Z/benchmark.json"
+      ]
+    },
+    {
+      "id": "F-019",
+      "date": "2026-11-07",
+      "kind": "failure",
+      "title": "A 20-second stall under WAL with synchronous=NORMAL, not yet explained",
+      "expected": "",
+      "observed": "In run 20261107T092243Z, OPT-WAL-NORMAL rep 2 completed 351 requests in second 12, then zero for the rest of the run, so the run overran its 20 s budget (the per-second list has 34 entries). Reps 1 and 3 ran at 569.0 and 696.4 req/s.",
+      "impact": "Open question. Candidates are a WAL checkpoint stall or the 30 s busy timeout; not investigated. The claim was already rejected on meaning, so the stall doesn't change its verdict.",
+      "evidence": [
+        "evidence/20261107T092243Z/benchmark.json (OPT-WAL-NORMAL rep 2 ok_per_second)"
+      ]
+    },
+    {
+      "id": "F-020",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "Optimisations that show nothing alone can matter in combination",
+      "expected": "Measuring each optimisation on its own shows what each contributes.",
+      "observed": "Run 20261107T092243Z: the index alone gave reps of 227.4 / 138.1 / 261.5 and connection reuse alone 153.2 / 267.8 / 175.9 req/s, both inside the baseline's noise (240.9 / 265.5 / 247.6). WAL alone gave 476.7 / 505.6 / 495.3. All three together gave 921.3 / 1241.1 / 1016.4. A likely explanation (⚠ not yet verified): with a rollback journal, writers' lock time dominates and hides the read-side gains, and WAL removes that bottleneck first.",
+      "impact": "Combinations are measured too, not only single changes. An agent that benchmarks one change at a time would discard two useful optimisations.",
+      "evidence": [
+        "evidence/20261107T092243Z/benchmark.json"
+      ]
+    },
+    {
+      "id": "F-021",
+      "date": "2026-11-07",
+      "kind": "caught",
+      "title": "Review caught spec v1's settlement properties as too weak: an implementation that allocates nothing satisfied them",
+      "expected": "Conservation plus 'never beyond outstanding' pins down settlement.",
+      "observed": "Both hold for an implementation that allocates nothing and keeps the whole payment as an advance. A review also found that pay 100 then bill 80 left the bill open, that the spec accepted negative amounts the API rejected, that 'oldest' meant creation order, and that the invariants were stated for arbitrary states rather than reachable ones.",
+      "impact": "Spec v2 (ADR-0022) adds 'settles the maximum' (total = min of owed and advances), 'oldest first', per-bill and per-payment limits, and invariants over every state run can reach, including party isolation. 14 claims, all accepted by the full pipeline. Formal proof didn't catch this: the statements were true but too weak. Only human review did.",
+      "evidence": [
+        "Spec/Ledger.lean",
+        "Proofs/Ledger.lean",
+        "docs/adr/0022-ledger-spec-v2.md"
+      ]
+    },
+    {
+      "id": "F-022",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "'It compiles' was checked separately from 'the checker accepts it'",
+      "expected": "",
+      "observed": "Each batch of new proofs was run through the full pipeline (lock, shape, axioms, witness, both kernels) in a throwaway locked copy, not just compiled. One witness had the wrong shape (fixed values where the statement binds variables) and was fixed before running.",
+      "impact": "All 14 v2 claims are accepted; check times about 4–6 s each after the first (32.8 s with the cold build).",
+      "evidence": [
+        "claims/lean/*.toml"
+      ]
+    },
+    {
+      "id": "F-023",
+      "date": "2026-11-07",
+      "kind": "finding",
+      "title": "Conformance coverage counted, not assumed",
+      "expected": "",
+      "observed": "Across 60 v2 sequences: 148 accepted reversals (42 that re-settled bills), 82 rejected reversals, 62 rejected invalid amounts, 403 bills settled from advances, 839 open-bill listings needing the id tie-break. Baseline, cached balance and the combined accepted set: 0 mismatches over 2816 operations; the capped scan: 15 of 60 sequences differ.",
+      "impact": "'0 mismatches' is backed by evidence that the new behaviours were exercised.",
+      "evidence": [
+        "godshand/differential.py (generate)"
+      ]
+    },
+    {
+      "id": "F-024",
+      "date": "2026-11-07",
+      "kind": "mistake",
+      "title": "A test-restore command that would have destroyed uncommitted work",
+      "expected": "",
+      "observed": "To undo a manual mutation, the agent ran `git checkout -- bench/loadgen.py`, which would have discarded every uncommitted change to that file. The safety check blocked it before it ran.",
+      "impact": "Mutations only go through tools/mutate.py, which restores the original bytes from memory.",
+      "evidence": [
+        "tools/mutate.py"
+      ]
+    },
+    {
+      "id": "F-025",
+      "date": "2026-11-15",
+      "kind": "mistake",
+      "title": "A broken claim record shipped, because nothing tested the claim files",
+      "expected": "",
+      "observed": "When regenerating the 14 v2 claim records, the agent converted Python quotes to TOML quotes with a blanket replace, which also turned the apostrophes in \"party's\" into double quotes. LEDGER-REVERSAL-RESTORES-BALANCE.toml no longer parsed. 60 tests passed, because none read claims/lean; the owner hit the error running `godshand spec`.",
+      "impact": "tests/test_claims.py now parses every claim file, checks that each statement and proof exists, and that every spec statement has a claim. It failed 3 tests on the broken file (shown before the fix) and passes after it.",
+      "evidence": [
+        "tests/test_claims.py",
+        "claims/lean/LEDGER-REVERSAL-RESTORES-BALANCE.toml"
+      ]
+    },
+    {
+      "id": "F-026",
+      "date": "2026-11-15",
+      "kind": "finding",
+      "title": "Owner's run: WAL, connection reuse and the accepted set beat the noise; the index and cached balance alone are inconclusive",
+      "expected": "Each accepted optimisation shows its own speed-up.",
+      "observed": "Run 20261114T210922Z, interleaved, 3 rounds. Baseline 196.5 / 279.9 / 251.4 req/s. ALL-ACCEPTED 1287.6 / 1265.5 / 873.4 (median 1265.5, 5.03x); its slowest round still beats the fastest baseline round. OPT-WAL 424.8 / 496.3 / 485.4 (1.93x). But OPT-INDEX-PARTY alone gave 81.1 / 248.8 / 51.7 and OPT-CACHED-BALANCE 293.7 / 54.9 / 301.4. In every slow round only writes slowed (bill/payment/reversal p50 34–45 ms against 7–8 ms) while reads stayed near 1 ms. Per-second counts show stalls starting and ending mid-run, e.g. index round 1 ran at about 45/s for 16 s, then 231, 330, 324. The same stalls hit the baseline (round 1 fell to about 70/s) and ALL-ACCEPTED (round 3 fell to about 750/s).",
+      "impact": "Classification rule (applied in code on the dashboard): faster only if the slowest round beats the baseline's fastest (279.9). Faster in every round: ALL-ACCEPTED (5.03x), OPT-WAL (1.93x), OPT-REUSE-CONNECTION (300.7 / 286.4 / 302.3, about 1.2x, a small margin), and the rejected OPT-WAL-NORMAL (3.21x, not taken). Inside the noise: OPT-INDEX-PARTY and OPT-CACHED-BALANCE alone, and the rejected capped scan. The agent first called connection reuse inconclusive by eye; the coded rule corrected that. Storage stalls on the WSL2 virtual disk (F-018) dominate durable writes; next step is a quieter disk or more rounds.",
+      "evidence": [
+        "evidence/20261114T210922Z/benchmark.json (ok_per_second, by_op)"
+      ]
+    },
+    {
+      "id": "F-027",
+      "date": "2026-11-15",
+      "kind": "finding",
+      "title": "The same baseline, measured minutes apart, differed by about 40%",
+      "expected": "",
+      "observed": "The owner ran 'before' twice. Run 20261114T210020Z baseline reps 242.3 / 141.7 / 186.8 (median 186.8); run 20261114T210922Z reps 263.6 / 266.7 / 180.3 (median 263.6). Same code, configuration and machine.",
+      "impact": "A before/after comparison taken at different times would be meaningless on this machine; 'after' re-measures the baseline in each interleaved round (ADR-0020, F-018).",
+      "evidence": [
+        "evidence/20261114T210020Z/before.json",
+        "evidence/20261114T210922Z/before.json"
+      ]
+    },
+    {
+      "id": "F-028",
+      "date": "2026-11-15",
+      "kind": "mistake",
+      "title": "'Only writes slowed' was wrong: in the slow rounds the slowest reads waited too",
+      "expected": "In the slow rounds of run 20261114T210922Z, reads were unaffected. The first write-up said only writes slowed and reads stayed near 1 ms.",
+      "observed": "Medians support that: balance p50 was 0.663, 0.824 and 0.908 ms in the three slow rounds. The read tail does not: balance p99 was 1,743.894 ms (OPT-CACHED-BALANCE round 2), 2,946.655 ms and 2,843.686 ms (OPT-INDEX-PARTY rounds 1 and 3). Under WAL, balance p99 stayed at or below 9.519 ms in every round (OPT-WAL-NORMAL round 1), and at or below 3.155 ms for OPT-WAL.",
+      "impact": "The agent read medians and didn't check the p99 table it had. The post now gives both, and the results dashboard shows p99 by operation, explaining the tail by SQLite's documented WAL behaviour: readers don't wait for writers.",
+      "evidence": [
+        "evidence/20261114T210922Z/benchmark.json runs[].reps[].by_op.balance",
+        "https://www.sqlite.org/wal.html"
+      ]
+    },
+    {
+      "id": "F-029",
+      "date": "2026-11-15",
+      "kind": "mistake",
+      "title": "'4,738 operations each' was true for five claims, not six",
+      "expected": "Every optimisation claim was compared with the spec on 4,738 operations, as both write-ups said.",
+      "observed": "OPT-CAP-SETTLE-SCAN was compared on 4,630. differential.run stops a sequence at its first disagreement, and that claim disagreed in 27 of 100 sequences. The other five claims were compared on 4,738.",
+      "impact": "Both posts now say 'up to 4,738 operations per claim' and explain why a failing claim is compared on fewer. The dashboard shows the count per claim.",
+      "evidence": [
+        "evidence/20261114T210922Z/verdicts.json verdicts[].evidence.conformance.operations",
+        "godshand/differential.py run()"
+      ]
+    }
+  ]
+}

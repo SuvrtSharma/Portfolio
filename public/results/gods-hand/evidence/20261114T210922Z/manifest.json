@@ -1,0 +1,48 @@
+{
+  "run_id": "20261114T210922Z",
+  "git": {
+    "commit": "aa01b81cc90f1b381f73622bf2c8d27d3230b13f",
+    "dirty": true,
+    "dirty_files": [
+      "?? Screenshots/",
+      "?? evidence/20261114T210020Z/",
+      "?? evidence/20261114T210922Z/",
+      "?? evidence/latest.txt"
+    ]
+  },
+  "files": {
+    "before.json": "466f6c60789e1e923378b97e57cee5d133f15f586d3c2ceba39351c534c910e3",
+    "benchmark.json": "c4aa7b263aeb997efc2a1607c5f0430c413a43c6298a98bf4d7966abd17fed41",
+    "samples/ALL-ACCEPTED-round1-rep1.csv.gz": "e2a40d8cda4f3e7cd264e7d150fae79ff8ea35e70945072917d2b7d79623615f",
+    "samples/ALL-ACCEPTED-round2-rep1.csv.gz": "0d7110b1817df00dd8164d0f7a20e4d65b3f4507a62c32648b3c6a2af4850204",
+    "samples/ALL-ACCEPTED-round3-rep1.csv.gz": "e37b317937cabd93f3ef72e88723ad76e361babdb01d3c4569b86eecda1a039d",
+    "samples/OPT-CACHED-BALANCE-round1-rep1.csv.gz": "2ada914b5cba4ea70e5a9962d552225108586f4fbed448abac1a067457f84262",
+    "samples/OPT-CACHED-BALANCE-round2-rep1.csv.gz": "d72c3a9ce25a5a8a03277a69794b8b0277843e36c9a268af8dc51e731db0cd20",
+    "samples/OPT-CACHED-BALANCE-round3-rep1.csv.gz": "bb08fc5db1c1a3741dd9fee2c61dd80c125fb1f74bd271db3f1e193a380db753",
+    "samples/OPT-CAP-SETTLE-SCAN-round1-rep1.csv.gz": "9a16c8d9d4a669fcf36597899fafe76c5a88eaf520d5b777f215f93b8df1a193",
+    "samples/OPT-CAP-SETTLE-SCAN-round2-rep1.csv.gz": "609067f1fa4c7bd4c40ac8583f5d03a5161ed5325c507b8f0406ab931d69b79c",
+    "samples/OPT-CAP-SETTLE-SCAN-round3-rep1.csv.gz": "dc2ea651e9f7916e0d316f3f68a59b13aa742151b4709076d04d703f06434e44",
+    "samples/OPT-INDEX-PARTY-round1-rep1.csv.gz": "327b4b5eb8339de2ba16bc7b76af7a7a7fe3458cbe928de3dfcf65573ef00abb",
+    "samples/OPT-INDEX-PARTY-round2-rep1.csv.gz": "6d2f4136ecc1c7401ad6e283aeaa97066ebd556b0a8b2d4c987bfa2fa8604458",
+    "samples/OPT-INDEX-PARTY-round3-rep1.csv.gz": "42797eb1c6eb55f22cbbb0b65934d2e7d2f57aaac849c83b68501a572857c55f",
+    "samples/OPT-REUSE-CONNECTION-round1-rep1.csv.gz": "3a15d023effab756b7280c84cb269f332a58c2fe60074ac10039f021975b50c0",
+    "samples/OPT-REUSE-CONNECTION-round2-rep1.csv.gz": "c6cb609e059eebf100f38aa20135352b87aef9fdcbdebb3f95a5b2d9af88bbbc",
+    "samples/OPT-REUSE-CONNECTION-round3-rep1.csv.gz": "24bcffa5ab81ca2a86076360f499e7e76411e26702225a8c81f65f3b0578d0a7",
+    "samples/OPT-WAL-NORMAL-round1-rep1.csv.gz": "c22a8482eb28de750e5d3862cfc500342f3ec17b86a21083f1790d2585bb869f",
+    "samples/OPT-WAL-NORMAL-round2-rep1.csv.gz": "28b23287274c10ce4a61ffab50164eafa2c1e01455491603a82016907fd1516d",
+    "samples/OPT-WAL-NORMAL-round3-rep1.csv.gz": "22bbaf733eabcb74508b3207b94e3151ea1242b358d02b07a23ba7b181911a20",
+    "samples/OPT-WAL-round1-rep1.csv.gz": "01f0b3564329d7b7c4b951f36a4062d3a528c97b9c08816bd5b1d529e0955c0b",
+    "samples/OPT-WAL-round2-rep1.csv.gz": "848f570ac2d55c31e3d745e7bdd2c3a2092949b8b56c121b03f3bc5353a5bca6",
+    "samples/OPT-WAL-round3-rep1.csv.gz": "e03311f20ff1069342b822daf62c4e966ddf9642cbce7c7fe828ee2bfeb4f358",
+    "samples/baseline-rep1.csv.gz": "d442cde7f32ec1d08818d497ba9dff6cfe61e7d64f03a79c52220472905d6037",
+    "samples/baseline-rep2.csv.gz": "91ca93882501e03f5a86ebbe60ad693d36f9eeb50f0df3ed3f4c416bb030198a",
+    "samples/baseline-rep3.csv.gz": "a16449ce451e995e8b56f4e6c537d08851149407e1f713781d8b3b4829abd73f",
+    "samples/baseline-round1-rep1.csv.gz": "d145602e93ff42d383e0ff426af8ad4754d32037d55026d842fbd8d104dd0a50",
+    "samples/baseline-round2-rep1.csv.gz": "6972e06ce06d4e27cf972fe99a81b4c90b143ede3755825753ac4a1ab7b26620",
+    "samples/baseline-round3-rep1.csv.gz": "98d39308f39ca83844a6ff4d4c3ebd791f3fed540f147572d0548fce384b0fbd",
+    "tests.log": "90818d68b95fb304d38c2d645d0c731fba83795cff489bec3cd9603907be3b92",
+    "tests.xml": "f6a1f6492fe6e31fec6f0f459c1dcd49b9bedceef4a8bfb63225cd0ff23aef71",
+    "verdicts.json": "462f6c1bc38bf858f12d54f6af2100020b1702bf1aabda0a2efea121dc379356",
+    "verdicts.log": "c571ba0a15b7486e0f821ccfe6235e901fde9f52a94ab21bc3ef91a67fb2e4c6"
+  }
+}

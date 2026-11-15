@@ -1,0 +1,241 @@
+{/* Every figure below comes from the God's Hand repository and evidence files: run 20261114T210922Z,
+    evidence/prove-2026-11-15.json, evidence/mutations-2026-11-15.json and line counts of the files named. */}
+
+[The first post](/blog/making-ai-agents-prove-their-claims) told the story: a forged
+theorem, a benchmark that measured TCP, and two optimisation claims that were wrong.
+This one is for the engineers who want to rebuild it, or decide whether to. It
+covers how the checker is set up, whether it works, whether it can be packaged as an
+agent skill, and what you need to know to use it.
+
+## The pieces
+
+Everything lives in one private repository. None of it depends on an external
+system: the ledger, its spec, the checker and the benchmark were all built for this.
+
+- **The spec** (`Spec/Ledger.lean`, 290 lines of Lean 4). It defines the ledger's
+  state as facts: bills, payments, allocations and reversals. Balances and advances
+  are computed from those facts and never stored. It also defines the 15
+  statements that the claims are about. I reviewed it, and then locked it with
+  SHA-256 fingerprints.
+- **The proofs** (`Proofs/Ledger.lean`, 1,400 lines). The agent wrote them. They
+  prove all 14 claims. One of the claims is a refutation, which proves the 15th
+  statement false.
+- **The checker** (`godshand/leancheck.py` and a 208-line Lean inspector). It
+  decides whether a proof counts.
+- **The compiled spec** (`LedgerModel.lean`, 62 lines). It turns the spec into a
+  program that reads JSON operations and prints the spec's answers, so the real
+  code can be compared with it.
+- **The reference ledger.** A store of 302 lines and an HTTP server of 118, in
+  standard-library Python on SQLite. This is the system under test.
+- **The optimisation checker** (`godshand/optcheck.py`). It has a guarantee register
+  and a differential tester with a shrinker.
+- **The benchmark harness** (`bench/`). It runs the load generator and the server in
+  separate containers, writes evidence and manifests, and re-checks them.
+- **The paper trail.** 22 architecture decision records, a findings log with 27
+  entries, and a runbook the owner follows to produce every screenshot.
+
+## The environment
+
+A Windows 11 laptop, an Intel i5-10300H. Docker Engine 29.9.3 runs inside WSL2
+(Ubuntu 24.04), with 8 virtual CPUs and no Docker Desktop. There are two images, both
+built from `python:3.14-slim` pinned by digest. In the container that gives Python
+3.14.10 and SQLite 3.46.1. Lean 4.35.0 is installed through elan inside the checker
+image. During timing, the server is pinned to CPUs 0–3 and the load generator to
+4–7.
+
+Pinning matters more than it looks. The same Python on Windows ships a different
+SQLite version from the one in the container. A measurement is only meaningful
+next to the versions that produced it, so every run records them.
+
+## A run, start to finish
+
+These are the commands the owner runs, in order. Each one writes evidence or
+prints a screenshot-ready result.
+
+```bash
+docker build -f docker/ledger.Dockerfile -t godshand/ledger:dev .
+docker build -f docker/checker.Dockerfile -t godshand/checker:dev .
+docker run --rm -t godshand/checker:dev python -m godshand spec
+docker run --rm -t godshand/checker:dev python -m godshand prove
+docker run --rm -t godshand/checker:dev python -m godshand cheats
+docker run --rm -t godshand/checker:dev python -m godshand counterexample
+docker run --rm -t godshand/checker:dev python -m pytest -q -rs
+docker run --rm -t godshand/checker:dev python tools/mutate.py
+python3 bench/docker_run.py before
+python3 bench/docker_run.py check
+python3 bench/docker_run.py after --each
+python3 bench/verify_manifest.py
+```
+
+## How a proof is judged
+
+A claim is a small TOML record. It names a statement in the spec and the proof
+that is supposed to prove it:
+
+```toml
+id = "LEDGER-ADVANCES-ALWAYS-APPLIED"
+kind = "invariant"
+says = "Advances are applied automatically: a party never has an open bill and an unapplied advance at the same time."
+statement = "Spec.advancesAlwaysApplied"
+proof = "Proofs.Ledger.advancesAlwaysApplied"
+```
+
+The statement is a definition in the locked spec:
+
+```lean
+def advancesAlwaysApplied : Prop :=
+  ∀ (ops : List Op) (q : Nat), openBills (run ops) q = [] ∨ advances (run ops) q = []
+```
+
+It reads: after any sequence of operations, every party has either no open bills or
+no unused advances. The checker then runs eight checks, and the proof has to pass
+all of them:
+
+1. The spec matches its lock.
+2. Everything builds.
+3. The statement is a proposition in the spec, built only from the spec, and the
+   proof's type is exactly that statement.
+4. The proof assumes only Lean's three standard axioms.
+5. Nothing in it is `unsafe`, `implemented_by` or `extern`.
+6. A *vacuity witness* proves that the statement's assumptions can be met, so it
+   isn't true only because nothing satisfies them.
+7. Lean's kernel replays the compiled proof.
+8. A second, independent kernel replays it too.
+
+Exit code 0 means accepted. 1 means rejected, with violation codes as JSON, and 2
+means the checker couldn't run. An agent is never allowed to say "verified" unless
+it got a 0. Each check has a mutation that removes it, and the tests fail when it is
+removed. That holds for all 29 mutations.
+
+## How an optimisation is judged
+
+An optimisation claim is a record too, and it has to say what it gives up:
+
+```toml
+id = "OPT-CAP-SETTLE-SCAN"
+title = "Read at most 20 open bills when settling a payment"
+agent_says = "Payments are rarely larger than 20 bills, so LIMIT 20 on the open-bill query is safe and avoids long scans."
+config = { settle_scan_cap = 20 }
+drops = ["app.full_open_bill_scan"]
+```
+
+The checker answers three questions, all before any timing.
+
+1. **What does the running system really guarantee?** It opens a live database with
+   the change applied and reads the settings. If a guarantee is lost and the claim
+   didn't list it, the claim is rejected. This is how WAL with synchronous=NORMAL
+   was caught.
+2. **If a guarantee is dropped, does a Lean proof cover the loss?** The cached
+   balance column is accepted because Lean proves it always equals the computed
+   balance. The 20-bill cap is rejected because Lean proves its matching differs.
+3. **Does the real code still agree with the spec?** Both run the same 100 seeded
+   random operation sequences, up to 4,738 operations per claim, and every answer
+   is compared. A sequence stops at its first disagreement, which is then shrunk
+   to the shortest sequence that still fails.
+
+## How speed is measured
+
+Meaning comes first, so only accepted claims count toward the speed result. The
+harness:
+
+- runs each configuration on a fresh server with its own volume;
+- warms up, then measures for a fixed time and records every request;
+- runs **interleaved rounds**: each round runs every configuration once, in a
+  shuffled order, with the baseline measured again in each round;
+- fails a run whose trivial read has a median above 10 ms, because then the run
+  measured the network;
+- calls a configuration faster only if its slowest round beats the baseline's
+  fastest round. Anything in between is reported as no result.
+
+## Does it work?
+
+**For what it set out to do, yes.** On this ledger it caught:
+
+- a forged theorem that passed the build and Lean's own axiom report;
+- an optimisation that Lean proves wrong, which conformance then confirmed
+  independently;
+- an optimisation that gave perfect answers but quietly gave up durability;
+- two failures of the benchmark itself, a TCP artefact and a drifting disk,
+  before they became conclusions;
+- several of the agent's own mistakes, including a baseline that wasn't durable.
+
+**What it doesn't do:**
+
+- **It doesn't prove the SQL.** The proofs are about the spec. Conformance compares
+  the real code with the spec on samples, which finds bugs but can't rule them out.
+- **It can't tell you the spec is right.** My review of the spec, and a reviewer's,
+  found four problems that no proof could, because the statements were true about
+  the wrong thing. That review was the most valuable step of the project, and it
+  can't be automated away.
+- **Proofs are expensive.** It took 1,400 lines of proof for a 290-line spec, and
+  many failed attempts. The agent did the work, but someone pays for that time.
+- **It's circular, for now.** The agent wrote both the spec and the code. Part 2
+  breaks that by using a ledger the agent didn't write.
+
+My conclusion: the checker is the cheap, reliable part. The expensive part is a
+spec that's worth checking against.
+
+## Can it become a skill?
+
+Partly, and it's worth being exact about which part.
+
+- **Ready now: the proof checker.** It works on any Lean project that keeps
+  statements in `Spec` and proofs in `Proofs`, and its exit codes and JSON are made
+  for machines. A skill can tell an agent:
+  - write the statement as a `Prop` in the spec, and the proof as a theorem of
+    exactly that type;
+  - run the checker, and report "verified" only when it exits 0;
+  - never edit the spec or its lock, and propose any change as a diff for a person
+    to approve.
+- **Close: claim records and the meaning-first rule.** The format is generic, and
+  the rule fits in a paragraph. The guarantee register covers only SQLite so far.
+  Every other platform needs entries, each with a cited source, before a skill can
+  catch an undeclared drop there.
+- **Not yet: conformance and the benchmark.** The ideas carry over to other
+  systems, but the code doesn't. Each new system needs its spec compiled into a
+  runnable model, plus an adapter that maps operations to the real API. That
+  adapter is per-project engineering, not a skill.
+
+The skill would be a short instruction file plus the command-line tool. I haven't
+built or tested it yet, so this is a plan, not a result. Even when it exists, it can
+make an agent produce evidence, but it can't make the spec right. The rule that only
+a person locks the spec stays.
+
+## What you need to know to use it
+
+**To review what an agent produces with it:**
+
+- **Read a Lean statement:** `∀`, `→`, `∧`, `∨` and list functions. You don't need
+  to read the proofs. You need to read what they prove, because that's where the
+  errors were.
+- **Know the domain.** Judging whether "oldest bill first" should mean creation
+  order or bill date is a business call, not a Lean call.
+- **Know your platform's guarantees:** durability settings, fsync, isolation levels.
+  An undeclared drop looks exactly like a free speed-up.
+- **Know basic measurement:** medians, percentiles, why repetitions are needed, and
+  why a difference smaller than the spread between rounds is no result.
+
+**To extend it:**
+
+- **Lean 4 proving:** induction on lists, `simp` and `omega`, and patience. A proof
+  can take many attempts.
+- **Lake builds, Python, Docker and SQL.**
+- **A habit of breaking your own checks** to make sure the tests fail.
+
+**You don't need** a background in formal methods. The agent wrote every proof
+here, and the checker decided whether each one counts. That division of labour is
+the point.
+
+## Next
+
+Part 2 runs the same checks on a real ledger that someone else wrote. The plan:
+
+1. Draft a spec from its documentation and code.
+2. Have a person review the spec, then lock it.
+3. Build an adapter for conformance.
+4. Add the guarantees of its database to the register.
+
+Every number in this series stays traceable. [The results
+dashboard](/results/gods-hand) shows every round, proof, mutation and finding,
+each read from the raw files of the run, and [how each number was
+made](/results/gods-hand/method).

@@ -1,0 +1,199 @@
+{/* Every figure below comes from the God's Hand evidence files: run 20261114T210922Z (the owner's run on a locked spec),
+    evidence/findings.json, and the Nagle and fsync experiment outputs. Screenshots are from the owner's terminal. */}
+
+AI agents now write a lot of my code, and they make claims faster than I can
+check them. *"This keeps the books balanced."* *"Cap the query at 20 rows; payments
+rarely cover more."* *"WAL with synchronous=NORMAL is the standard fast setting."*
+Most of these claims are fine. The wrong ones stay silent until they cost money.
+
+In [an earlier post](/blog/the-llm-is-not-allowed-to-state-facts) my rule was that
+the LLM isn't allowed to state facts. This project goes a step further: **an
+agent's claim isn't accepted until a tool produces evidence for it.** That evidence
+is a proof, a counterexample or a measurement, and anyone can check it without
+trusting me or the agent.
+
+I built it with an AI agent, on a small ledger: parties, dated bills, payments,
+advances, and reversals. The ledger has a formal spec in Lean 4, a real HTTP API on
+SQLite, and a checker that sits between the agent's claims and production.
+
+## The rule: meaning first, speed second
+
+An optimisation claim usually bundles two things together.
+
+- **Meaning:** results stay correct and the rules still hold. That can be checked,
+  with Lean proofs and by comparing the real code against an executable spec.
+- **Speed:** it's faster. That can only be *measured*, and a measurement depends on
+  the hardware and the noise.
+
+So the order is fixed. A claim's meaning is judged first, with no timing involved.
+Only claims that pass get timed. A fast optimisation that breaks a rule is
+rejected, and no benchmark can bring it back.
+
+## Part 1: proofs can be faked, so I tried
+
+Lean checks proofs mechanically, but "it compiles" isn't "it's true". Before
+trusting the checker, the agent and I tried to fool it, 13 different ways.
+
+![Thirteen attempts to fake a proof, each rejected, with the check that caught it](/blog/gods-hand/cheats.png)
+
+The one that changed the design was a "theorem" proving `a = a + 1` for every
+integer. It was added with Lean's kernel check switched off. **It built cleanly, and
+Lean's own `#print axioms` said it "does not depend on any axioms".** A pipeline that
+trusted a green build and an axiom check would have accepted a false theorem. Only
+replaying the compiled proof through the kernel caught it. Now two independent
+kernels have to agree, Lean's own and a separate checker called con-leche.
+
+A check is only worth something if it can fail. So I removed each check in turn,
+29 of them, and confirmed that its tests then failed. All 29 did.
+
+![29 of 29 mutations caught by the tests](/blog/gods-hand/mutations.png)
+
+## Part 2: my review caught what the proofs couldn't
+
+The agent drafted the spec, and Lean proved every statement in it. Then I read it,
+and it was wrong in ways no proof could catch:
+
+- **Advances weren't applied.** Pay 100, then bill 80: the bill stayed open while the
+  balance said −20.
+- **The spec was looser than the code.** It allowed negative amounts that the API
+  rejected.
+- **"Oldest bill first" meant creation order,** not bill date.
+- **The settlement guarantees were too weak.** A reviewer pointed out that an
+  implementation that *allocates nothing at all* satisfied both of them.
+
+None of these were false statements. They were true statements about the wrong
+thing, and that's the gap formal proof can't close on its own. The second version
+of the spec proves 14 claims. Among them: settlement always settles *the maximum
+possible*, pays oldest bills first, never overpays a bill, and never leaves a party
+with both an open bill and an unused advance. Reversals restore the balance
+exactly. One party's operations never change another party's data.
+
+The spec is only official once I approve it. Approving it records its fingerprint,
+so if anyone (including the agent) changes one character, every proof is rejected.
+
+![The spec, locked by me](/blog/gods-hand/spec-locked.png)
+
+![All 14 claims verified, each through both kernels](/blog/gods-hand/prove-summary.png)
+
+## Part 3: six optimisation claims, judged
+
+Six optimisations of the kind an agent proposes. Each was checked against the
+compiled spec on the same 100 random sequences of operations, up to 4,738
+operations per claim, including date ties, reversals and invalid input. (A
+sequence stops at its first disagreement, so a claim that fails is compared on
+fewer.) Every verdict, with its full evidence, is on the [meaning
+tab](/results/gods-hand/meaning) of the dashboard.
+
+![Every verdict, with its reasons](/blog/gods-hand/check.png)
+
+- **Accepted (4):**
+  - an index on party;
+  - reusing connections;
+  - WAL journaling;
+  - a cached balance column. Lean proves the cached balance always equals the
+    true balance, through every bill, payment and reversal.
+- **Rejected, "read at most 20 open bills":** caught three independent ways.
+  1. There's no proof it's safe.
+  2. Lean proves it's false.
+  3. The real code disagreed with the spec in 27 of 100 random runs.
+
+  The shrinker reduced the failure to 22 operations: 21 bills, then one payment. The
+  capped version leaves money unapplied while a bill stays unpaid.
+
+  ![Lean evaluating the optimisation on its counterexample](/blog/gods-hand/counterexample.png)
+- **Rejected, WAL with synchronous=NORMAL:** its results were *perfect*, with zero
+  differences in 4,738 operations. It was rejected anyway, because the checker reads
+  the live database's settings, and SQLite's own documentation says such a commit
+  "might roll back following a power loss." The agent never said it was giving up
+  durability. **Every functional test passes with this setting.** That's what makes
+  an undeclared trade-off dangerous.
+
+## Part 4: the benchmark lied before the code did
+
+I learned the most here, because the measuring instrument failed before the code
+did.
+
+**My first benchmark measured TCP, not the database.** Median latency sat near 45 ms
+for almost every operation, in every configuration. The server wrote headers and
+body as two small packets, and the second waited for a delayed acknowledgement. A
+controlled experiment confirmed it: a balance read went from 47.5 ms to 1.5 ms at
+the median, once the fix was in. Any conclusion drawn from that run was noise
+around a 40 ms floor. The harness now flags any run where a trivial read is slower
+than 10 ms.
+
+**The disk was the second problem.** I measured the same baseline twice, minutes
+apart, and the medians were 186.8 and 263.6 requests per second. A bare fsync probe,
+with no database at all, found the WSL2 virtual disk completing anywhere from 145 to
+600 syncs per second on its own. So the final run measures in **interleaved rounds**:
+every configuration once per round, in a shuffled order, with the baseline
+re-measured in each round.
+
+**And the rule for calling a result is strict.** A configuration counts as faster
+only if its slowest round beats the baseline's fastest round. By that rule:
+
+- **The accepted set is 5.03× the baseline:** a median of 1,265.5 against 251.4
+  requests per second. Even its slowest round, 873.4, beats the baseline's best,
+  279.9.
+- **WAL alone is 1.93×.** Connection reuse is about 1.2×, a small margin, but
+  consistent.
+- **The index and the cached balance, on their own, are inside the noise.** In the
+  slow rounds the writes stalled: the median bill or payment took 26 to 45 ms
+  instead of about 8 ms. The median read stayed under a millisecond, but the
+  slowest 1% of reads took up to 2.9 seconds, which fits reads waiting for the
+  stalled writes to release SQLite's lock. Under WAL, where readers don't wait
+  for writers, the slowest reads stayed in single-digit milliseconds. The
+  per-second counts show stalls of several seconds starting and stopping mid-run.
+  That's the disk, not the index. The honest call is "no result", not "slower".
+- **WAL with synchronous=NORMAL was 3.21×.** That was the speed on offer, and it
+  wasn't taken.
+
+![Before and after, measured in interleaved rounds](/blog/gods-hand/after.png)
+
+Every evidence file of the run has a fingerprint, and all 33 matched when I
+re-checked them.
+
+## Part 5: the agent's own mistakes
+
+The agent that built this made mistakes too, and the tooling caught several of
+them:
+- Its first baseline used a database setting that SQLite documents as "not
+  necessarily durable across a power loss". The durability check rejected the
+  baseline itself.
+- It tried to approve its own draft spec, and a safety check blocked it. Only I
+  lock the spec.
+- It broke a claim file with a careless find-and-replace. It added a test for every
+  claim file only after I hit the error.
+
+Every one of these is in the project's findings log, next to the successes. 27
+entries so far.
+
+## What I'd tell a team adopting coding agents
+
+1. **Split every claim into meaning and speed,** and never let a benchmark argue for
+   a change that broke a rule.
+2. **Make agents declare what they drop,** then check the running system for drops
+   they didn't declare.
+3. **A green build isn't evidence.** A proof checker can be fooled, so attack it with
+   forgeries before you trust it.
+4. **Proof doesn't replace review.** Every statement was true; three of them were
+   about the wrong thing. A person still has to read the spec.
+5. **Validate the instrument before the result.** Both of my big benchmark problems
+   were in the harness, not in the code.
+
+## Limits
+
+- The spec is a model. Comparing the real code with it samples behaviour; it
+  doesn't prove the SQL.
+- Everything ran on one laptop, in a WSL2 VM, against a ledger the agent built.
+  The measurements expire in 90 days.
+- The ledger is deliberately small. It has no tenants, taxes, credit notes or
+  partial refunds.
+
+**Next:** the same checks, on a real ledger codebase that the agent didn't write.
+That removes the last circularity: right now, the agent wrote both the spec and
+the code it's checked against.
+
+**The evidence, in full:** every round, every test, every proof and every
+mutation is in [the results dashboard](/results/gods-hand). Each number on it is
+read straight from the run's files when the site is built. You can download every
+file from the page, and the site checks each one against its SHA-256 fingerprint.

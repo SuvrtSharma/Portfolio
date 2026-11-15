@@ -29,6 +29,8 @@ export interface ThemeVocabulary {
   graveyardTitle: string;
   harborTitle: string;
   journalTitle: string;
+  /** Eyebrow for the results dashboards ("Soundings": measurements taken). */
+  resultsTitle: string;
   mapPrompt: string;
 }
 

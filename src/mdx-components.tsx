@@ -65,6 +65,26 @@ const components: MDXComponents = {
     />
   ),
   hr: () => <hr className="my-8 border-gold/15" />,
+  // Screenshots are often wider than the column, so each one opens full size.
+  // Spans, not a <figure>, because Markdown puts images inside a paragraph.
+  img: ({ src, alt = "" }: ComponentPropsWithoutRef<"img">) => {
+    const href = typeof src === "string" ? src : "";
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener"
+        className="group my-6 block overflow-hidden rounded-lg border border-gold/15 bg-black transition-colors hover:border-gold/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element -- Markdown images have no intrinsic size for next/image */}
+        <img src={href} alt={alt} loading="lazy" className="block h-auto w-full" />
+        <span className="flex items-start justify-between gap-3 border-t border-gold/15 bg-ocean-panel px-3 py-2 text-xs text-muted-foreground">
+          <span className="text-pretty">{alt}</span>
+          <span className="shrink-0 text-gold group-hover:underline">Full size ↗</span>
+        </span>
+      </a>
+    );
+  },
 };
 
 export function useMDXComponents(): MDXComponents {
