@@ -1,0 +1,196 @@
+{/* Every figure below comes from the part 2 evidence files, published with the results dashboard at
+    /results/retroactive-ledger: the checker's verdicts against the owner's lock (2026-11-24), the counterexamples
+    and code reproductions (evidence/part2/published-2026-11-24), the optimisation tests and bite checks
+    (rebuild-from-earliest-2026-11-24) and the speed run (speed-2026-11-24). */}
+
+In [part 1](/blog/making-ai-agents-prove-their-claims) an AI agent built a small
+ledger, proposed six optimisations, and a checker judged each one: Lean 4 proofs
+for what it means, a benchmark for how fast it is, in that order. It worked, but
+the agent had written both the code and the rules it was judged by. That's a
+closed loop.
+
+So part 2 needed a ledger nobody on this project wrote. I picked one I had a
+reason to read closely: **Precise Ledger Pro**, a loan ledger with a Java
+service, a Haskell port, and a draft paper describing how it corrects the ledger
+when events arrive late. It was written by a mentor of mine.
+
+What made it a good target is the paper itself. It is candid about where it is
+unfinished. Its future-work section names, as the first open direction, *"a
+formal proof of convergence and correctness for recursively nested retroactive
+events"*. The second is benchmarking on synthetic ledgers. Those are exactly the
+two things this toolkit is for. So that's what I set out to do. The first
+findings went to the author before anything else, as failing tests in a pull
+request.
+
+## The problem the paper takes on
+
+A loan ledger records disbursals, fees and payments, each with the date it takes
+effect. The trouble is that events don't always arrive in that order. A payment
+made on Monday is recorded on Thursday. A disbursal turns out to be a mistake and
+is reversed a week later. Every balance and every allocation after that date may
+now be wrong.
+
+The safe answer is a **full rebuild**: re-apply every event in date order from
+the start. It is correct by construction, and it gets slower as the ledger grows.
+The paper's answer is **fork-and-sync**: copy the ledger at the late event's
+date, replay what follows on the copy, and post individually traced adjustments
+for any difference. It is a real engineering idea with sensible goals: correct
+balances, an untouched audit trail, every correction traced to its cause, and
+support for further corrections later. And the paper specifies it as clear,
+step-by-step pseudocode, which is what made checking it possible at all.
+
+In this project's terms, fork-and-sync is an **optimisation claim**: it promises
+the full rebuild's answer at a lower cost. Part 1's rule applies. Check the
+meaning first, then measure the speed.
+
+## Part 1: rules from outside the code
+
+The first step was deliberately *not* to read the code. I wrote down what a
+production ledger has to do, from published practice and regulation, and turned
+those rules into a model in Lean 4. The model has two halves: the full rebuild,
+which is the definition of "right", and fork-and-sync, following the paper's
+pseudocode step by step.
+
+Every place where the pseudocode left a choice open became a named, written-down
+reading. Then a person (me, as the owner) reviewed the model and locked it. The
+lock is a set of SHA-256 fingerprints. Change one character and every proof is
+rejected until the model is reviewed again. A proof only counts once the checker
+accepts it against that lock, with two independent kernels and a test that the
+proof's assumptions can actually be met.
+
+Against the lock, **7 proofs are accepted**: some that the rebuild behaves well,
+some that fork-and-sync doesn't always match it, and two about an optimisation
+I'll come to.
+
+## Part 2: what the model found
+
+On short sequences of events, the model of fork-and-sync and the full rebuild
+mostly agree, but not always. The checker accepts three proofs of disagreement,
+each a concrete counterexample. The simplest has three events: a disbursal of
+10 dated day 2, then two that arrive after it but are dated earlier, a disbursal
+of 10 on day 0 and a payment of 20 on day 1. Both versions end with the same net
+position. But fork-and-sync splits it differently between principal and excess,
+because the copy it replays on keeps a stored running balance that already
+includes the day 2 disbursal.
+
+I was careful about what that does and doesn't show, and a reviewer made me more
+careful still.
+
+- **It is a statement about my model.** Calling it a property of the paper rests
+  on a step-by-step mapping from the paper's pseudocode to the model, and that
+  case also depends on two readings the paper leaves open. The mapping is
+  published alongside the results.
+- **One counterexample is mine, not the paper's.** It involves two events on the
+  same date. My rules order those by id; the paper orders them by arrival. That
+  case disagrees with *my* rule, and the paper never promised otherwise.
+- **The other two cases show up in the real code.** Run through the project's own
+  Haskell port and Java service, the same events give the same kind of
+  difference, compared against those engines' own on-time results.
+
+## Part 3: four events that don't finish
+
+The paper's limitations section already warns that a missing exclusion in the
+reversal replay *"would cause unbounded recursion"*. Measuring speed led me
+straight into that area.
+
+The two implementations handle a late event by replaying what followed it, and a
+reversal by replaying what was recorded after the event it reverses. With a
+reversal and two late events, those replays can contain each other. Four events
+are enough:
+
+1. a disbursal, dated day 6;
+2. its reversal, dated day 9;
+3. a disbursal recorded late, dated day 4;
+4. a payment recorded late, dated day 2.
+
+In the model, the replay never settles: it runs out of every recursion budget I
+tried, from 8 to 512. Take away any one of the three ingredients and it finishes.
+The Haskell port runs out of memory, and the Java service runs out of stack, its
+two replay paths calling each other more than 200 times in the stack trace.
+
+That is consistent with never finishing, but **it isn't a proof that it never
+finishes**, and I've been careful to say so everywhere. It is also an edge case:
+without reversals in the mix, fork-and-sync finished on every workload I gave it.
+
+## Part 4: an optimisation that keeps its meaning
+
+Finding what's wrong is half the job. The other half is a cheaper rebuild that is
+*right*.
+
+The idea is simple. When one event arrives late, or one is reversed, nothing
+before it in date order changes. So keep those effects, and the running balance
+at that point, and re-apply only what follows. The claim is that this gives
+**exactly** the full rebuild's answer: the same balance and the same effect for
+every event. It is stated in Lean for both a late arrival and a reversal, and
+proved for both.
+
+Before proving it, I tested it on 82,048 cases, and it never failed. Then I made
+sure the tests could fail, by running plausible wrong versions on the same cases.
+All six fail somewhere. The most instructive is the tempting shortcut for a
+reversal: subtract the reversed event's own effect and leave everything else
+alone. It is right most of the time and wrong in 5,004 of 27,120 cases, whenever
+a later payment's allocation depended on the balance. "Re-apply what follows"
+isn't caution. It is required.
+
+## Part 5: how much faster
+
+Then the speed, on the project's own Haskell port, unmodified. Three engines, the
+same 32 workloads, and part 1's method: a discarded warm-up, three timed rounds in
+rotated order, medians, and a strict rule for calling anything faster.
+
+- Rebuilding from the affected point gave the full rebuild's answer on all 32
+  workloads.
+- It was faster on **all 32**: a median of **11.86×**, from 1.96× to 155.94×. The
+  gain is largest when late events are recent, because less needs re-applying.
+- Fork-and-sync's saving is real. Where it finishes, without reversals, it beat
+  the full rebuild on 12 of 16 workloads. What it doesn't do is reliably give the
+  same answer.
+
+Two honest caveats. The project's ledger keeps entries in a plain list, so adding
+one costs more as the ledger grows. Every engine pays that, and it shapes the
+absolute numbers. And it's one laptop, one run. The measurements carry an expiry
+date.
+
+## Part 6: the reviews caught me too
+
+The most useful thing this project produced may be the record of my own mistakes,
+each caught by a review or by the checker:
+
+- **A theorem that could never apply.** I proved the rebuild's balance
+  independent of arrival order "assuming" a property that is false for events in
+  general. True, and useless. The checker now insists on a witness that a proof's
+  assumptions can hold.
+- **A claim that couldn't fail.** My first "payments are conserved" statement held
+  for any allocation at all, even one that paid seven times the amount to fees.
+  Strengthened, it now rejects all three absurd allocations I tried.
+- **A fix that broke something else.** My first fix for how adjustments are dated
+  used events that hadn't arrived yet. An independent review spotted it. A test
+  then counted 7,944 broken cases out of 119,100, against none before.
+- **Words that said more than the evidence.** I wrote "follows the paper
+  literally" when it also depended on readings the paper leaves open. Corrected,
+  in public.
+
+## What I'd take from it
+
+- **Write the rules before reading the code.** If the rules come from the code,
+  they can't disagree with it.
+- **A counterexample is a gift.** One short, concrete case is worth more than a
+  long argument, to the author as much as to anyone.
+- **Check the assumptions, not just the proof.** A proof with an impossible
+  premise is true and says nothing.
+- **Make the tests fail on purpose.** If a test can't fail, it isn't protecting
+  anything.
+- **Have someone else review it.** Each review found something the proofs didn't.
+
+## Limits
+
+The model covers fixed amounts in one currency, with no interest yet. The proofs
+are about the model, and connecting them to the paper rests on a published
+mapping and two readings. The four-event case is not proved to run forever. The
+speed figures come from one machine and expire. And the paper is a draft: some of
+this may already be different by the time you read it.
+
+Every figure here comes from a published evidence file, with its SHA-256, on the
+[results dashboard](/results/retroactive-ledger). My thanks to the author for
+publishing the design in enough detail to check, and for taking the findings as
+they were meant.

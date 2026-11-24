@@ -83,7 +83,7 @@ for (const file of FILES) {
 }
 
 const source = {
-  repository: "God's Hand (private)",
+  repository: "Burden of Proof (private)",
   commit,
   checked_at: checkedAt,
   copied_from: "the commit (git show HEAD:<path>), not the working tree",

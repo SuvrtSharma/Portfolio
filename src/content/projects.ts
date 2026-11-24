@@ -3,17 +3,17 @@ import type { Project } from "@/types";
 export const projects: Project[] = [
   {
     slug: "gods-hand",
-    title: "God's Hand: evidence for AI agents' claims",
-    shortTitle: "God's Hand",
+    title: "Burden of Proof: evidence for AI agents' claims",
+    shortTitle: "Burden of Proof",
     tagline:
       "Turns what AI coding agents claim about software into proofs, counterexamples and measurements.",
     description:
-      "AI agents claim an optimisation is safe, or faster, with the same confidence whether it is true or not. God's Hand checks the claim before anyone believes it. It splits each claim into meaning, checked with Lean 4 proofs, a live guarantee check and conformance to an executable spec, and speed, measured only after the meaning passes. Part 1 checked a ledger API an agent built. Part 2 checks a real ledger it didn't write: an open-source loan ledger and its draft paper's fork-and-sync algorithm.",
+      "AI agents claim an optimisation is safe, or faster, with the same confidence whether it is true or not. Burden of Proof checks the claim before anyone believes it. It splits each claim into meaning, checked with Lean 4 proofs, a live guarantee check and conformance to an executable spec, and speed, measured only after the meaning passes. Part 1 checked a ledger API an agent built. Part 2 checks a real ledger it didn't write: an open-source loan ledger and its draft paper's fork-and-sync algorithm.",
     highlights: [
       "Lean 4 proofs checked by two independent kernels, against a spec only a person can lock",
       "Every claim split into meaning (checked) and speed (measured), in that order",
       "Caught a forged proof, a refuted optimisation and an undeclared durability drop",
-      "Proved counterexamples to a published ledger algorithm, reproduced in its own code",
+      "Proved where a published ledger algorithm and a full rebuild part ways, as modelled, and a cheaper rebuild that keeps its meaning",
       "Every published figure traces to a raw evidence file and its SHA-256",
     ],
     tech: ["Lean 4", "Python", "SQLite", "Haskell", "Java", "Docker", "WSL2"],

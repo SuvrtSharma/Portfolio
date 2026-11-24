@@ -169,8 +169,10 @@ harness:
   can't be automated away.
 - **Proofs are expensive.** It took 1,400 lines of proof for a 290-line spec, and
   many failed attempts. The agent did the work, but someone pays for that time.
-- **It's circular, for now.** The agent wrote both the spec and the code. Part 2
-  breaks that by using a ledger the agent didn't write.
+- **It was circular.** The agent wrote both the spec and the code.
+  [Part 2](/blog/a-ledger-i-didnt-write) removed half of that: the code came from
+  someone else, and the rules from published practice. The agent still drafted
+  the model, which is why a person reviews and locks it.
 
 My conclusion: the checker is the cheap, reliable part. The expensive part is a
 spec that's worth checking against.
@@ -228,12 +230,19 @@ the point.
 
 ## Next
 
-Part 2 runs the same checks on a real ledger that someone else wrote. The plan:
+The plan for part 2 was to run the same checks on a ledger someone else wrote.
+[It's written up here](/blog/a-ledger-i-didnt-write). It went differently from
+the plan, and the differences are worth stating:
 
-1. Draft a spec from its documentation and code.
-2. Have a person review the spec, then lock it.
-3. Build an adapter for conformance.
-4. Add the guarantees of its database to the register.
+1. **The spec came from outside the code, not from it.** Rules drafted from a
+   project's own code can't disagree with that code, so I wrote them from
+   published practice and regulation instead.
+2. **A person reviewed it and locked it**, as planned. An outside review then
+   found mistakes in it, and the spec was corrected and locked again.
+3. **Conformance testing isn't done yet.** The counterexamples were run through
+   the project's own code by hand-written tests instead.
+4. **The database guarantees aren't in the register yet.** Part 2 needed none:
+   its findings are in the algorithm, not in storage.
 
 Every number in this series stays traceable. [The results
 dashboard](/results/gods-hand) shows every round, proof, mutation and finding,

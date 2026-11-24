@@ -18,6 +18,16 @@ function cs360(
  */
 export const posts: Post[] = [
   {
+    slug: "a-ledger-i-didnt-write",
+    title: "A ledger I didn't write: checking a paper's open question with Lean 4",
+    summary:
+      "A draft paper names a formal proof for nested late events as open work. I modelled its fork-and-sync in Lean 4, found where it and a full rebuild part ways, proved a cheaper rebuild exact, and timed it in the project's own code.",
+    date: "2026-11-24",
+    tags: ["AI", "Lean 4", "Formal Methods", "Ledgers", "Benchmarking"],
+    readingMinutes: 9,
+    project: "gods-hand",
+  },
+  {
     slug: "how-the-claim-checker-is-built",
     title: "How the claim checker is built, whether it works, and whether it can be a skill",
     summary:
@@ -25,7 +35,6 @@ export const posts: Post[] = [
     date: "2026-11-15",
     tags: ["AI", "Lean 4", "Formal Methods", "Agent Skills", "Benchmarking"],
     readingMinutes: 10,
-    draft: true,
     project: "gods-hand",
   },
   {
@@ -36,7 +45,6 @@ export const posts: Post[] = [
     date: "2026-11-07",
     tags: ["AI", "Lean 4", "Formal Methods", "SQLite", "Benchmarking"],
     readingMinutes: 8,
-    draft: true,
     project: "gods-hand",
   },
   {

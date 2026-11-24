@@ -6,7 +6,7 @@
 export interface ResultSet {
   slug: string;
   title: string;
-  /** Compact name for the dashboard switcher and cards ("God's Hand"). */
+  /** Compact name for the dashboard switcher and cards ("Burden of Proof"). */
   shortTitle: string;
   /** The question the results answer, in one sentence. */
   question: string;

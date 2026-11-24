@@ -10,6 +10,7 @@ export const postLoaders: Record<
   string,
   () => Promise<{ default: ComponentType }>
 > = {
+  "a-ledger-i-didnt-write": () => import("./a-ledger-i-didnt-write.mdx"),
   "making-ai-agents-prove-their-claims": () =>
     import("./making-ai-agents-prove-their-claims.mdx"),
   "how-the-claim-checker-is-built": () =>

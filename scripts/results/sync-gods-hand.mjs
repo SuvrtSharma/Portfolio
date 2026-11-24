@@ -51,7 +51,7 @@ for (const file of FILES) {
 }
 
 const source = {
-  repository: "God's Hand (private)",
+  repository: "Burden of Proof (private)",
   commit,
   uncommitted_changes: dirty ? dirty.split("\n") : [],
   run: RUN,
