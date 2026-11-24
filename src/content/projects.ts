@@ -20,6 +20,7 @@ export const projects: Project[] = [
     status: "in-progress",
     year: 2026,
     links: [
+      { label: "Code and skills", href: "https://github.com/SuvrtSharma/burden-of-proof", kind: "repo" },
       { label: "Part 1 results", href: "/results/gods-hand", kind: "case-study" },
       { label: "Part 2 results", href: "/results/retroactive-ledger", kind: "case-study" },
     ],
