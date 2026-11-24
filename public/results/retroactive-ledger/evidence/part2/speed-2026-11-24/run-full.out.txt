@@ -1,0 +1,425 @@
+ENV_HOST 6.18.58.1-microsoft-standard-WSL2
+The Glorious Glasgow Haskell Compilation System, version 9.6.6
+model name	: Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz
+4
+2026-11-24T09:34:00Z
+04e618b2634be370848b1caf58e34dd3a9fd95e88e54d10d6b1263ce0f315633  /repro/Bench.hs
+ENV {"mode": "full", "rounds": 3, "warmup_rounds": 1, "engines": ["forkSync","full","partial"], "limit_seconds": 60, "rule": "an engine that does not finish within the limit in the warm-up round is not timed again"}
+CHECK {"config": "n=100 late=0.10 Recent rev=0.00", "activities": 100, "reversals": 0, "backdated": 10, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=100 late=0.10 Deep rev=0.00", "activities": 100, "reversals": 0, "backdated": 10, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=100 late=0.50 Recent rev=0.00", "activities": 100, "reversals": 0, "backdated": 61, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=100 late=0.50 Deep rev=0.00", "activities": 100, "reversals": 0, "backdated": 53, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=200 late=0.10 Recent rev=0.00", "activities": 200, "reversals": 0, "backdated": 30, "partial_equals_full": true, "forkSync_equals_full": true}
+CHECK {"config": "n=200 late=0.10 Deep rev=0.00", "activities": 200, "reversals": 0, "backdated": 23, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=200 late=0.50 Recent rev=0.00", "activities": 200, "reversals": 0, "backdated": 106, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=200 late=0.50 Deep rev=0.00", "activities": 200, "reversals": 0, "backdated": 106, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=400 late=0.10 Recent rev=0.00", "activities": 400, "reversals": 0, "backdated": 40, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=400 late=0.10 Deep rev=0.00", "activities": 400, "reversals": 0, "backdated": 38, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=400 late=0.50 Recent rev=0.00", "activities": 400, "reversals": 0, "backdated": 187, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=400 late=0.50 Deep rev=0.00", "activities": 400, "reversals": 0, "backdated": 181, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=800 late=0.10 Recent rev=0.00", "activities": 800, "reversals": 0, "backdated": 92, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=800 late=0.10 Deep rev=0.00", "activities": 800, "reversals": 0, "backdated": 84, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=800 late=0.50 Recent rev=0.00", "activities": 800, "reversals": 0, "backdated": 392, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=800 late=0.50 Deep rev=0.00", "activities": 800, "reversals": 0, "backdated": 402, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=100 late=0.10 Recent rev=0.05", "activities": 100, "reversals": 4, "backdated": 12, "partial_equals_full": true, "forkSync_equals_full": false}
+CHECK {"config": "n=100 late=0.10 Deep rev=0.05", "activities": 100, "reversals": 4, "backdated": 9, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=100 late=0.50 Recent rev=0.05", "activities": 100, "reversals": 4, "backdated": 50, "partial_equals_full": true, "forkSync_equals_full": "did not finish (time limit)"}
+CHECK {"config": "n=100 late=0.50 Deep rev=0.05", "activities": 100, "reversals": 4, "backdated": 50, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=200 late=0.10 Recent rev=0.05", "activities": 200, "reversals": 13, "backdated": 21, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=200 late=0.10 Deep rev=0.05", "activities": 200, "reversals": 10, "backdated": 17, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=200 late=0.50 Recent rev=0.05", "activities": 200, "reversals": 13, "backdated": 90, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=200 late=0.50 Deep rev=0.05", "activities": 200, "reversals": 10, "backdated": 101, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=400 late=0.10 Recent rev=0.05", "activities": 400, "reversals": 24, "backdated": 31, "partial_equals_full": true, "forkSync_equals_full": "did not finish (time limit)"}
+CHECK {"config": "n=400 late=0.10 Deep rev=0.05", "activities": 400, "reversals": 26, "backdated": 38, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=400 late=0.50 Recent rev=0.05", "activities": 400, "reversals": 24, "backdated": 175, "partial_equals_full": true, "forkSync_equals_full": "did not finish (time limit)"}
+CHECK {"config": "n=400 late=0.50 Deep rev=0.05", "activities": 400, "reversals": 26, "backdated": 190, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=800 late=0.10 Recent rev=0.05", "activities": 800, "reversals": 42, "backdated": 74, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=800 late=0.10 Deep rev=0.05", "activities": 800, "reversals": 40, "backdated": 71, "partial_equals_full": true, "forkSync_equals_full": "did not finish (time limit)"}
+CHECK {"config": "n=800 late=0.50 Recent rev=0.05", "activities": 800, "reversals": 42, "backdated": 384, "partial_equals_full": true, "forkSync_equals_full": "did not finish (heap overflow)"}
+CHECK {"config": "n=800 late=0.50 Deep rev=0.05", "activities": 800, "reversals": 40, "backdated": 378, "partial_equals_full": true, "forkSync_equals_full": "did not finish (time limit)"}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.005032, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.029642, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.001672, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.009876, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.027096, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.003434, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.016045, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.027667, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.003103, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.036252, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.026046, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.010725, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.009537, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.212409, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.006912, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.111003, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.201677, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.024377, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.037762, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.212916, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.011013, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.620444, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.205205, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.061843, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.060366, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 1.673199, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.028532, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.385153, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 1.484039, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.115271, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.137964, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 1.580580, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.035756, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 1.735102, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 1.579303, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.414987, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.274912, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 12.233635, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.075873, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 3.053801, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 12.115779, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.889642, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.582452, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 12.652707, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.186368, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 17.217005, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 12.810086, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 3.159150, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.005509, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.022343, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.001328, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.028283, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.005413, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.024759, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.003005, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.055520, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.008772, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.156223, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.009168, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.161694, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.023434, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.178914, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.010856, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.167915, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.054236, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 1.321613, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.044970, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 1.229915, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.155960, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 1.255525, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.058605, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 1.289082, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.476334, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "failed", "error": "heap overflow"}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 10.154864, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.487322, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 11.332715, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.965472, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 11.843118, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.555978, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "outcome": "timed out"}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 10.909240, "checksum": null, "timed_out": false}
+TIME {"round": 0, "warmup": true, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 3.174116, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.033768, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.001938, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.005140, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.030391, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.004549, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.010385, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.041245, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.003446, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.014013, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.026508, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.016129, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.036258, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.223481, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.006387, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.009341, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.211863, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.025602, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.108974, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.230278, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.012115, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.044158, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.214864, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.062569, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.644299, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 1.666270, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.020855, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.065109, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 1.666584, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.109273, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.337816, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 1.624676, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.038754, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.145175, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 1.690231, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.467175, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 1.752869, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 13.260987, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.082615, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.312959, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 12.865029, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.972627, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 3.241587, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 12.949057, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.148349, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.652661, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 13.567830, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 3.388189, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 17.535671, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.026090, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.001631, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.005893, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.023346, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.004788, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.024117, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.003020, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.024850, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.008017, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.194659, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.008231, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.170966, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.022500, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.158118, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.011659, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.165048, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.059435, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 1.276148, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.049162, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 1.375272, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.188170, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 1.397710, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.071091, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 1.328569, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.521653, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 10.867393, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.463293, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 10.253362, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.986917, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 10.349858, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.548013, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 10.452418, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 3.008167, "checksum": null, "timed_out": false}
+TIME {"round": 1, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.001853, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.006018, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.026511, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.003616, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.010324, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.025774, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.003420, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.013636, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.027060, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.013593, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.038240, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.026937, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.005955, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.009429, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.211604, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.032106, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.125907, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.206938, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.012570, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.037612, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.210458, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.075679, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.636831, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.207191, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.020610, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.064509, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 1.550895, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.115690, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.340505, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 1.567793, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.038790, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.144218, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 1.554478, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.419389, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 1.762762, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 1.580643, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.096820, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.288202, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 12.883083, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 1.005083, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 3.106865, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 12.210288, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.148585, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.610458, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 12.677546, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 3.232979, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 16.986193, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 12.549501, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.001852, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.005856, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.022478, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.004495, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.022928, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.003338, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.023037, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.007200, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.027040, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.008466, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.150408, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.021755, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.157831, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.017851, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.164938, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.062971, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.157381, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.046257, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 1.271628, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.189558, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 1.283157, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.068886, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 1.323537, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.507063, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 1.332684, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.486542, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 10.083382, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.952509, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 10.119401, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.560734, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 10.195770, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 3.069563, "checksum": null, "timed_out": false}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 2, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 10.390357, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.007077, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.027941, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.001474, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.010463, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.026013, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.003318, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.013790, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.026696, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.003901, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.035308, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.026693, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.010625, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.009336, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 0.222305, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.009577, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.121866, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 0.207876, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.024679, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.038248, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 0.214809, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.011080, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 0.636300, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 0.214012, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.062340, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.062124, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 1.551606, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.020047, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 0.356901, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 1.528117, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.109727, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.140419, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 1.575525, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.036760, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 1.732077, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 1.553023, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 0.416190, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "forkSync", "seconds": 0.273662, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "full", "seconds": 12.780869, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.00", "engine": "partial", "seconds": 0.081841, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "forkSync", "seconds": 3.261931, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "full", "seconds": 12.607786, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.00", "engine": "partial", "seconds": 0.955475, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "forkSync", "seconds": 0.625189, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "full", "seconds": 12.585590, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.00", "engine": "partial", "seconds": 0.145791, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "forkSync", "seconds": 17.104938, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "full", "seconds": 12.369296, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.00", "engine": "partial", "seconds": 3.177551, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.005925, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.028173, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.002156, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.022705, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.005225, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.023280, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.002934, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.023736, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=100 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.007254, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.152527, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.008740, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 0.162386, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.021057, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 0.157793, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.011610, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.159320, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=200 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.053393, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 1.224054, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.045673, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 1.374011, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.151967, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 1.243628, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.061851, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 1.284621, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=400 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.555687, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 11.677926, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.476609, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "full", "seconds": 10.426381, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.10 Deep rev=0.05", "engine": "partial", "seconds": 0.930939, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "full", "seconds": 10.107757, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Recent rev=0.05", "engine": "partial", "seconds": 0.543562, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true, "skipped": true}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 10.461304, "checksum": null, "timed_out": false}
+TIME {"round": 3, "warmup": false, "config": "n=800 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 3.047645, "checksum": null, "timed_out": false}
+DONE {"configs": 32}
+2026-11-24T10:12:49Z

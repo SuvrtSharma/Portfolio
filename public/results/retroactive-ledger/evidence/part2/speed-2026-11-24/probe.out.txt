@@ -1,0 +1,21 @@
+The Glorious Glasgow Haskell Compilation System, version 9.6.6
+model name	: Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz
+ENV {"mode": "probe", "limit_seconds": 120}
+TIME {"config": "n=25 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.002859, "checksum": 14771.0000, "timed_out": false}
+TIME {"config": "n=25 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.002846, "checksum": 7615.0000, "timed_out": false}
+TIME {"config": "n=25 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.000213, "checksum": 7615.0000, "timed_out": false}
+TIME {"config": "n=50 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": 0.019118, "checksum": 31824.0000, "timed_out": false}
+TIME {"config": "n=50 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.008843, "checksum": 38470.0000, "timed_out": false}
+TIME {"config": "n=50 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.001301, "checksum": 38470.0000, "timed_out": false}
+TIME {"config": "n=100 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true}
+TIME {"config": "n=100 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.027893, "checksum": 122849.0000, "timed_out": false}
+TIME {"config": "n=100 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.003346, "checksum": 122849.0000, "timed_out": false}
+TIME {"config": "n=200 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true}
+TIME {"config": "n=200 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 0.208168, "checksum": 2741907.0000, "timed_out": false}
+TIME {"config": "n=200 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.008868, "checksum": 2741907.0000, "timed_out": false}
+TIME {"config": "n=400 late=0.10 Recent rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true}
+TIME {"config": "n=400 late=0.10 Recent rev=0.05", "engine": "full", "seconds": 1.336791, "checksum": 7885595.0000, "timed_out": false}
+TIME {"config": "n=400 late=0.10 Recent rev=0.05", "engine": "partial", "seconds": 0.048074, "checksum": 7885595.0000, "timed_out": false}
+TIME {"config": "n=25 late=0.50 Deep rev=0.05", "engine": "forkSync", "seconds": null, "checksum": null, "timed_out": true}
+TIME {"config": "n=25 late=0.50 Deep rev=0.05", "engine": "full", "seconds": 0.004045, "checksum": 6832.0000, "timed_out": false}
+TIME {"config": "n=25 late=0.50 Deep rev=0.05", "engine": "partial", "seconds": 0.000241, "checksum": 6832.0000, "timed_out": false}

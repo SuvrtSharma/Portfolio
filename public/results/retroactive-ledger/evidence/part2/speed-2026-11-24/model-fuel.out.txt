@@ -1,0 +1,10 @@
+[(8, true), (16, true), (32, true), (64, true), (128, true), (256, true), (512, true)]
+[(0, false), (1, false), (2, false), (3, false), (4, true)]
+("no reversal", false)
+("no late disbursal", false)
+("no late payment", false)
+("rebuild",
+ { fee := 0, principal := 10, excess := 5 },
+ [(1, { fee := 0, principal := 0, excess := 0 }),
+  (3, { fee := 0, principal := 10, excess := 0 }),
+  (4, { fee := 0, principal := 0, excess := 5 })])

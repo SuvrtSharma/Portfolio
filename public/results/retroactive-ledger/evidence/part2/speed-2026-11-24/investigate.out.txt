@@ -1,0 +1,20 @@
+ENV {"mode": "investigate", "limit_seconds": 20}
+RUN {"config": "n=100 late=0.10 Recent rev=0.05", "runner": "forkSync per arrival", "reversals": 10, "backdated": 7, "outcome": "timed out"}
+RUN {"config": "n=100 late=0.10 Recent rev=0.05", "runner": "forkSync one call", "reversals": 10, "backdated": 7, "outcome": "timed out"}
+RUN {"config": "n=25 late=0.50 Deep rev=0.05", "runner": "forkSync per arrival", "reversals": 3, "backdated": 11, "outcome": "timed out"}
+RUN {"config": "n=25 late=0.50 Deep rev=0.05", "runner": "forkSync one call", "reversals": 3, "backdated": 11, "outcome": "timed out"}
+SHRINK {"runner": "forkSync per arrival", "activities": 4, "reversals": 1, "outcome": "failed", "error": "heap overflow"}
+  11: Disbursal, effective 2024-01-06 00:00:11, arrives 2040-01-01 00:00:11
+  18: reverse 11, effective 2024-01-09 00:00:18, arrives 2040-01-01 00:00:18
+  19: Disbursal, effective 2024-01-04 00:00:19, arrives 2040-01-01 00:00:19
+  21: Payment, effective 2024-01-02 00:00:21, arrives 2040-01-01 00:00:21
+RETRY {"runner": "forkSync per arrival", "limit_seconds": 60, "outcome": "failed", "error": "heap overflow"}
+RETRY {"runner": "forkSync per arrival", "limit_seconds": 180, "outcome": "failed", "error": "heap overflow"}
+SHRINK {"runner": "forkSync one call", "activities": 4, "reversals": 1, "outcome": "failed", "error": "heap overflow"}
+  11: Disbursal, effective 2024-01-06 00:00:11, arrives 2040-01-01 00:00:11
+  18: reverse 11, effective 2024-01-09 00:00:18, arrives 2040-01-01 00:00:18
+  19: Disbursal, effective 2024-01-04 00:00:19, arrives 2040-01-01 00:00:19
+  21: Payment, effective 2024-01-02 00:00:21, arrives 2040-01-01 00:00:21
+RETRY {"runner": "forkSync one call", "limit_seconds": 60, "outcome": "failed", "error": "heap overflow"}
+RETRY {"runner": "forkSync one call", "limit_seconds": 180, "outcome": "failed", "error": "heap overflow"}
+DONE {}

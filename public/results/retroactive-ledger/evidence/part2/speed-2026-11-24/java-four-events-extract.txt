@@ -1,0 +1,29 @@
+Extract of java-four-events.log (the full log is kept private: it prints connection details).
+Precise Ledger Pro Java service, upstream 06bb4ce; test GodsHandReproTest#fourEventsThatDoNotFinishInTheHaskellPort.
+Events in arrival order: a = disburse 10 (day 6), r = reverse a (day 9), b = disburse 10 (day 4), c = pay 5 (day 2).
+
+== outcome
+49573:2026-11-24 09:33:13,952 ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-1) HTTP Request to /api/v1/loans/684a0f4c-a6b1-468a-b67a-7f6ce2aa343f/ledger-activities failed, error id: …: java.lang.StackOverflowEr
+50604:[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 18.49 s <<< FAILURE! -- in ledger.api.ledgerevent.GodsHandReproTest
+50607:1 expectation failed.
+50608:Expected status code <200> but was <500>.
+50642:	Suppressed: java.lang.StackOverflowError
+51677:[ERROR]   GodsHandReproTest.fourEventsThatDoNotFinishInTheHaskellPort:61->run:67->post:108 1 expectation failed.
+51678:Expected status code <200> but was <500>.
+51681:[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+
+== stack frames from ledger.* in the StackOverflowError trace, by count
+    436 at ledger.service.LedgerService.applyLedgerActivities(LedgerService.java:53)
+    218 at ledger.service.LedgerService.performBackdatedActivity(LedgerService.java:170)
+    218 at ledger.service.LedgerService.applyLedgerActivity(LedgerService.java:82)
+    218 at ledger.service.LedgerService.applyLedgerActivity(LedgerService.java:80)
+    218 at ledger.common.ledgeractivity.ReversalActivity.generateLedgerEntries(ReversalActivity.java:34)
+    218 at ledger.common.LedgerActivity.applyTo(LedgerActivity.java:55)
+    216 at ledger.service.LedgerService.reverseLedgerActivity(LedgerService.java:210)
+      2 at ledger.service.LoanService.getLedgerActivitiesCreatedSinceButBeforeCreatedAt(LoanService.java:30)
+      2 at ledger.service.LedgerService.reverseLedgerActivity(LedgerService.java:203)
+      2 at ledger.repository.LedgerActivityRepository.getLedgerActivitiesCreatedSinceButBeforeCreatedAt(LedgerActivityRepository.java:36)
+      2 at ledger.repository.LedgerActivityRepository.findFirstByLoanIdAndTypeAndId(LedgerActivityRepository.java:18)
+      1 at ledger.api.ledgerevent.GodsHandReproTest.run(GodsHandReproTest.java:67)
+      1 at ledger.api.ledgerevent.GodsHandReproTest.post(GodsHandReproTest.java:108)
+      1 at ledger.api.ledgerevent.GodsHandReproTest.fourEventsThatDoNotFinishInTheHaskellPort(GodsHandReproTest.java:61)

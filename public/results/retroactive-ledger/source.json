@@ -1,6 +1,6 @@
 {
   "repository": "God's Hand (private)",
-  "commit": "c8a670efc6c737ae4c9499fb505b4d4945a52eb5",
+  "commit": "0d115a1f16352b4b9a7e0abe51ba5cf8a838f89c",
   "checked_at": "2026-11-24T13:56:34+05:30",
   "copied_from": "the commit (git show HEAD:<path>), not the working tree",
   "copied_by": "node scripts/results/sync-retroactive-ledger.mjs",
@@ -30,6 +30,19 @@
     "evidence/part2/rebuild-from-earliest-2026-11-24/bite.lean": "7e1dd0ca49944daca20551d791d7e80b75868e31c03f5252f6af9c06077f5541",
     "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt": "7ccf41c55e177f7f9393ad63ecf40edf0c389a001939820d7f249200a989d0df",
     "evidence/part2/mapping-2026-11-23/readings-needed.txt": "26e0da653f618d06c684b53a84586d681c9564c0c45855168b80ed5b860254d2",
-    "docs/part2/paper-model-mapping.md": "313217f4491ebba859542aedaabb0f53d73870001cbf361accd5ba6ed2a8fb43"
+    "docs/part2/paper-model-mapping.md": "313217f4491ebba859542aedaabb0f53d73870001cbf361accd5ba6ed2a8fb43",
+    "evidence/part2/speed-2026-11-24/NOTES.md": "471cf17d7654304bb059e9f008fd76643cc062d91a7554855130fce63c4806e7",
+    "evidence/part2/speed-2026-11-24/run-full.out.txt": "58370b76518c9f094a2b79314af1f71bcc3bce7861fa1fc01bf7932b3d59885a",
+    "evidence/part2/speed-2026-11-24/run-full.out.summary.json": "efd789fc670fecef2c3cb3979e3faefb8581114a6cb5a44893ca2799c4ac9e7a",
+    "evidence/part2/speed-2026-11-24/run-full.out.summary.txt": "a6e77145f7bf628cef2ced58355520887f1619f4fc75aba6b72804eb280e6827",
+    "evidence/part2/speed-2026-11-24/summarise.py": "835c46d52d3f4346cdef0d167406b0a2ae001bde3d732bbf4cdc4754c76a1cdc",
+    "evidence/part2/speed-2026-11-24/probe.out.txt": "72e3f32903aba7c12a6c1759d61d70ad47517103aa770802f95caa866277dd47",
+    "evidence/part2/speed-2026-11-24/investigate.out.txt": "88885c9fd7d53e038b4f75c14e386a63392b0f746beeec7e62cf5ac48e68535b",
+    "evidence/part2/speed-2026-11-24/model-fuel.lean": "3a1e943513513ce723e9c872cbcac4a0dbd24c3a00e3457cf19dfc864339ed99",
+    "evidence/part2/speed-2026-11-24/model-fuel.out.txt": "482c1e8b5544b8fb419cd7722a046362c2f4b53f9e19495017d140ef37b733b8",
+    "evidence/part2/speed-2026-11-24/java-four-events-extract.txt": "98ba37deed1e463bb386e62dc1dea1b33346d90b262cc46902a13a34bfd21d3e",
+    "evidence/part2/speed-2026-11-24/nontermination.json": "d681f8af581c97d24ecbd0b4dad37ef1dfb99b4f1c232e6a4b3eea1b70341155",
+    "evidence/part2/speed-2026-11-24/make_published.py": "b571709fc959521f6430ab2f6cd73b9e66ea79292e889a456a62bc74ff47c2e1",
+    "tools/plp/haskell/Bench.hs": "04e618b2634be370848b1caf58e34dd3a9fd95e88e54d10d6b1263ce0f315633"
   }
 }

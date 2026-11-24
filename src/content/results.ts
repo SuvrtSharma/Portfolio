@@ -30,7 +30,7 @@ export const resultSets: ResultSet[] = [
     question:
       "A draft paper's fork-and-sync claims to correct a loan ledger for late events without a full rebuild. Does it keep the rebuild's meaning, and is there an optimisation that does?",
     summary:
-      "Precise Ledger Pro's fork-and-sync, modelled in Lean 4 and checked against a full rebuild. Three proved counterexamples, run back through the project's own Haskell and Java code, and a cheaper rebuild proved exact. Every figure is read from the evidence files.",
+      "Precise Ledger Pro's fork-and-sync, modelled in Lean 4 and checked against a full rebuild. Three proved counterexamples, run back through the project's own Haskell and Java code; a cheaper rebuild proved exact and timed in that code; and a four-event case on which fork-and-sync doesn't finish. Every figure is read from the evidence files.",
     date: "2026-11-24",
     tags: ["Lean 4", "Formal methods", "Ledgers", "Counterexamples", "AI agents"],
     posts: [],

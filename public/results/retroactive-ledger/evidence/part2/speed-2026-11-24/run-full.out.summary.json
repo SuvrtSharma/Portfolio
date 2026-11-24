@@ -1,0 +1,1689 @@
+{
+  "source": "run-full.out.txt",
+  "checks": [
+    {
+      "config": "n=100 late=0.10 Recent rev=0.00",
+      "activities": 100,
+      "reversals": 0,
+      "backdated": 10,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 8
+    },
+    {
+      "config": "n=100 late=0.10 Deep rev=0.00",
+      "activities": 100,
+      "reversals": 0,
+      "backdated": 10,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 9
+    },
+    {
+      "config": "n=100 late=0.50 Recent rev=0.00",
+      "activities": 100,
+      "reversals": 0,
+      "backdated": 61,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 10
+    },
+    {
+      "config": "n=100 late=0.50 Deep rev=0.00",
+      "activities": 100,
+      "reversals": 0,
+      "backdated": 53,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 11
+    },
+    {
+      "config": "n=200 late=0.10 Recent rev=0.00",
+      "activities": 200,
+      "reversals": 0,
+      "backdated": 30,
+      "partial_equals_full": true,
+      "forkSync_equals_full": true,
+      "line": 12
+    },
+    {
+      "config": "n=200 late=0.10 Deep rev=0.00",
+      "activities": 200,
+      "reversals": 0,
+      "backdated": 23,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 13
+    },
+    {
+      "config": "n=200 late=0.50 Recent rev=0.00",
+      "activities": 200,
+      "reversals": 0,
+      "backdated": 106,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 14
+    },
+    {
+      "config": "n=200 late=0.50 Deep rev=0.00",
+      "activities": 200,
+      "reversals": 0,
+      "backdated": 106,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 15
+    },
+    {
+      "config": "n=400 late=0.10 Recent rev=0.00",
+      "activities": 400,
+      "reversals": 0,
+      "backdated": 40,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 16
+    },
+    {
+      "config": "n=400 late=0.10 Deep rev=0.00",
+      "activities": 400,
+      "reversals": 0,
+      "backdated": 38,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 17
+    },
+    {
+      "config": "n=400 late=0.50 Recent rev=0.00",
+      "activities": 400,
+      "reversals": 0,
+      "backdated": 187,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 18
+    },
+    {
+      "config": "n=400 late=0.50 Deep rev=0.00",
+      "activities": 400,
+      "reversals": 0,
+      "backdated": 181,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 19
+    },
+    {
+      "config": "n=800 late=0.10 Recent rev=0.00",
+      "activities": 800,
+      "reversals": 0,
+      "backdated": 92,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 20
+    },
+    {
+      "config": "n=800 late=0.10 Deep rev=0.00",
+      "activities": 800,
+      "reversals": 0,
+      "backdated": 84,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 21
+    },
+    {
+      "config": "n=800 late=0.50 Recent rev=0.00",
+      "activities": 800,
+      "reversals": 0,
+      "backdated": 392,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 22
+    },
+    {
+      "config": "n=800 late=0.50 Deep rev=0.00",
+      "activities": 800,
+      "reversals": 0,
+      "backdated": 402,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 23
+    },
+    {
+      "config": "n=100 late=0.10 Recent rev=0.05",
+      "activities": 100,
+      "reversals": 4,
+      "backdated": 12,
+      "partial_equals_full": true,
+      "forkSync_equals_full": false,
+      "line": 24
+    },
+    {
+      "config": "n=100 late=0.10 Deep rev=0.05",
+      "activities": 100,
+      "reversals": 4,
+      "backdated": 9,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 25
+    },
+    {
+      "config": "n=100 late=0.50 Recent rev=0.05",
+      "activities": 100,
+      "reversals": 4,
+      "backdated": 50,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (time limit)",
+      "line": 26
+    },
+    {
+      "config": "n=100 late=0.50 Deep rev=0.05",
+      "activities": 100,
+      "reversals": 4,
+      "backdated": 50,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 27
+    },
+    {
+      "config": "n=200 late=0.10 Recent rev=0.05",
+      "activities": 200,
+      "reversals": 13,
+      "backdated": 21,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 28
+    },
+    {
+      "config": "n=200 late=0.10 Deep rev=0.05",
+      "activities": 200,
+      "reversals": 10,
+      "backdated": 17,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 29
+    },
+    {
+      "config": "n=200 late=0.50 Recent rev=0.05",
+      "activities": 200,
+      "reversals": 13,
+      "backdated": 90,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 30
+    },
+    {
+      "config": "n=200 late=0.50 Deep rev=0.05",
+      "activities": 200,
+      "reversals": 10,
+      "backdated": 101,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 31
+    },
+    {
+      "config": "n=400 late=0.10 Recent rev=0.05",
+      "activities": 400,
+      "reversals": 24,
+      "backdated": 31,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (time limit)",
+      "line": 32
+    },
+    {
+      "config": "n=400 late=0.10 Deep rev=0.05",
+      "activities": 400,
+      "reversals": 26,
+      "backdated": 38,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 33
+    },
+    {
+      "config": "n=400 late=0.50 Recent rev=0.05",
+      "activities": 400,
+      "reversals": 24,
+      "backdated": 175,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (time limit)",
+      "line": 34
+    },
+    {
+      "config": "n=400 late=0.50 Deep rev=0.05",
+      "activities": 400,
+      "reversals": 26,
+      "backdated": 190,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 35
+    },
+    {
+      "config": "n=800 late=0.10 Recent rev=0.05",
+      "activities": 800,
+      "reversals": 42,
+      "backdated": 74,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 36
+    },
+    {
+      "config": "n=800 late=0.10 Deep rev=0.05",
+      "activities": 800,
+      "reversals": 40,
+      "backdated": 71,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (time limit)",
+      "line": 37
+    },
+    {
+      "config": "n=800 late=0.50 Recent rev=0.05",
+      "activities": 800,
+      "reversals": 42,
+      "backdated": 384,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (heap overflow)",
+      "line": 38
+    },
+    {
+      "config": "n=800 late=0.50 Deep rev=0.05",
+      "activities": 800,
+      "reversals": 40,
+      "backdated": 378,
+      "partial_equals_full": true,
+      "forkSync_equals_full": "did not finish (time limit)",
+      "line": 39
+    }
+  ],
+  "rows": [
+    {
+      "config": "n=100 late=0.10 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.027941,
+          "min_s": 0.026511,
+          "max_s": 0.033768,
+          "lines": [
+            136,
+            234,
+            329
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.001853,
+          "min_s": 0.001474,
+          "max_s": 0.001938,
+          "lines": [
+            137,
+            232,
+            330
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.006018,
+          "min_s": 0.00514,
+          "max_s": 0.007077,
+          "lines": [
+            138,
+            233,
+            328
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 15.078791149487317,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 4.642904619474908
+    },
+    {
+      "config": "n=100 late=0.10 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.026013,
+          "min_s": 0.025774,
+          "max_s": 0.030391,
+          "lines": [
+            139,
+            237,
+            332
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.003616,
+          "min_s": 0.003318,
+          "max_s": 0.004549,
+          "lines": [
+            140,
+            235,
+            333
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.010385,
+          "min_s": 0.010324,
+          "max_s": 0.010463,
+          "lines": [
+            141,
+            236,
+            331
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 7.193860619469027,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 2.5048627828598944
+    },
+    {
+      "config": "n=100 late=0.50 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.02706,
+          "min_s": 0.026696,
+          "max_s": 0.041245,
+          "lines": [
+            142,
+            240,
+            335
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.003446,
+          "min_s": 0.00342,
+          "max_s": 0.003901,
+          "lines": [
+            143,
+            238,
+            336
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.01379,
+          "min_s": 0.013636,
+          "max_s": 0.014013,
+          "lines": [
+            144,
+            239,
+            334
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 7.852582704585027,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 1.962291515591008
+    },
+    {
+      "config": "n=100 late=0.50 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.026693,
+          "min_s": 0.026508,
+          "max_s": 0.026937,
+          "lines": [
+            145,
+            243,
+            338
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.013593,
+          "min_s": 0.010625,
+          "max_s": 0.016129,
+          "lines": [
+            146,
+            241,
+            339
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.036258,
+          "min_s": 0.035308,
+          "max_s": 0.03824,
+          "lines": [
+            147,
+            242,
+            337
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 1.9637313323033916,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 0.7361961498152133
+    },
+    {
+      "config": "n=200 late=0.10 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.222305,
+          "min_s": 0.211604,
+          "max_s": 0.223481,
+          "lines": [
+            148,
+            246,
+            341
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.006387,
+          "min_s": 0.005955,
+          "max_s": 0.009577,
+          "lines": [
+            149,
+            244,
+            342
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.009341,
+          "min_s": 0.009336,
+          "max_s": 0.009429,
+          "lines": [
+            150,
+            245,
+            340
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 34.805855644277436,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 23.798843806872924
+    },
+    {
+      "config": "n=200 late=0.10 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.207876,
+          "min_s": 0.206938,
+          "max_s": 0.211863,
+          "lines": [
+            151,
+            249,
+            344
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.025602,
+          "min_s": 0.024679,
+          "max_s": 0.032106,
+          "lines": [
+            152,
+            247,
+            345
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.121866,
+          "min_s": 0.108974,
+          "max_s": 0.125907,
+          "lines": [
+            153,
+            248,
+            343
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 8.119521912350598,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 1.70577519570676
+    },
+    {
+      "config": "n=200 late=0.50 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.214809,
+          "min_s": 0.210458,
+          "max_s": 0.230278,
+          "lines": [
+            154,
+            252,
+            347
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.012115,
+          "min_s": 0.01108,
+          "max_s": 0.01257,
+          "lines": [
+            155,
+            250,
+            348
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.038248,
+          "min_s": 0.037612,
+          "max_s": 0.044158,
+          "lines": [
+            156,
+            251,
+            346
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 17.73082955014445,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 5.616215226939971
+    },
+    {
+      "config": "n=200 late=0.50 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.214012,
+          "min_s": 0.207191,
+          "max_s": 0.214864,
+          "lines": [
+            157,
+            255,
+            350
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.062569,
+          "min_s": 0.06234,
+          "max_s": 0.075679,
+          "lines": [
+            158,
+            253,
+            351
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.636831,
+          "min_s": 0.6363,
+          "max_s": 0.644299,
+          "lines": [
+            159,
+            254,
+            349
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 3.420415860889578,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 0.3360577610072374
+    },
+    {
+      "config": "n=400 late=0.10 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.551606,
+          "min_s": 1.550895,
+          "max_s": 1.66627,
+          "lines": [
+            160,
+            258,
+            353
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.02061,
+          "min_s": 0.020047,
+          "max_s": 0.020855,
+          "lines": [
+            161,
+            256,
+            354
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.064509,
+          "min_s": 0.062124,
+          "max_s": 0.065109,
+          "lines": [
+            162,
+            257,
+            352
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 75.28413391557497,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 24.05255080686416
+    },
+    {
+      "config": "n=400 late=0.10 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.567793,
+          "min_s": 1.528117,
+          "max_s": 1.666584,
+          "lines": [
+            163,
+            261,
+            356
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.109727,
+          "min_s": 0.109273,
+          "max_s": 0.11569,
+          "lines": [
+            164,
+            259,
+            357
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.340505,
+          "min_s": 0.337816,
+          "max_s": 0.356901,
+          "lines": [
+            165,
+            260,
+            355
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 14.288124162694688,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 4.604317117222948
+    },
+    {
+      "config": "n=400 late=0.50 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.575525,
+          "min_s": 1.554478,
+          "max_s": 1.624676,
+          "lines": [
+            166,
+            264,
+            359
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.038754,
+          "min_s": 0.03676,
+          "max_s": 0.03879,
+          "lines": [
+            167,
+            262,
+            360
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.144218,
+          "min_s": 0.140419,
+          "max_s": 0.145175,
+          "lines": [
+            168,
+            263,
+            358
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 40.654513082520516,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 10.924607191890054
+    },
+    {
+      "config": "n=400 late=0.50 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.580643,
+          "min_s": 1.553023,
+          "max_s": 1.690231,
+          "lines": [
+            169,
+            267,
+            362
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.419389,
+          "min_s": 0.41619,
+          "max_s": 0.467175,
+          "lines": [
+            170,
+            265,
+            363
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.752869,
+          "min_s": 1.732077,
+          "max_s": 1.762762,
+          "lines": [
+            171,
+            266,
+            361
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 3.7689185934776543,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 0.9017462229065606
+    },
+    {
+      "config": "n=800 late=0.10 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 12.883083,
+          "min_s": 12.780869,
+          "max_s": 13.260987,
+          "lines": [
+            172,
+            270,
+            365
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.082615,
+          "min_s": 0.081841,
+          "max_s": 0.09682,
+          "lines": [
+            173,
+            268,
+            366
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.288202,
+          "min_s": 0.273662,
+          "max_s": 0.312959,
+          "lines": [
+            174,
+            269,
+            364
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 155.94120922350663,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 44.70157389608677
+    },
+    {
+      "config": "n=800 late=0.10 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 12.607786,
+          "min_s": 12.210288,
+          "max_s": 12.865029,
+          "lines": [
+            175,
+            273,
+            368
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.972627,
+          "min_s": 0.955475,
+          "max_s": 1.005083,
+          "lines": [
+            176,
+            271,
+            369
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 3.241587,
+          "min_s": 3.106865,
+          "max_s": 3.261931,
+          "lines": [
+            177,
+            272,
+            367
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 12.962611566407267,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 3.8893868959864415
+    },
+    {
+      "config": "n=800 late=0.50 Recent rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 12.677546,
+          "min_s": 12.58559,
+          "max_s": 12.949057,
+          "lines": [
+            178,
+            276,
+            371
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.148349,
+          "min_s": 0.145791,
+          "max_s": 0.148585,
+          "lines": [
+            179,
+            274,
+            372
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.625189,
+          "min_s": 0.610458,
+          "max_s": 0.652661,
+          "lines": [
+            180,
+            275,
+            370
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 85.45757639080816,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 20.277941550475134
+    },
+    {
+      "config": "n=800 late=0.50 Deep rev=0.00",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 12.549501,
+          "min_s": 12.369296,
+          "max_s": 13.56783,
+          "lines": [
+            181,
+            279,
+            374
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 3.232979,
+          "min_s": 3.177551,
+          "max_s": 3.388189,
+          "lines": [
+            182,
+            277,
+            375
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 17.104938,
+          "min_s": 16.986193,
+          "max_s": 17.535671,
+          "lines": [
+            183,
+            278,
+            373
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 3.8817143569444776,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 0.7336770820215776
+    },
+    {
+      "config": "n=100 late=0.10 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.02609,
+          "min_s": 0.022478,
+          "max_s": 0.028173,
+          "lines": [
+            184,
+            282,
+            377
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.001852,
+          "min_s": 0.001631,
+          "max_s": 0.002156,
+          "lines": [
+            185,
+            280,
+            378
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.005893,
+          "min_s": 0.005856,
+          "max_s": 0.005925,
+          "lines": [
+            186,
+            281,
+            376
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 14.087473002159827,
+      "call": "faster",
+      "forkSync_vs_full_ratio": 4.427286611233667
+    },
+    {
+      "config": "n=100 late=0.10 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.022928,
+          "min_s": 0.022705,
+          "max_s": 0.023346,
+          "lines": [
+            187,
+            285,
+            380
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.004788,
+          "min_s": 0.004495,
+          "max_s": 0.005225,
+          "lines": [
+            188,
+            283,
+            381
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            189,
+            284,
+            379
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 4.788638262322473,
+      "call": "faster"
+    },
+    {
+      "config": "n=100 late=0.50 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.02328,
+          "min_s": 0.023037,
+          "max_s": 0.024117,
+          "lines": [
+            190,
+            288,
+            383
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.00302,
+          "min_s": 0.002934,
+          "max_s": 0.003338,
+          "lines": [
+            191,
+            286,
+            384
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            192,
+            287,
+            382
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 7.708609271523178,
+      "call": "faster"
+    },
+    {
+      "config": "n=100 late=0.50 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.02485,
+          "min_s": 0.023736,
+          "max_s": 0.02704,
+          "lines": [
+            193,
+            291,
+            386
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.007254,
+          "min_s": 0.0072,
+          "max_s": 0.008017,
+          "lines": [
+            194,
+            289,
+            387
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            195,
+            290,
+            385
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 3.4256961676316515,
+      "call": "faster"
+    },
+    {
+      "config": "n=200 late=0.10 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.152527,
+          "min_s": 0.150408,
+          "max_s": 0.194659,
+          "lines": [
+            196,
+            294,
+            389
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.008466,
+          "min_s": 0.008231,
+          "max_s": 0.00874,
+          "lines": [
+            197,
+            292,
+            390
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            198,
+            293,
+            388
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 18.016418615639026,
+      "call": "faster"
+    },
+    {
+      "config": "n=200 late=0.10 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.162386,
+          "min_s": 0.157831,
+          "max_s": 0.170966,
+          "lines": [
+            199,
+            297,
+            392
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.021755,
+          "min_s": 0.021057,
+          "max_s": 0.0225,
+          "lines": [
+            200,
+            295,
+            393
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            201,
+            296,
+            391
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 7.46430705584923,
+      "call": "faster"
+    },
+    {
+      "config": "n=200 late=0.50 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.158118,
+          "min_s": 0.157793,
+          "max_s": 0.164938,
+          "lines": [
+            202,
+            300,
+            395
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.011659,
+          "min_s": 0.01161,
+          "max_s": 0.017851,
+          "lines": [
+            203,
+            298,
+            396
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            204,
+            299,
+            394
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 13.561883523458274,
+      "call": "faster"
+    },
+    {
+      "config": "n=200 late=0.50 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.15932,
+          "min_s": 0.157381,
+          "max_s": 0.165048,
+          "lines": [
+            205,
+            303,
+            398
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.059435,
+          "min_s": 0.053393,
+          "max_s": 0.062971,
+          "lines": [
+            206,
+            301,
+            399
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            207,
+            302,
+            397
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 2.6805754185244384,
+      "call": "faster"
+    },
+    {
+      "config": "n=400 late=0.10 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.271628,
+          "min_s": 1.224054,
+          "max_s": 1.276148,
+          "lines": [
+            208,
+            306,
+            401
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.046257,
+          "min_s": 0.045673,
+          "max_s": 0.049162,
+          "lines": [
+            209,
+            304,
+            402
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            210,
+            305,
+            400
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 27.490498735326543,
+      "call": "faster"
+    },
+    {
+      "config": "n=400 late=0.10 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.374011,
+          "min_s": 1.283157,
+          "max_s": 1.375272,
+          "lines": [
+            211,
+            309,
+            404
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.18817,
+          "min_s": 0.151967,
+          "max_s": 0.189558,
+          "lines": [
+            212,
+            307,
+            405
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            213,
+            308,
+            403
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 7.301966307062763,
+      "call": "faster"
+    },
+    {
+      "config": "n=400 late=0.50 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.323537,
+          "min_s": 1.243628,
+          "max_s": 1.39771,
+          "lines": [
+            214,
+            312,
+            407
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.068886,
+          "min_s": 0.061851,
+          "max_s": 0.071091,
+          "lines": [
+            215,
+            310,
+            408
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            216,
+            311,
+            406
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 19.21343959585402,
+      "call": "faster"
+    },
+    {
+      "config": "n=400 late=0.50 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 1.328569,
+          "min_s": 1.284621,
+          "max_s": 1.332684,
+          "lines": [
+            217,
+            315,
+            410
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.521653,
+          "min_s": 0.507063,
+          "max_s": 0.555687,
+          "lines": [
+            218,
+            313,
+            411
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            219,
+            314,
+            409
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 2.5468443582228035,
+      "call": "faster"
+    },
+    {
+      "config": "n=800 late=0.10 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 10.867393,
+          "min_s": 10.083382,
+          "max_s": 11.677926,
+          "lines": [
+            220,
+            318,
+            413
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.476609,
+          "min_s": 0.463293,
+          "max_s": 0.486542,
+          "lines": [
+            221,
+            316,
+            414
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            222,
+            317,
+            412
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 22.801485074767786,
+      "call": "faster"
+    },
+    {
+      "config": "n=800 late=0.10 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 10.253362,
+          "min_s": 10.119401,
+          "max_s": 10.426381,
+          "lines": [
+            223,
+            321,
+            416
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.952509,
+          "min_s": 0.930939,
+          "max_s": 0.986917,
+          "lines": [
+            224,
+            319,
+            417
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            225,
+            320,
+            415
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 10.764582801842291,
+      "call": "faster"
+    },
+    {
+      "config": "n=800 late=0.50 Recent rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 10.19577,
+          "min_s": 10.107757,
+          "max_s": 10.349858,
+          "lines": [
+            226,
+            324,
+            419
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 0.548013,
+          "min_s": 0.543562,
+          "max_s": 0.560734,
+          "lines": [
+            227,
+            322,
+            420
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            228,
+            323,
+            418
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 18.604978349053763,
+      "call": "faster"
+    },
+    {
+      "config": "n=800 late=0.50 Deep rev=0.05",
+      "engines": {
+        "full": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 10.452418,
+          "min_s": 10.390357,
+          "max_s": 10.461304,
+          "lines": [
+            229,
+            327,
+            422
+          ]
+        },
+        "partial": {
+          "rounds": 3,
+          "timed_out": 0,
+          "median_s": 3.047645,
+          "min_s": 3.008167,
+          "max_s": 3.069563,
+          "lines": [
+            230,
+            325,
+            423
+          ]
+        },
+        "forkSync": {
+          "rounds": 3,
+          "timed_out": 3,
+          "median_s": null,
+          "min_s": null,
+          "max_s": null,
+          "lines": [
+            231,
+            326,
+            421
+          ]
+        }
+      },
+      "partial_vs_full_ratio": 3.42967045046257,
+      "call": "faster"
+    }
+  ],
+  "rule": "median of timed rounds; partial called faster only if its slowest round beat full's fastest"
+}

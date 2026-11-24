@@ -3,7 +3,7 @@
  * `evidence.ts`, which only reads files; nothing here is typed in by hand
  * except the plain-language description of each claim.
  */
-import { evidence, fingerprint, FILES, PROOFS, type CodeCase, type ProofName, type Verdict } from "./evidence";
+import { evidence, fingerprint, FILES, PROOFS, speedEvidence, type CodeCase, type ProofName, type SpeedRow, type Verdict } from "./evidence";
 
 export type ClaimGroup = "optimisation" | "refutation" | "property";
 
@@ -175,4 +175,83 @@ export function reproductionFacts() {
       lateBalanceMatchesModel: same(c.arrival.balance, m?.forkSync.balance),
     };
   });
+}
+
+/* ------------------------------------------------------------ speed (2026-11-24) */
+
+function median(xs: number[]): number {
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+/** A workload's settings, read back from its name ("n=800 late=0.50 Deep rev=0.05"). */
+export function workloadParts(config: string) {
+  const m = config.match(/^n=(\d+) late=([\d.]+) (Recent|Deep) rev=([\d.]+)$/);
+  if (!m) throw new Error(`unexpected workload name: ${config}`);
+  return { n: Number(m[1]), late: Number(m[2]), regime: m[3] as "Recent" | "Deep", reversals: Number(m[4]) };
+}
+
+export function speedStats() {
+  const s = speedEvidence.summary();
+  const rows = s.rows;
+  const checks = s.checks;
+  const ratios = rows.map((r) => r.partial_vs_full_ratio).filter((x): x is number => x !== null);
+  const byRev = (rev: boolean) => rows.filter((r) => workloadParts(r.config).reversals > 0 === rev);
+  const finished = (r: SpeedRow) => r.engines.forkSync.median_s !== null;
+  const checkFor = (r: SpeedRow) => checks.find((c) => c.config === r.config);
+  const forkGroup = (rev: boolean) => {
+    const sel = byRev(rev);
+    const fin = sel.filter(finished);
+    return {
+      workloads: sel.length,
+      finished: fin.length,
+      equalsFull: sel.filter((r) => checkFor(r)?.forkSync_equals_full === true).length,
+      partialFasterThanFork: fin.filter((r) => (r.engines.partial.median_s ?? Infinity) < (r.engines.forkSync.median_s ?? 0)).length,
+      forkFasterThanFull: fin.filter((r) => (r.engines.forkSync.median_s ?? Infinity) < (r.engines.full.median_s ?? 0)).length,
+    };
+  };
+  const notFinished = checks.filter((c) => typeof c.forkSync_equals_full === "string");
+  const regimeMedian = (reg: "Recent" | "Deep") =>
+    median(rows.filter((r) => workloadParts(r.config).regime === reg).map((r) => r.partial_vs_full_ratio ?? 0));
+  return {
+    workloads: rows.length,
+    faster: rows.filter((r) => r.call === "faster").length,
+    partialEqualsFull: checks.filter((c) => c.partial_equals_full === true).length,
+    ratioMin: Math.min(...ratios),
+    ratioMax: Math.max(...ratios),
+    ratioMedian: median(ratios),
+    recentMedian: regimeMedian("Recent"),
+    deepMedian: regimeMedian("Deep"),
+    noReversals: forkGroup(false),
+    withReversals: forkGroup(true),
+    heapOverflow: notFinished.filter((c) => String(c.forkSync_equals_full).includes("heap overflow")).length,
+    timeLimit: notFinished.filter((c) => String(c.forkSync_equals_full).includes("time limit")).length,
+    sizes: [...new Set(rows.map((r) => workloadParts(r.config).n))],
+  };
+}
+
+/** What the four-event case shows, in each of the three places it was run. */
+export function nonTerminationFacts() {
+  const d = speedEvidence.nontermination();
+  const fuel = d.model.fuel;
+  return {
+    events: d.events.length,
+    modelStuckAtEveryBound: fuel.length > 0 && fuel.every((f) => f.stuck),
+    fuelMin: Math.min(...fuel.map((f) => f.fuel)),
+    fuelMax: Math.max(...fuel.map((f) => f.fuel)),
+    prefixesFinish: d.model.prefixes.filter((p) => p.events < d.events.length).every((p) => !p.stuck),
+    eachIngredientNeeded: d.model.removals.length > 0 && d.model.removals.every((r) => !r.stuck_at_fuel_512),
+    haskellBothPatterns: d.haskell.shrunk.length >= 2 && d.haskell.shrunk.every((s) => s.outcome !== "finished"),
+    haskellRetryLimits: d.haskell.retries.map((r) => r.limit_seconds),
+    haskellRetriesFail: d.haskell.retries.every((r) => r.outcome !== "finished"),
+    javaStackOverflow: d.java.stack_overflow_lines.length > 0,
+    // Each method's most repeated frame is the one inside the loop (the same method can also appear once or
+    // twice at other lines, outside it); the cycle repeats as often as the less frequent of the two.
+    javaCycleCount: Math.min(
+      ...["performBackdatedActivity", "reverseLedgerActivity"].map((m) =>
+        Math.max(0, ...d.java.frames.filter((f) => f.frame.includes(`.${m}(`)).map((f) => f.count)),
+      ),
+    ),
+  };
 }

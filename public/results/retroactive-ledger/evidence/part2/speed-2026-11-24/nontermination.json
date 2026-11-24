@@ -1,0 +1,265 @@
+{
+  "about": "Precise Ledger Pro's fork-and-sync on four events, in the model of the paper and in both implementations (upstream 06bb4ce). Running out of every bound tried is consistent with not terminating; it is not a proof of non-termination.",
+  "events": [
+    {
+      "id": "11",
+      "activity": "Disbursal",
+      "effective": "2024-01-06",
+      "line": 7
+    },
+    {
+      "id": "18",
+      "activity": "reverse 11",
+      "effective": "2024-01-09",
+      "line": 8
+    },
+    {
+      "id": "19",
+      "activity": "Disbursal",
+      "effective": "2024-01-04",
+      "line": 9
+    },
+    {
+      "id": "21",
+      "activity": "Payment",
+      "effective": "2024-01-02",
+      "line": 10
+    }
+  ],
+  "model": {
+    "file": "evidence/part2/speed-2026-11-24/model-fuel.out.txt",
+    "fuel": [
+      {
+        "fuel": 8,
+        "stuck": true
+      },
+      {
+        "fuel": 16,
+        "stuck": true
+      },
+      {
+        "fuel": 32,
+        "stuck": true
+      },
+      {
+        "fuel": 64,
+        "stuck": true
+      },
+      {
+        "fuel": 128,
+        "stuck": true
+      },
+      {
+        "fuel": 256,
+        "stuck": true
+      },
+      {
+        "fuel": 512,
+        "stuck": true
+      }
+    ],
+    "prefixes": [
+      {
+        "events": 0,
+        "stuck": false
+      },
+      {
+        "events": 1,
+        "stuck": false
+      },
+      {
+        "events": 2,
+        "stuck": false
+      },
+      {
+        "events": 3,
+        "stuck": false
+      },
+      {
+        "events": 4,
+        "stuck": true
+      }
+    ],
+    "removals": [
+      {
+        "without": "reversal",
+        "stuck_at_fuel_512": false,
+        "line": 3
+      },
+      {
+        "without": "late disbursal",
+        "stuck_at_fuel_512": false,
+        "line": 4
+      },
+      {
+        "without": "late payment",
+        "stuck_at_fuel_512": false,
+        "line": 5
+      }
+    ]
+  },
+  "haskell": {
+    "file": "evidence/part2/speed-2026-11-24/investigate.out.txt",
+    "workloads": [
+      {
+        "config": "n=100 late=0.10 Recent rev=0.05",
+        "runner": "forkSync per arrival",
+        "reversals": 10,
+        "backdated": 7,
+        "outcome": "timed out",
+        "line": 2
+      },
+      {
+        "config": "n=100 late=0.10 Recent rev=0.05",
+        "runner": "forkSync one call",
+        "reversals": 10,
+        "backdated": 7,
+        "outcome": "timed out",
+        "line": 3
+      },
+      {
+        "config": "n=25 late=0.50 Deep rev=0.05",
+        "runner": "forkSync per arrival",
+        "reversals": 3,
+        "backdated": 11,
+        "outcome": "timed out",
+        "line": 4
+      },
+      {
+        "config": "n=25 late=0.50 Deep rev=0.05",
+        "runner": "forkSync one call",
+        "reversals": 3,
+        "backdated": 11,
+        "outcome": "timed out",
+        "line": 5
+      }
+    ],
+    "shrunk": [
+      {
+        "runner": "forkSync per arrival",
+        "activities": 4,
+        "reversals": 1,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 6
+      },
+      {
+        "runner": "forkSync one call",
+        "activities": 4,
+        "reversals": 1,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 13
+      }
+    ],
+    "retries": [
+      {
+        "runner": "forkSync per arrival",
+        "limit_seconds": 60,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 11
+      },
+      {
+        "runner": "forkSync per arrival",
+        "limit_seconds": 180,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 12
+      },
+      {
+        "runner": "forkSync one call",
+        "limit_seconds": 60,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 18
+      },
+      {
+        "runner": "forkSync one call",
+        "limit_seconds": 180,
+        "outcome": "failed",
+        "error": "heap overflow",
+        "line": 19
+      }
+    ]
+  },
+  "java": {
+    "file": "evidence/part2/speed-2026-11-24/java-four-events-extract.txt",
+    "stack_overflow_lines": [
+      10,
+      15
+    ],
+    "frames": [
+      {
+        "count": 436,
+        "frame": "at ledger.service.LedgerService.applyLedgerActivities(LedgerService.java:53)",
+        "line": 16
+      },
+      {
+        "count": 218,
+        "frame": "at ledger.service.LedgerService.performBackdatedActivity(LedgerService.java:170)",
+        "line": 17
+      },
+      {
+        "count": 218,
+        "frame": "at ledger.service.LedgerService.applyLedgerActivity(LedgerService.java:82)",
+        "line": 18
+      },
+      {
+        "count": 218,
+        "frame": "at ledger.service.LedgerService.applyLedgerActivity(LedgerService.java:80)",
+        "line": 19
+      },
+      {
+        "count": 218,
+        "frame": "at ledger.common.ledgeractivity.ReversalActivity.generateLedgerEntries(ReversalActivity.java:34)",
+        "line": 20
+      },
+      {
+        "count": 218,
+        "frame": "at ledger.common.LedgerActivity.applyTo(LedgerActivity.java:55)",
+        "line": 21
+      },
+      {
+        "count": 216,
+        "frame": "at ledger.service.LedgerService.reverseLedgerActivity(LedgerService.java:210)",
+        "line": 22
+      },
+      {
+        "count": 2,
+        "frame": "at ledger.service.LoanService.getLedgerActivitiesCreatedSinceButBeforeCreatedAt(LoanService.java:30)",
+        "line": 23
+      },
+      {
+        "count": 2,
+        "frame": "at ledger.service.LedgerService.reverseLedgerActivity(LedgerService.java:203)",
+        "line": 24
+      },
+      {
+        "count": 2,
+        "frame": "at ledger.repository.LedgerActivityRepository.getLedgerActivitiesCreatedSinceButBeforeCreatedAt(LedgerActivityRepository.java:36)",
+        "line": 25
+      },
+      {
+        "count": 2,
+        "frame": "at ledger.repository.LedgerActivityRepository.findFirstByLoanIdAndTypeAndId(LedgerActivityRepository.java:18)",
+        "line": 26
+      },
+      {
+        "count": 1,
+        "frame": "at ledger.api.ledgerevent.GodsHandReproTest.run(GodsHandReproTest.java:67)",
+        "line": 27
+      },
+      {
+        "count": 1,
+        "frame": "at ledger.api.ledgerevent.GodsHandReproTest.post(GodsHandReproTest.java:108)",
+        "line": 28
+      },
+      {
+        "count": 1,
+        "frame": "at ledger.api.ledgerevent.GodsHandReproTest.fourEventsThatDoNotFinishInTheHaskellPort(GodsHandReproTest.java:61)",
+        "line": 29
+      }
+    ]
+  }
+}

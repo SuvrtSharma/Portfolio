@@ -52,6 +52,19 @@ export const FILES = {
   bite: "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
   readings: "evidence/part2/mapping-2026-11-23/readings-needed.txt",
   mapping: "docs/part2/paper-model-mapping.md",
+  speedNotes: "evidence/part2/speed-2026-11-24/NOTES.md",
+  speedRun: "evidence/part2/speed-2026-11-24/run-full.out.txt",
+  speedSummary: "evidence/part2/speed-2026-11-24/run-full.out.summary.json",
+  speedSummaryText: "evidence/part2/speed-2026-11-24/run-full.out.summary.txt",
+  summarise: "evidence/part2/speed-2026-11-24/summarise.py",
+  probe: "evidence/part2/speed-2026-11-24/probe.out.txt",
+  investigate: "evidence/part2/speed-2026-11-24/investigate.out.txt",
+  modelFuelLean: "evidence/part2/speed-2026-11-24/model-fuel.lean",
+  modelFuel: "evidence/part2/speed-2026-11-24/model-fuel.out.txt",
+  javaFour: "evidence/part2/speed-2026-11-24/java-four-events-extract.txt",
+  nontermination: "evidence/part2/speed-2026-11-24/nontermination.json",
+  makeNontermination: "evidence/part2/speed-2026-11-24/make_published.py",
+  bench: "tools/plp/haskell/Bench.hs",
 } as Record<string, string>;
 
 export type FileKey = keyof typeof FILES;
@@ -219,3 +232,101 @@ export function fingerprint(file: string): { sha256: string; bytes: number } {
     bytes: statSync(join(ROOT, file)).size,
   };
 }
+
+/* ------------------------------------------------------------ speed (2026-11-24) */
+
+export interface EngineStats {
+  rounds: number;
+  timed_out: number;
+  median_s: number | null;
+  min_s: number | null;
+  max_s: number | null;
+  lines: number[];
+}
+
+export interface SpeedRow {
+  config: string;
+  engines: Record<"forkSync" | "full" | "partial", EngineStats>;
+  partial_vs_full_ratio: number | null;
+  call: string;
+  forkSync_vs_full_ratio?: number;
+}
+
+export interface SpeedCheck {
+  config: string;
+  activities: number;
+  reversals: number;
+  backdated: number;
+  partial_equals_full: boolean;
+  forkSync_equals_full: boolean | string;
+  line: number;
+}
+
+export interface SpeedSummary {
+  source: string;
+  checks: SpeedCheck[];
+  rows: SpeedRow[];
+  rule: string;
+}
+
+export interface SpeedEnv {
+  hostKernel: string;
+  ghc: string;
+  cpu: string;
+  cpus: string;
+  startedAt: string;
+  endedAt: string;
+  benchSha256: string;
+}
+
+/** The environment lines `run-full.out.txt` starts and ends with, as written. */
+function parseSpeedEnv(raw: string): SpeedEnv {
+  const lines = raw.split(/\r?\n/).filter((l) => l.trim() !== "");
+  const iso = lines.filter((l) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(l));
+  const find = (re: RegExp) => {
+    const l = lines.find((x) => re.test(x));
+    if (!l) throw new Error(`run-full.out.txt: no line matching ${re}`);
+    return l;
+  };
+  return {
+    hostKernel: find(/^ENV_HOST /).replace(/^ENV_HOST /, ""),
+    ghc: find(/Glasgow Haskell/).replace(/.*version /, "GHC "),
+    cpu: find(/^model name/).replace(/^model name\s*:\s*/, ""),
+    cpus: find(/^\d+$/),
+    startedAt: iso[0],
+    endedAt: iso[iso.length - 1],
+    benchSha256: find(/^[0-9a-f]{64}\s/).split(/\s+/)[0],
+  };
+}
+
+/** The expiry date the speed notes state ("Measurements expire YYYY-MM-DD"). */
+function parseExpiry(raw: string): string {
+  const m = raw.match(/expire (\d{4}-\d{2}-\d{2})/);
+  if (!m) throw new Error("speed NOTES.md: no expiry");
+  return m[1];
+}
+
+export interface NonTermination {
+  about: string;
+  events: { id: string; activity: string; effective: string; line: number }[];
+  model: {
+    file: string;
+    fuel: { fuel: number; stuck: boolean }[];
+    prefixes: { events: number; stuck: boolean }[];
+    removals: { without: string; stuck_at_fuel_512: boolean; line: number }[];
+  };
+  haskell: {
+    file: string;
+    workloads: { config: string; runner: string; outcome: string; reversals: number; backdated: number; line: number }[];
+    shrunk: { runner: string; activities: number; outcome: string; error?: string; line: number }[];
+    retries: { runner: string; limit_seconds: number; outcome: string; error?: string; line: number }[];
+  };
+  java: { file: string; stack_overflow_lines: number[]; frames: { count: number; frame: string; line: number }[] };
+}
+
+export const speedEvidence = {
+  summary: once(() => json<SpeedSummary>(FILES.speedSummary)),
+  env: once(() => parseSpeedEnv(text(FILES.speedRun))),
+  expires: once(() => parseExpiry(text(FILES.speedNotes))),
+  nontermination: once(() => json<NonTermination>(FILES.nontermination)),
+};

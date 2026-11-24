@@ -1,13 +1,15 @@
 import Link from "next/link";
 import type { HeadlineFigure } from "../../types";
-import { fmtInt } from "../../format";
+import { fmtInt, fmtRatio } from "../../format";
 import { Card, DataTable, Definitions, Pill, Stat, Td, Th, ViewSection } from "../../ui";
 import {
   counterexampleFacts,
+  nonTerminationFacts,
   optimisationTotals,
   proofCounts,
   proofResults,
   reproductionFacts,
+  speedStats,
   type ClaimGroup,
 } from "../derive";
 import { AcceptedPill, Source, VIEW } from "../shared";
@@ -31,7 +33,7 @@ const STEPS = [
   },
   {
     title: "A safe optimisation",
-    body: "A cheaper way to rebuild, proved to give exactly the full rebuild, and tested against plausible wrong versions.",
+    body: "A cheaper way to rebuild, proved to give exactly the full rebuild, then timed in their own code.",
   },
 ];
 
@@ -56,6 +58,8 @@ export function OverviewView({ figures }: { figures: HeadlineFigure[] }) {
   const proofs = proofResults();
   const counts = proofCounts();
   const opt = optimisationTotals();
+  const sp = speedStats();
+  const nt = nonTerminationFacts();
   const facts = counterexampleFacts();
   const repro = reproductionFacts();
   const robustHaskell = repro.find((r) => r.case === "reading-robust" && r.implementation === "Haskell port");
@@ -180,15 +184,26 @@ export function OverviewView({ figures }: { figures: HeadlineFigure[] }) {
                 <strong className="text-foreground">A cheaper rebuild that keeps its meaning.</strong> Rebuilding only
                 from the earliest affected point is proved to give exactly the full rebuild, for an arrival and for a
                 reversal. It was tested on {fmtInt(opt.tested)} cases first, and {opt.caught} of {opt.variants}{" "}
-                plausible wrong versions fail.
+                plausible wrong versions fail. In their own code it is faster than a full rebuild on {sp.faster} of{" "}
+                {sp.workloads} workloads, by a median of {fmtRatio(sp.ratioMedian)}.
+              </li>
+              <li>
+                <strong className="text-foreground">Fork-and-sync can fail to finish.</strong> On{" "}
+                {sp.withReversals.workloads - sp.withReversals.finished} of {sp.withReversals.workloads} workloads with
+                reversals it ran out of memory or time, down to a case of {nt.events} activities that the model of the
+                paper, the Haskell port and the Java service all fail to finish.{" "}
+                <Link href={VIEW("termination")} className="text-gold hover:underline">
+                  Why
+                </Link>
               </li>
             </ul>
           </Card>
           <Card title="What it doesn't show">
             <ul className="space-y-3 text-sm text-pretty text-foreground/85">
               <li>
-                <strong className="text-foreground">Speed.</strong> The optimisation re-applies fewer events than a full
-                rebuild, but nothing has been timed yet. Unlike part 1, there is no measurement here.
+                <strong className="text-foreground">Speed in general.</strong> The timings are from one laptop, on their
+                list-based ledger, whose own costs set the absolute times. They expire, and the fork-and-sync finding is
+                not a proof that it never finishes.
               </li>
               <li>
                 <strong className="text-foreground">The proofs are about the model.</strong> Attributing a

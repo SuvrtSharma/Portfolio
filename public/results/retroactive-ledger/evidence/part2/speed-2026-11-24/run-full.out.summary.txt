@@ -1,0 +1,69 @@
+From run-full.out.txt. Median seconds of the timed rounds (warm-up discarded).
+
+workload                                  forkSync        full     partial  full/partial  call
+n=100 late=0.10 Recent rev=0.00             0.0060      0.0279      0.0019        15.08x  faster
+n=100 late=0.10 Deep rev=0.00               0.0104      0.0260      0.0036         7.19x  faster
+n=100 late=0.50 Recent rev=0.00             0.0138      0.0271      0.0034         7.85x  faster
+n=100 late=0.50 Deep rev=0.00               0.0363      0.0267      0.0136         1.96x  faster
+n=200 late=0.10 Recent rev=0.00             0.0093      0.2223      0.0064        34.81x  faster
+n=200 late=0.10 Deep rev=0.00               0.1219      0.2079      0.0256         8.12x  faster
+n=200 late=0.50 Recent rev=0.00             0.0382      0.2148      0.0121        17.73x  faster
+n=200 late=0.50 Deep rev=0.00               0.6368      0.2140      0.0626         3.42x  faster
+n=400 late=0.10 Recent rev=0.00             0.0645      1.5516      0.0206        75.28x  faster
+n=400 late=0.10 Deep rev=0.00               0.3405      1.5678      0.1097        14.29x  faster
+n=400 late=0.50 Recent rev=0.00             0.1442      1.5755      0.0388        40.65x  faster
+n=400 late=0.50 Deep rev=0.00               1.7529      1.5806      0.4194         3.77x  faster
+n=800 late=0.10 Recent rev=0.00             0.2882     12.8831      0.0826       155.94x  faster
+n=800 late=0.10 Deep rev=0.00               3.2416     12.6078      0.9726        12.96x  faster
+n=800 late=0.50 Recent rev=0.00             0.6252     12.6775      0.1483        85.46x  faster
+n=800 late=0.50 Deep rev=0.00              17.1049     12.5495      3.2330         3.88x  faster
+n=100 late=0.10 Recent rev=0.05             0.0059      0.0261      0.0019        14.09x  faster
+n=100 late=0.10 Deep rev=0.05            timed out      0.0229      0.0048         4.79x  faster
+n=100 late=0.50 Recent rev=0.05          timed out      0.0233      0.0030         7.71x  faster
+n=100 late=0.50 Deep rev=0.05            timed out      0.0249      0.0073         3.43x  faster
+n=200 late=0.10 Recent rev=0.05          timed out      0.1525      0.0085        18.02x  faster
+n=200 late=0.10 Deep rev=0.05            timed out      0.1624      0.0218         7.46x  faster
+n=200 late=0.50 Recent rev=0.05          timed out      0.1581      0.0117        13.56x  faster
+n=200 late=0.50 Deep rev=0.05            timed out      0.1593      0.0594         2.68x  faster
+n=400 late=0.10 Recent rev=0.05          timed out      1.2716      0.0463        27.49x  faster
+n=400 late=0.10 Deep rev=0.05            timed out      1.3740      0.1882         7.30x  faster
+n=400 late=0.50 Recent rev=0.05          timed out      1.3235      0.0689        19.21x  faster
+n=400 late=0.50 Deep rev=0.05            timed out      1.3286      0.5217         2.55x  faster
+n=800 late=0.10 Recent rev=0.05          timed out     10.8674      0.4766        22.80x  faster
+n=800 late=0.10 Deep rev=0.05            timed out     10.2534      0.9525        10.76x  faster
+n=800 late=0.50 Recent rev=0.05          timed out     10.1958      0.5480        18.60x  faster
+n=800 late=0.50 Deep rev=0.05            timed out     10.4524      3.0476         3.43x  faster
+
+Checks before timing:
+  n=100 late=0.10 Recent rev=0.00        partial==full True  forkSync==full False  (100 activities, 10 backdated, 0 reversals)
+  n=100 late=0.10 Deep rev=0.00          partial==full True  forkSync==full False  (100 activities, 10 backdated, 0 reversals)
+  n=100 late=0.50 Recent rev=0.00        partial==full True  forkSync==full False  (100 activities, 61 backdated, 0 reversals)
+  n=100 late=0.50 Deep rev=0.00          partial==full True  forkSync==full False  (100 activities, 53 backdated, 0 reversals)
+  n=200 late=0.10 Recent rev=0.00        partial==full True  forkSync==full True  (200 activities, 30 backdated, 0 reversals)
+  n=200 late=0.10 Deep rev=0.00          partial==full True  forkSync==full False  (200 activities, 23 backdated, 0 reversals)
+  n=200 late=0.50 Recent rev=0.00        partial==full True  forkSync==full False  (200 activities, 106 backdated, 0 reversals)
+  n=200 late=0.50 Deep rev=0.00          partial==full True  forkSync==full False  (200 activities, 106 backdated, 0 reversals)
+  n=400 late=0.10 Recent rev=0.00        partial==full True  forkSync==full False  (400 activities, 40 backdated, 0 reversals)
+  n=400 late=0.10 Deep rev=0.00          partial==full True  forkSync==full False  (400 activities, 38 backdated, 0 reversals)
+  n=400 late=0.50 Recent rev=0.00        partial==full True  forkSync==full False  (400 activities, 187 backdated, 0 reversals)
+  n=400 late=0.50 Deep rev=0.00          partial==full True  forkSync==full False  (400 activities, 181 backdated, 0 reversals)
+  n=800 late=0.10 Recent rev=0.00        partial==full True  forkSync==full False  (800 activities, 92 backdated, 0 reversals)
+  n=800 late=0.10 Deep rev=0.00          partial==full True  forkSync==full False  (800 activities, 84 backdated, 0 reversals)
+  n=800 late=0.50 Recent rev=0.00        partial==full True  forkSync==full False  (800 activities, 392 backdated, 0 reversals)
+  n=800 late=0.50 Deep rev=0.00          partial==full True  forkSync==full False  (800 activities, 402 backdated, 0 reversals)
+  n=100 late=0.10 Recent rev=0.05        partial==full True  forkSync==full False  (100 activities, 12 backdated, 4 reversals)
+  n=100 late=0.10 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (100 activities, 9 backdated, 4 reversals)
+  n=100 late=0.50 Recent rev=0.05        partial==full True  forkSync==full did not finish (time limit)  (100 activities, 50 backdated, 4 reversals)
+  n=100 late=0.50 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (100 activities, 50 backdated, 4 reversals)
+  n=200 late=0.10 Recent rev=0.05        partial==full True  forkSync==full did not finish (heap overflow)  (200 activities, 21 backdated, 13 reversals)
+  n=200 late=0.10 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (200 activities, 17 backdated, 10 reversals)
+  n=200 late=0.50 Recent rev=0.05        partial==full True  forkSync==full did not finish (heap overflow)  (200 activities, 90 backdated, 13 reversals)
+  n=200 late=0.50 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (200 activities, 101 backdated, 10 reversals)
+  n=400 late=0.10 Recent rev=0.05        partial==full True  forkSync==full did not finish (time limit)  (400 activities, 31 backdated, 24 reversals)
+  n=400 late=0.10 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (400 activities, 38 backdated, 26 reversals)
+  n=400 late=0.50 Recent rev=0.05        partial==full True  forkSync==full did not finish (time limit)  (400 activities, 175 backdated, 24 reversals)
+  n=400 late=0.50 Deep rev=0.05          partial==full True  forkSync==full did not finish (heap overflow)  (400 activities, 190 backdated, 26 reversals)
+  n=800 late=0.10 Recent rev=0.05        partial==full True  forkSync==full did not finish (heap overflow)  (800 activities, 74 backdated, 42 reversals)
+  n=800 late=0.10 Deep rev=0.05          partial==full True  forkSync==full did not finish (time limit)  (800 activities, 71 backdated, 40 reversals)
+  n=800 late=0.50 Recent rev=0.05        partial==full True  forkSync==full did not finish (heap overflow)  (800 activities, 384 backdated, 42 reversals)
+  n=800 late=0.50 Deep rev=0.05          partial==full True  forkSync==full did not finish (time limit)  (800 activities, 378 backdated, 40 reversals)

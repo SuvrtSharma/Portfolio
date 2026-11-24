@@ -52,6 +52,19 @@ const FILES = [
   "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
   "evidence/part2/mapping-2026-11-23/readings-needed.txt",
   "docs/part2/paper-model-mapping.md",
+  "evidence/part2/speed-2026-11-24/NOTES.md",
+  "evidence/part2/speed-2026-11-24/run-full.out.txt",
+  "evidence/part2/speed-2026-11-24/run-full.out.summary.json",
+  "evidence/part2/speed-2026-11-24/run-full.out.summary.txt",
+  "evidence/part2/speed-2026-11-24/summarise.py",
+  "evidence/part2/speed-2026-11-24/probe.out.txt",
+  "evidence/part2/speed-2026-11-24/investigate.out.txt",
+  "evidence/part2/speed-2026-11-24/model-fuel.lean",
+  "evidence/part2/speed-2026-11-24/model-fuel.out.txt",
+  "evidence/part2/speed-2026-11-24/java-four-events-extract.txt",
+  "evidence/part2/speed-2026-11-24/nontermination.json",
+  "evidence/part2/speed-2026-11-24/make_published.py",
+  "tools/plp/haskell/Bench.hs",
 ];
 
 const repo = resolve(process.argv[2] ?? join("..", "God's Hand"));

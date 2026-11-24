@@ -1,16 +1,18 @@
 import type { Dashboard, HeadlineFigure } from "../types";
-import { fmtInt } from "../format";
-import { optimisationTotals, proofCounts } from "./derive";
-import { evidence } from "./evidence";
+import { fmtRatio } from "../format";
+import { proofCounts, speedStats } from "./derive";
+import { evidence, speedEvidence } from "./evidence";
 import { CounterexamplesView } from "./views/counterexamples";
 import { OptimisationView } from "./views/optimisation";
 import { OverviewView } from "./views/overview";
 import { ProofsView } from "./views/proofs";
 import { ProvenanceView } from "./views/provenance";
+import { SpeedView } from "./views/speed";
+import { TerminationView } from "./views/termination";
 
 function headline(): HeadlineFigure[] {
   const p = proofCounts();
-  const o = optimisationTotals();
+  const sp = speedStats();
   return [
     {
       label: "Proofs accepted",
@@ -31,16 +33,16 @@ function headline(): HeadlineFigure[] {
       tone: "gold",
     },
     {
-      label: "Tested before proving",
-      value: fmtInt(o.tested),
-      detail: `Cases the optimisation was run on first; it failed on ${fmtInt(o.failures)}.`,
-      tone: o.failures === 0 ? "positive" : "negative",
+      label: "Faster than a full rebuild",
+      value: fmtRatio(sp.ratioMedian),
+      detail: `Median, in their own code; faster on ${sp.faster} of ${sp.workloads} workloads, from ${fmtRatio(sp.ratioMin)} to ${fmtRatio(sp.ratioMax)}.`,
+      tone: "positive",
     },
     {
-      label: "Wrong versions caught",
-      value: `${o.caught} of ${o.variants}`,
-      detail: "Plausible shortcuts that must fail, and do.",
-      tone: o.caught === o.variants ? "positive" : "negative",
+      label: "Fork-and-sync didn't finish",
+      value: `${sp.withReversals.workloads - sp.withReversals.finished} of ${sp.withReversals.workloads}`,
+      detail: "Workloads with reversals, in their Haskell port; down to a four-activity case.",
+      tone: "negative",
     },
   ];
 }
@@ -50,6 +52,8 @@ export const retroactiveLedgerDashboard: Dashboard = {
     { id: "overview", label: "Overview", description: "What was checked in a published ledger algorithm, how, and what held." },
     { id: "counterexamples", label: "Counterexamples", description: "Three cases where fork-and-sync ends somewhere else, in the model and in the project's own code." },
     { id: "optimisation", label: "A safe optimisation", description: "Rebuilding from the earliest affected point, proved exact and tested against wrong versions." },
+    { id: "speed", label: "Speed", description: "The optimisation timed against fork-and-sync and a full rebuild, in the project's own code." },
+    { id: "termination", label: "Does it finish?", description: "Four activities on which fork-and-sync doesn't finish, in the model and in both implementations." },
     { id: "proofs", label: "Proofs", description: "Every checker verdict against the owner's lock, and each claim's exact Lean statement." },
     { id: "provenance", label: "Provenance", description: "The commit and the SHA-256 of every evidence file, checked at build time." },
   ],
@@ -58,6 +62,7 @@ export const retroactiveLedgerDashboard: Dashboard = {
     return {
       run: `lock ${evidence.verdict("paymentConserved").lock_sha256.slice(0, 8)}`,
       measuredAt: s.checked_at,
+      expires: speedEvidence.expires(),
       commit: evidence.checkedCommit(),
       uncommitted: [],
     };
@@ -71,6 +76,10 @@ export const retroactiveLedgerDashboard: Dashboard = {
         return <CounterexamplesView />;
       case "optimisation":
         return <OptimisationView />;
+      case "speed":
+        return <SpeedView />;
+      case "termination":
+        return <TerminationView />;
       case "proofs":
         return <ProofsView />;
       case "provenance":
