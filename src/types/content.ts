@@ -37,6 +37,9 @@ export interface Project {
   links?: ProjectLink[];
   /** Surfaced on the quick-skim landing page when true. */
   featured?: boolean;
+  /** Drafts render under `npm run dev` and are excluded from production builds,
+   *  the same rule as posts and result sets. */
+  draft?: boolean;
 }
 
 export interface SkillGroup {

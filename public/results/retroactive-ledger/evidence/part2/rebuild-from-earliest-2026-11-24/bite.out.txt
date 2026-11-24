@@ -1,0 +1,8 @@
+arrival cases 54928; the claimed step fails on 0
+  apply the late event at the end, as if on time: fails on 17584
+  put the late event one place too late: fails on 17584
+  put the late event one place too early: fails on 43024
+reversal cases 27120; the claimed step fails on 0
+  restart at the reversed event but keep it: fails on 27120
+  restart one event too late (the reversed effect stays in, the next is skipped): fails on 27120
+  subtract its own effect only, re-apply nothing after it: fails on 5004

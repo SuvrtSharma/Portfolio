@@ -1,0 +1,5 @@
+leancheck against the owner's lock, project part2, commit 2b1ae8e
+lock sha256 103a922b162e1137b5f46b83494f522a16b8208f91b3b53c73bf88bad85cc657
+Spec/Retro.lean sha256 5b690fddff30d5bc856e0ff9de528b542757df28a23bf2c19a1adb983cb136fe
+Proofs/Retro.lean sha256 829b43e07398edc57f4ddd5a4d99ff125b800d0bc2738542fb1107cd78a46519 (committed: 829b43e07398edc57f4ddd5a4d99ff125b800d0bc2738542fb1107cd78a46519)
+ok

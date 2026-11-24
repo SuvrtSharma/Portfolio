@@ -1,0 +1,82 @@
+{
+  "arrival_cases": {
+    "value": 54928,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 1,
+    "text": "insert cases: 54928, of which backdated (insertion point before the end): 17584, claim fails on: 0"
+  },
+  "arrival_backdated": {
+    "value": 17584,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 1,
+    "text": "insert cases: 54928, of which backdated (insertion point before the end): 17584, claim fails on: 0"
+  },
+  "arrival_claim_fails": {
+    "value": 0,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 1,
+    "text": "insert cases: 54928, of which backdated (insertion point before the end): 17584, claim fails on: 0"
+  },
+  "reversal_cases": {
+    "value": 27120,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 2,
+    "text": "remove cases: 27120, of which not the last in business order: 14400, claim fails on: 0"
+  },
+  "reversal_not_last": {
+    "value": 14400,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 2,
+    "text": "remove cases: 27120, of which not the last in business order: 14400, claim fails on: 0"
+  },
+  "reversal_claim_fails": {
+    "value": 0,
+    "file": "evidence/part2/rebuild-from-earliest-2026-11-24/pretest.out.txt",
+    "line": 2,
+    "text": "remove cases: 27120, of which not the last in business order: 14400, claim fails on: 0"
+  },
+  "variants": [
+    {
+      "variant": "apply the late event at the end, as if on time",
+      "fails_on": 17584,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 2,
+      "case": "arrival"
+    },
+    {
+      "variant": "put the late event one place too late",
+      "fails_on": 17584,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 3,
+      "case": "arrival"
+    },
+    {
+      "variant": "put the late event one place too early",
+      "fails_on": 43024,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 4,
+      "case": "arrival"
+    },
+    {
+      "variant": "restart at the reversed event but keep it",
+      "fails_on": 27120,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 6,
+      "case": "reversal"
+    },
+    {
+      "variant": "restart one event too late (the reversed effect stays in, the next is skipped)",
+      "fails_on": 27120,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 7,
+      "case": "reversal"
+    },
+    {
+      "variant": "subtract its own effect only, re-apply nothing after it",
+      "fails_on": 5004,
+      "file": "evidence/part2/rebuild-from-earliest-2026-11-24/bite.out.txt",
+      "line": 8,
+      "case": "reversal"
+    }
+  ]
+}

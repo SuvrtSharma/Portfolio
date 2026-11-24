@@ -1,0 +1,2 @@
+insert cases: 54928, of which backdated (insertion point before the end): 17584, claim fails on: 0
+remove cases: 27120, of which not the last in business order: 14400, claim fails on: 0

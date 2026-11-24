@@ -1,0 +1,325 @@
+{
+  "about": "The counterexamples as Precise Ledger Pro's own code computed them, at upstream 06bb4ce: the late (arrival-order) path against an on-time run of the same engine.",
+  "cases": [
+    {
+      "file": "evidence/plp/repro-haskell-2026-11-18.txt",
+      "lines": [
+        4,
+        5
+      ],
+      "ids": "arrival positions: 0 = model id 1, 1 = model id 2, 2 = model id 3",
+      "arrival": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 0
+        },
+        "effects": [
+          {
+            "id": "0",
+            "effect": {
+              "fee": 0,
+              "principal": 10,
+              "excess": 0
+            }
+          },
+          {
+            "id": "1",
+            "effect": {
+              "fee": 0,
+              "principal": 10,
+              "excess": 0
+            }
+          },
+          {
+            "id": "2",
+            "effect": {
+              "fee": 0,
+              "principal": -20,
+              "excess": 0
+            }
+          }
+        ]
+      },
+      "on_time": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 0
+        },
+        "effects": [
+          {
+            "id": "0",
+            "effect": {
+              "fee": 0,
+              "principal": 0,
+              "excess": -10
+            }
+          },
+          {
+            "id": "1",
+            "effect": {
+              "fee": 0,
+              "principal": 10,
+              "excess": 0
+            }
+          },
+          {
+            "id": "2",
+            "effect": {
+              "fee": 0,
+              "principal": -10,
+              "excess": 10
+            }
+          }
+        ]
+      },
+      "implementation": "Haskell port",
+      "case": "backdated",
+      "late_path_agrees_with_on_time": false,
+      "balance_agrees": true
+    },
+    {
+      "file": "evidence/part2/published-2026-11-24/java-results-extract.txt",
+      "from_log": "evidence/plp/repro-java-2026-11-18.log.gz",
+      "log_lines": [
+        4446,
+        4486,
+        4526
+      ],
+      "scenario": "late event after a late event (model candidate) [Ev[id=a, kind=D, day=2], Ev[id=b, kind=D, day=0], Ev[id=c, kind=P20, day=1]]",
+      "arrival": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 0
+        },
+        "effects": [
+          {
+            "id": "b",
+            "effect": {
+              "principal": 10,
+              "fee": 0,
+              "excess": 0
+            }
+          },
+          {
+            "id": "c",
+            "effect": {
+              "principal": -20,
+              "fee": 0,
+              "excess": 0
+            }
+          },
+          {
+            "id": "a",
+            "effect": {
+              "principal": 10,
+              "fee": 0,
+              "excess": 0
+            }
+          }
+        ],
+        "entries": 3
+      },
+      "on_time": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 0
+        },
+        "effects": [
+          {
+            "id": "b",
+            "effect": {
+              "principal": 10,
+              "fee": 0,
+              "excess": 0
+            }
+          },
+          {
+            "id": "c",
+            "effect": {
+              "principal": -10,
+              "fee": 0,
+              "excess": 10
+            }
+          },
+          {
+            "id": "a",
+            "effect": {
+              "principal": 0,
+              "fee": 0,
+              "excess": -10
+            }
+          }
+        ],
+        "entries": 3
+      },
+      "implementation": "Java service",
+      "case": "backdated",
+      "late_path_agrees_with_on_time": false,
+      "balance_agrees": true
+    },
+    {
+      "file": "evidence/part2/readings8-2026-11-23/code-check-original-haskell.txt",
+      "lines": [
+        10,
+        11
+      ],
+      "ids": "model ids",
+      "arrival": {
+        "balance": {
+          "fee": -3,
+          "principal": 0,
+          "excess": 4
+        },
+        "effects": [
+          {
+            "id": "1",
+            "effect": {
+              "fee": -3,
+              "principal": 0,
+              "excess": 2
+            }
+          },
+          {
+            "id": "2",
+            "effect": {
+              "fee": 3,
+              "principal": 0,
+              "excess": 0
+            }
+          },
+          {
+            "id": "3",
+            "effect": {
+              "fee": -3,
+              "principal": 0,
+              "excess": 2
+            }
+          }
+        ]
+      },
+      "on_time": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 7
+        },
+        "effects": [
+          {
+            "id": "2",
+            "effect": {
+              "fee": 3,
+              "principal": 0,
+              "excess": 0
+            }
+          },
+          {
+            "id": "1",
+            "effect": {
+              "fee": -3,
+              "principal": 0,
+              "excess": 2
+            }
+          },
+          {
+            "id": "3",
+            "effect": {
+              "fee": 0,
+              "principal": 0,
+              "excess": 5
+            }
+          }
+        ]
+      },
+      "implementation": "Haskell port",
+      "case": "reading-robust",
+      "late_path_agrees_with_on_time": false,
+      "balance_agrees": false
+    },
+    {
+      "file": "evidence/part2/published-2026-11-24/java-results-extract.txt",
+      "from_log": "evidence/part2/readings8-2026-11-23/code-check-original-java.log.gz",
+      "log_lines": [
+        5100,
+        5140,
+        5180
+      ],
+      "scenario": "late charge between payments (reading-robust model candidate, 2026-11-23) [Ev[id=a, kind=P5, day=1], Ev[id=b, kind=C, day=0], Ev[id=c, kind=P5, day=2]]",
+      "arrival": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 7
+        },
+        "effects": [
+          {
+            "id": "b",
+            "effect": {
+              "principal": 0,
+              "fee": 3,
+              "excess": 0
+            }
+          },
+          {
+            "id": "a",
+            "effect": {
+              "principal": 0,
+              "fee": -3,
+              "excess": 2
+            }
+          },
+          {
+            "id": "c",
+            "effect": {
+              "principal": 0,
+              "fee": -3,
+              "excess": 2
+            }
+          }
+        ],
+        "entries": 4
+      },
+      "on_time": {
+        "balance": {
+          "fee": 0,
+          "principal": 0,
+          "excess": 7
+        },
+        "effects": [
+          {
+            "id": "b",
+            "effect": {
+              "principal": 0,
+              "fee": 3,
+              "excess": 0
+            }
+          },
+          {
+            "id": "a",
+            "effect": {
+              "principal": 0,
+              "fee": -3,
+              "excess": 2
+            }
+          },
+          {
+            "id": "c",
+            "effect": {
+              "principal": 0,
+              "fee": 0,
+              "excess": 5
+            }
+          }
+        ],
+        "entries": 3
+      },
+      "implementation": "Java service",
+      "case": "reading-robust",
+      "late_path_agrees_with_on_time": false,
+      "balance_agrees": true
+    }
+  ]
+}

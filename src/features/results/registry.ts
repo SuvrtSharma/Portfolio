@@ -1,4 +1,5 @@
 import { godsHandDashboard } from "./gods-hand";
+import { retroactiveLedgerDashboard } from "./retroactive-ledger";
 import type { Dashboard } from "./types";
 
 /**
@@ -8,6 +9,7 @@ import type { Dashboard } from "./types";
  */
 const dashboards: Record<string, Dashboard> = {
   "gods-hand": godsHandDashboard,
+  "retroactive-ledger": retroactiveLedgerDashboard,
 };
 
 export function getDashboard(slug: string): Dashboard | undefined {

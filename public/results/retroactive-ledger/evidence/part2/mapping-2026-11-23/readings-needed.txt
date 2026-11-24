@@ -1,0 +1,64 @@
+Which readings the backdated counterexample needs. Committed spec (HEAD d060616), with two
+alternative readings substituted in a scratch copy:
+  recompute:  a fork's entries get their running balances recomputed (as if added with addEntry)
+  sumcurrent: the current balance is the sum of the entries' changes, not the last stored one
+Raw: fp-<reading>.txt per sequence (scratch); this file is the summary. Lean 4.35.0.
+
+cex = [disburse 10 @2, disburse 10 @0, pay 20 @1]; rebuild: fee 0, principal 10, excess 10
+  orig (stored balances, last stored is current): forkSync principal 0, excess 0 -> disagrees
+  recompute:                                      forkSync principal 10, excess 10 -> agrees
+  sumcurrent:                                     forkSync principal 10, excess 10 -> agrees
+(raw output of cex.lean under each reading is at the end of this file)
+
+All sequences of up to 3 events: 3432
+  orig: differ from rebuild 150; with distinct dates 58
+  recompute: differ from rebuild 90; with distinct dates 43
+  sumcurrent: differ from rebuild 90; with distinct dates 43
+differ under all three readings: 90; distinct dates 43; of those, with a reversal 32; posting an adjustment under every reading 43
+
+=== raw: cex.lean under each reading
+--- orig
+("rebuild",
+ { fee := 0, principal := 10, excess := 10 },
+ [(1, { fee := 0, principal := 10, excess := 0 }),
+  (2, { fee := 0, principal := 10, excess := 0 }),
+  (3, { fee := 0, principal := -10, excess := 10 })])
+("forkSync",
+ ({ fee := 0, principal := 0, excess := 0 },
+  [(1, { fee := 0, principal := 10, excess := 0 }),
+   (2, { fee := 0, principal := 10, excess := 0 }),
+   (3, { fee := 0, principal := -20, excess := 0 })]),
+ "agrees",
+ false,
+ "stuck",
+ false)
+--- recompute
+("rebuild",
+ { fee := 0, principal := 10, excess := 10 },
+ [(1, { fee := 0, principal := 10, excess := 0 }),
+  (2, { fee := 0, principal := 10, excess := 0 }),
+  (3, { fee := 0, principal := -10, excess := 10 })])
+("forkSync",
+ ({ fee := 0, principal := 10, excess := 10 },
+  [(1, { fee := 0, principal := 10, excess := 0 }),
+   (2, { fee := 0, principal := 10, excess := 0 }),
+   (3, { fee := 0, principal := -10, excess := 10 })]),
+ "agrees",
+ true,
+ "stuck",
+ false)
+--- sumcurrent
+("rebuild",
+ { fee := 0, principal := 10, excess := 10 },
+ [(1, { fee := 0, principal := 10, excess := 0 }),
+  (2, { fee := 0, principal := 10, excess := 0 }),
+  (3, { fee := 0, principal := -10, excess := 10 })])
+("forkSync",
+ ({ fee := 0, principal := 10, excess := 10 },
+  [(1, { fee := 0, principal := 10, excess := 0 }),
+   (2, { fee := 0, principal := 10, excess := 0 }),
+   (3, { fee := 0, principal := -10, excess := 10 })]),
+ "agrees",
+ true,
+ "stuck",
+ false)

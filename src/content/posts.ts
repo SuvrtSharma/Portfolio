@@ -26,6 +26,7 @@ export const posts: Post[] = [
     tags: ["AI", "Lean 4", "Formal Methods", "Agent Skills", "Benchmarking"],
     readingMinutes: 10,
     draft: true,
+    project: "gods-hand",
   },
   {
     slug: "making-ai-agents-prove-their-claims",
@@ -36,6 +37,7 @@ export const posts: Post[] = [
     tags: ["AI", "Lean 4", "Formal Methods", "SQLite", "Benchmarking"],
     readingMinutes: 8,
     draft: true,
+    project: "gods-hand",
   },
   {
     slug: "the-llm-is-not-allowed-to-state-facts",

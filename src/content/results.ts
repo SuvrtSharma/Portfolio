@@ -22,6 +22,18 @@ export const resultSets: ResultSet[] = [
       "how-the-claim-checker-is-built",
     ],
     source: { name: "God's Hand", visibility: "private" },
-    draft: true,
+  },
+  {
+    slug: "retroactive-ledger",
+    title: "God's Hand, part 2: a published ledger algorithm, checked",
+    shortTitle: "God's Hand: part 2",
+    question:
+      "A draft paper's fork-and-sync claims to correct a loan ledger for late events without a full rebuild. Does it keep the rebuild's meaning, and is there an optimisation that does?",
+    summary:
+      "Precise Ledger Pro's fork-and-sync, modelled in Lean 4 and checked against a full rebuild. Three proved counterexamples, run back through the project's own Haskell and Java code, and a cheaper rebuild proved exact. Every figure is read from the evidence files.",
+    date: "2026-11-24",
+    tags: ["Lean 4", "Formal methods", "Ledgers", "Counterexamples", "AI agents"],
+    posts: [],
+    source: { name: "God's Hand", visibility: "private" },
   },
 ];

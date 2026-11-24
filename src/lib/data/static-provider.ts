@@ -38,15 +38,16 @@ export class StaticWorldDataProvider implements IWorldDataProvider {
   }
 
   getProjects(): Project[] {
-    return projects;
+    const includeDrafts = process.env.NODE_ENV !== "production";
+    return projects.filter((project) => includeDrafts || !project.draft);
   }
 
   getProjectBySlug(slug: string): Project | undefined {
-    return projects.find((project) => project.slug === slug);
+    return this.getProjects().find((project) => project.slug === slug);
   }
 
   getFeaturedProjects(): Project[] {
-    return projects.filter((project) => project.featured);
+    return this.getProjects().filter((project) => project.featured);
   }
 
   getSkillGroups(): SkillGroup[] {

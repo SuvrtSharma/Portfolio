@@ -1,0 +1,28 @@
+Result lines (GODSHAND) of the Java runs, extracted by make_published.py.
+The full Maven logs are not published: they also print connection details.
+
+== evidence/plp/repro-java-2026-11-18.log.gz
+2961: GODSHAND scenario: double reversal, no late events [Ev[id=a, kind=D, day=0], Ev[id=b, kind=D, day=1], Ev[id=r1, kind=R:b, day=2], Ev[id=r2, kind=R:a, day=3]]
+3001: GODSHAND   arrival : balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts | entries 5
+3041: GODSHAND   in order: balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts | entries 0
+3799: GODSHAND scenario: late payment, then an in-order disbursal [Ev[id=a, kind=D, day=0], Ev[id=b, kind=D, day=2], Ev[id=c, kind=P20, day=1], Ev[id=d, kind=D, day=3]]
+3839: GODSHAND   arrival : balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] b=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] d=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] | entries 5
+3879: GODSHAND   in order: balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] b=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] d=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | entries 4
+4446: GODSHAND scenario: late event after a late event (model candidate) [Ev[id=a, kind=D, day=2], Ev[id=b, kind=D, day=0], Ev[id=c, kind=P20, day=1]]
+4486: GODSHAND   arrival : balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts b=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -20, interest=USD 0, fee=USD 0, excess=USD 0] a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | entries 3
+4526: GODSHAND   in order: balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts b=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] a=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] | entries 3
+
+== evidence/part2/readings8-2026-11-23/code-check-original-java.log.gz
+2961: GODSHAND scenario: double reversal, no late events [Ev[id=a, kind=D, day=0], Ev[id=b, kind=D, day=1], Ev[id=r1, kind=R:b, day=2], Ev[id=r2, kind=R:a, day=3]]
+3001: GODSHAND   arrival : balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts | entries 5
+3041: GODSHAND   in order: balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts | entries 0
+3799: GODSHAND scenario: late payment, then an in-order disbursal [Ev[id=a, kind=D, day=0], Ev[id=b, kind=D, day=2], Ev[id=c, kind=P20, day=1], Ev[id=d, kind=D, day=3]]
+3839: GODSHAND   arrival : balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] b=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] d=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] | entries 5
+3879: GODSHAND   in order: balance Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | impacts a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] b=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] d=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | entries 4
+4446: GODSHAND scenario: late event after a late event (model candidate) [Ev[id=a, kind=D, day=2], Ev[id=b, kind=D, day=0], Ev[id=c, kind=P20, day=1]]
+4486: GODSHAND   arrival : balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts b=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -20, interest=USD 0, fee=USD 0, excess=USD 0] a=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] | entries 3
+4526: GODSHAND   in order: balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 0] | impacts b=Balance[principal=USD 10, interest=USD 0, fee=USD 0, excess=USD 0] c=Balance[principal=USD -10, interest=USD 0, fee=USD 0, excess=USD 10] a=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD -10] | entries 3
+5100: GODSHAND scenario: late charge between payments (reading-robust model candidate, 2026-11-23) [Ev[id=a, kind=P5, day=1], Ev[id=b, kind=C, day=0], Ev[id=c, kind=P5, day=2]]
+5140: GODSHAND   arrival : balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 7] | impacts b=Balance[principal=USD 0, interest=USD 0, fee=USD 3, excess=USD 0] a=Balance[principal=USD 0, interest=USD 0, fee=USD -3, excess=USD 2] c=Balance[principal=USD 0, interest=USD 0, fee=USD -3, excess=USD 2] | entries 4
+5180: GODSHAND   in order: balance Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 7] | impacts b=Balance[principal=USD 0, interest=USD 0, fee=USD 3, excess=USD 0] a=Balance[principal=USD 0, interest=USD 0, fee=USD -3, excess=USD 2] c=Balance[principal=USD 0, interest=USD 0, fee=USD 0, excess=USD 5] | entries 3
+
