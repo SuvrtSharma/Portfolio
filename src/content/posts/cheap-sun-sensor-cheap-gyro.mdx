@@ -1,0 +1,141 @@
+{/* Work-in-progress write-up of HELIOS. Figures come from the evidence files published at /results/helios:
+    run 2026-11-26 (phase1/summary.csv, phase1/runs.csv, embedded_vs_python.csv, bench_host.txt,
+    esp32-build.txt). The plots are the benchmark's own, from the same run. */}
+
+> **Work in progress.** Everything below is from simulation, and the C code has
+> only run on a PC so far. The hardware phases are next, and the numbers will
+> change when real sensors are involved. I'll update this post as they do.
+
+Every phone, drone and rocket needs to know which way it's pointing. The cheap
+way to find out is a **gyroscope**: it measures how fast you're turning, and you
+add those turns up. The problem is that cheap gyros are slightly wrong all the
+time, and adding up slightly wrong numbers gives an answer that drifts further
+and further from the truth.
+
+This post is about a project I'm building to answer one question: **can a cheap
+Sun sensor keep a cheap gyro honest, on a chip that costs a few hundred
+rupees?**
+
+## The problem: gyros drift
+
+A low-cost gyro like the MPU-6050 reads a tiny turning rate even when it's
+sitting perfectly still. That error, called the **bias**, is only about 0.2
+degrees per second. Over two minutes that adds up to 24 degrees.
+
+In my simulation, adding up the gyro alone gives a typical error of **25.7°
+over two minutes sitting still**, and **32.6° averaged over eight test
+situations**. ("Typical" here is the RMS error over the whole run.)
+In the worst situation, where the device spins faster than the gyro can
+measure for one second, it reaches 95°.
+
+## The idea: let the Sun hold it steady
+
+The Sun is a free reference that's in a known place for any time and location.
+A small Sun sensor (four light sensors behind a small opening) tells you where the Sun
+is relative to the device. Compare that with where the Sun *should* be, and you
+can see how far your orientation has drifted, then nudge it back.
+
+## The catch: the Sun has a blind spot
+
+A Sun sensor gives you one direction. If the device rolls *around* the line
+pointing at the Sun, the Sun stays in exactly the same spot in the sensor's
+view. No Sun sensor can ever notice that roll.
+
+![An orientation error split into the part a Sun sensor sees and the roll around the Sun line it can't](/blog/helios/sun-error-geometry.svg)
+
+So the benchmark scores every error in two parts: the part across the Sun line,
+which the sensor can see, and the part along it, which it can't.
+
+## How I tested it
+
+Everything is simulated for now, so the true answer is always known.
+
+- **A simulator** fakes a gyro, an accelerometer and a Sun sensor with realistic
+  flaws: noise, bias, temperature drift, readings that are slightly crooked,
+  clouds, and a gyro that maxes out at 250° per second. The Sun's position comes
+  from standard astronomy formulas for a real place and time.
+- **The answer is hidden.** The orientation-guessing code gets only what a real
+  device could know. The true orientation goes only to the code that grades it,
+  and a test checks that nothing leaks across.
+- **Eight situations:** sitting still, swinging, spinning around the Sun line,
+  hand-held wobbling, the Sun blocked for 30 seconds, an over-speed spin,
+  heating up, and passing clouds. Each is run with eight different random seeds.
+- **Five estimators**, each one adding an idea to the last:
+  1. **Gyro only:** add up the turns.
+  2. **Complementary:** gyro, plus a gentle nudge toward the Sun.
+  3. **Mahony PI:** also learns the gyro's bias.
+  4. **Kalman filter (Sun):** tracks how unsure it is and weighs each reading.
+  5. **Kalman filter (Sun + gravity):** also uses the accelerometer, which knows
+     which way is down.
+
+## What I found
+
+Typical error over two minutes, averaged over all eight situations:
+
+| Estimator | Error |
+| --- | --- |
+| Gyro only | 32.6° |
+| Complementary | 16.6° |
+| Mahony PI | 13.6° |
+| Kalman (Sun) | 6.6° |
+| Kalman (Sun + gravity) | 1.2° |
+
+![Typical error per situation for each estimator, on a log scale](/blog/helios/rms_total.png)
+
+Three things stood out:
+
+1. **The Sun works on what it can see.** Sitting still, the error the Sun sensor
+   can see drops from 18.9° to under 0.8° for every Sun-aided method.
+2. **The blind spot is real.** In the same test, the roll around the Sun line
+   stays at about 16° for every Sun-only method, including the Kalman filter.
+   It's not a weak algorithm; it's geometry.
+3. **Movement and gravity fix it.** When the device moves around, the Sun line
+   moves too, and the Kalman filter can work out the gyro's bias: hand-held,
+   its error falls to 2.4°. Adding gravity as a second direction makes every
+   axis visible, and the error stays around 1° in every situation except the
+   over-speed spin, where it is 2.9°.
+
+The Kalman filter also copes best when things go wrong. When the gyro is
+over-spun, it knows that reading is wrong and leans on the Sun to recover in
+about a second:
+
+![Error over time when the gyro is over-spun at 30 seconds](/blog/helios/timeseries_gyro_saturation.png)
+
+## Getting it onto a small chip
+
+A microcontroller can't run Python, so I rewrote all five estimators in C, with
+no dynamic memory: each one is a small fixed-size struct. The biggest, the
+Kalman filter, needs 172 bytes of state.
+
+The ESP32 does single-precision maths (float) in hardware, but double
+precision slowly in software. So I built everything twice and checked both
+against Python on every sample. The double version matches Python almost
+exactly. The float version is never more than about a hundredth of a degree
+off, which is 50 times smaller than the Sun sensor's own noise. **Float is good
+enough.**
+
+There's now a firmware app for the classic ESP32 that replays recorded sensor
+data through all five estimators and times them. It builds in CI with
+Espressif's official toolchain. **It hasn't run on a board yet**, so I don't
+have real timing numbers. That's the next step.
+
+## How I know the numbers are right
+
+- A test checks that the estimators never see the true answer.
+- The grader is tested on made-up errors of known size.
+- Two of the estimators reproduce an earlier saved run of the benchmark exactly,
+  to about 15 decimal places.
+- Every push runs the tests, the benchmark and the C-vs-Python check
+  automatically.
+- The [results dashboard](/results/helios) reads the raw evidence files, which
+  are published, each with its SHA-256 fingerprint.
+
+## What's next
+
+1. Flash a real ESP32 and time each estimator.
+2. Build a hand-turned test rig, within a ₹5,000–10,000 budget, with an angle
+   encoder as the true reference.
+3. Measure the real sensors' errors and replace my guesses with them.
+
+The code is private for now. The results, and how they're computed, are on the
+[HELIOS dashboard](/results/helios).

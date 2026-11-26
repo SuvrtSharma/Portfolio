@@ -1,0 +1,18 @@
+{
+  "generated_utc": "2026-11-26T17:08:57+00:00",
+  "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007
+  ],
+  "quick": false,
+  "python": "3.14.10",
+  "numpy": "2.5.5",
+  "machine": "AMD64",
+  "note": "us_per_step_python is desktop CPython timing, a relative indicator only."
+}

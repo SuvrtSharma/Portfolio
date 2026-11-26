@@ -26,6 +26,26 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "helios",
+    title: "HELIOS: Sun-aided orientation on a low-cost chip",
+    shortTitle: "HELIOS",
+    tagline:
+      "Can a cheap Sun sensor stop a cheap gyroscope from drifting, on a microcontroller that costs a few hundred rupees?",
+    description:
+      "A research platform for affordable orientation sensing. A simulator fakes a low-cost gyro, accelerometer and Sun sensor, with noise, bias, temperature drift, dropouts and saturation, and hides the true answer from five estimators, from plain gyro integration up to a Kalman filter. All five are ported to C for an ESP32 and checked against Python. Simulation and the C port are done; the board and a hand-turned test rig are next.",
+    highlights: [
+      "Ground truth kept apart from estimator inputs, and a test that checks it",
+      "Error split into what a Sun sensor can see and the roll around the Sun line it never can",
+      "All five estimators in C99 with no dynamic memory, double and float, checked against Python sample by sample",
+      "ESP32 benchmark firmware built in CI with ESP-IDF; on-board timing still to come",
+      "Every published figure traces to a raw evidence file and its SHA-256",
+    ],
+    tech: ["Python", "NumPy", "C99", "CMake", "ESP32", "ESP-IDF", "GitHub Actions"],
+    status: "in-progress",
+    year: 2026,
+    links: [{ label: "Results so far", href: "/results/helios", kind: "case-study" }],
+  },
+  {
     slug: "arqon",
     title: "Arqon: SQL Architecture Studio",
     shortTitle: "Arqon",

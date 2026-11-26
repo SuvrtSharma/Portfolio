@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Attitude error split into along-Sun and cross-Sun parts</title>
+  <defs>
+    <marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+    <marker id="ah-orange" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d35400"/>
+    </marker>
+    <marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1e8449"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="640" height="380" rx="14" fill="#ffffff" stroke="#d9d9d9"/>
+
+  <!-- Sun line: from the device toward the Sun -->
+  <line x1="90" y1="290" x2="556" y2="72" stroke="#b8a04a" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="330" y="163" font-size="14" fill="#7a6a2a" transform="rotate(-25.1 330 163)">Sun line</text>
+
+  <!-- Sun -->
+  <g transform="translate(588 56)">
+    <circle r="20" fill="#f5b400"/>
+    <g stroke="#f5b400" stroke-width="3" stroke-linecap="round">
+      <line x1="0" y1="-28" x2="0" y2="-36"/><line x1="0" y1="28" x2="0" y2="36"/>
+      <line x1="-28" y1="0" x2="-36" y2="0"/><line x1="28" y1="0" x2="36" y2="0"/>
+      <line x1="20" y1="20" x2="26" y2="26"/><line x1="-20" y1="-20" x2="-26" y2="-26"/>
+      <line x1="20" y1="-20" x2="26" y2="-26"/><line x1="-20" y1="20" x2="-26" y2="26"/>
+    </g>
+  </g>
+
+  <!-- Roll about the beam: invisible to a Sun sensor -->
+  <ellipse cx="480" cy="108" rx="8" ry="26" fill="none" stroke="#d35400" stroke-width="2" stroke-dasharray="4 3" transform="rotate(-25.1 480 108)"/>
+  <path d="M 492 86 l 7 -2 l -3 7" fill="none" stroke="#d35400" stroke-width="2"/>
+  <text x="460" y="160" font-size="13" fill="#a04000">rolling about the beam:</text>
+  <text x="460" y="177" font-size="13" fill="#a04000">the Sun stays in the same spot</text>
+
+  <!-- along-Sun component -->
+  <line x1="90" y1="290" x2="296" y2="193.5" stroke="#d35400" stroke-width="5" marker-end="url(#ah-orange)"/>
+  <!-- cross-Sun component -->
+  <line x1="298.4" y1="192.5" x2="249" y2="87" stroke="#1e8449" stroke-width="5" marker-end="url(#ah-green)"/>
+  <!-- right-angle mark -->
+  <polyline points="287.5,197.6 282.4,186.7 293.3,181.6" fill="none" stroke="#555" stroke-width="1.5"/>
+  <!-- total error -->
+  <line x1="90" y1="290" x2="246" y2="87.5" stroke="#c0392b" stroke-width="3" marker-end="url(#ah-red)"/>
+
+  <!-- device -->
+  <rect x="70" y="276" width="40" height="28" rx="5" fill="#2a78d6"/>
+  <circle cx="104" cy="283" r="4" fill="#ffffff"/>
+  <text x="58" y="326" font-size="13" fill="#333">device</text>
+
+  <!-- labels -->
+  <text x="40" y="196" font-size="15" font-weight="600" fill="#c0392b">total error φ</text>
+  <text x="196" y="44" font-size="15" font-weight="600" fill="#1e8449">cross-Sun part</text>
+  <text x="196" y="62" font-size="13" fill="#1e8449">the Sun sensor sees this</text>
+  <text x="196" y="262" font-size="15" font-weight="600" fill="#d35400">along-Sun part</text>
+  <text x="196" y="280" font-size="13" fill="#d35400">the Sun sensor cannot see this</text>
+
+  <text x="24" y="360" font-size="12" fill="#666">φ = along + cross.  Scored as rms_along_sun_deg and rms_cross_sun_deg (benchmarks/harness.py).</text>
+</svg>

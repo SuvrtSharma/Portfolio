@@ -37,4 +37,17 @@ export const resultSets: ResultSet[] = [
     posts: ["ai-agents-prove-it-plain-english", "a-ledger-i-didnt-write"],
     source: { name: "Burden of Proof", visibility: "private" },
   },
+  {
+    slug: "helios",
+    title: "HELIOS: can a cheap Sun sensor keep a cheap gyro honest?",
+    shortTitle: "HELIOS (in progress)",
+    question:
+      "Low-cost gyroscopes drift. How much of that drift can a low-cost Sun sensor remove, what can it never see, and does it all fit on a small microcontroller?",
+    summary:
+      "Work in progress. Five ways to estimate orientation from a simulated low-cost gyro, accelerometer and Sun sensor, compared over eight scenarios, then ported to C for an ESP32 and checked against Python. Simulation only so far; the hardware phases are next.",
+    date: "2026-11-26",
+    tags: ["Sensor fusion", "Kalman filter", "Embedded C", "ESP32", "Simulation"],
+    posts: ["cheap-sun-sensor-cheap-gyro"],
+    source: { name: "HELIOS", visibility: "private" },
+  },
 ];

@@ -1,0 +1,20 @@
+{
+  "repository": "HELIOS (private)",
+  "run": "2026-11-26",
+  "commit": "0ec50d8814bc4289e504051e89fd429ac7cd57ae",
+  "committed_at": "2026-11-26T22:41:36+05:30",
+  "copied_from": "the commit (git show HEAD:<path>), not the working tree",
+  "copied_by": "node scripts/results/sync-helios.mjs",
+  "files": {
+    "README.md": "1d46128c42451e8deb9e4fee23db76b77a9cf7040cba70705acca41ee2b4cb91",
+    "phase1/runs.csv": "ad7b52f0595a4061302fc7681f058c631fa05e30eb407488c46f13fa64a5ffae",
+    "phase1/summary.csv": "bf5a26dd34dc13f6a759099622d8cade16e985245f216331a403405e339daa24",
+    "phase1/metadata.json": "1541383bb2ddbb04f4e9ffb13f619a96f8a71ec0712266c9ec26c77b71e4ab62",
+    "run_phase1.log": "fd569d2403d4fa8ec7fe81f019bd2db02d6213c5d8a8b94544bbdb72fd839216",
+    "embedded_vs_python.csv": "291899d480ca13151d669c50cb2b09c41e53b11debb6d60869f1db3af21ffbda",
+    "compare_embedded.log": "75de76654ed7e4ecbd2bbb5fdde78155d049e79e6b98535b2defa924ef1df22a",
+    "bench_host.txt": "093c452769937ea5cd7582058758c05ac07aab2877f8b184f535160b955eb58f",
+    "tests.txt": "46955a411fa2869e0ed7a6f109d7c6b7f8b0959ac7c8eb095e024eefaaf19971",
+    "esp32-build.txt": "0f29852900c9295a5f1cf1eacc114318fa8f197b1fafa9bc7fee70f4e61db3b2"
+  }
+}

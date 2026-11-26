@@ -18,6 +18,16 @@ function cs360(
  */
 export const posts: Post[] = [
   {
+    slug: "cheap-sun-sensor-cheap-gyro",
+    title: "Can a cheap Sun sensor keep a cheap gyro honest?",
+    summary:
+      "Work in progress: five ways to stop a low-cost gyroscope drifting, tested in simulation, the one thing a Sun sensor can never see, and all of it squeezed into C for a few-hundred-rupee ESP32.",
+    date: "2026-11-26",
+    tags: ["Sensor fusion", "Kalman filter", "Embedded C", "ESP32", "Work in progress"],
+    readingMinutes: 7,
+    project: "helios",
+  },
+  {
     slug: "ai-agents-prove-it-plain-english",
     title: "Making AI agents prove their claims, in plain English",
     summary:
