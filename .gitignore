@@ -50,3 +50,6 @@ AGENTS.md
 
 # Source art original (kept locally; the optimized .webp is what the app uses)
 /public/world/archipelago.png
+
+# Hosted evidence is published byte for byte, logs included (ADR-16)
+!public/results/**/*.log
