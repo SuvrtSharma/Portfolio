@@ -1,6 +1,21 @@
 {/* Every figure below comes from the God's Hand repository and evidence files: run 20261114T210922Z,
     evidence/prove-2026-11-15.json, evidence/mutations-2026-11-15.json and line counts of the files named. */}
 
+> **The short version**
+>
+> - **Goal:** explain how the checker works, whether it can be trusted, and
+>   whether it can be packaged for other teams.
+> - **What's in it:** the written rules (290 lines), the agent's proofs (1,400
+>   lines), a checker that accepts a proof only if it really proves the locked
+>   rule, and a timing harness.
+> - **Result:** it caught every fake proof we tried, and the tests protecting it
+>   all fail when it's broken.
+> - **Conclusion:** checking proofs is the cheap, reliable part. Writing rules
+>   worth checking is the expensive part, and it needs a person.
+>
+> New to this? Start with [the plain-English version](/blog/ai-agents-prove-it-plain-english).
+
+
 [The first post](/blog/making-ai-agents-prove-their-claims) told the story: a forged
 theorem, a benchmark that measured TCP, and two optimisation claims that were wrong.
 This one is for the engineers who want to rebuild it, or decide whether to. It
@@ -9,7 +24,8 @@ agent skill, and what you need to know to use it.
 
 ## The pieces
 
-Everything lives in one private repository. None of it depends on an external
+Everything lives in one repository, now public as
+[burden-of-proof](https://github.com/SuvrtSharma/burden-of-proof). None of it depends on an external
 system: the ledger, its spec, the checker and the benchmark were all built for this.
 
 - **The spec** (`Spec/Ledger.lean`, 290 lines of Lean 4). It defines the ledger's

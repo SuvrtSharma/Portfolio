@@ -1,0 +1,174 @@
+{/* Plain-language summary of the Burden of Proof project. Figures come from the same evidence files as the
+    other posts: part 1 run 20261114T210922Z (verdicts.json, benchmark.json), part 2 evidence (leancheck verdicts
+    against the owner's lock, speed-2026-11-24, nontermination.json), and line counts of the spec and proof files
+    (wc -l, 2026-11-26). Token cost has not been measured; the post says so. */}
+
+AI coding agents are confident. They say *"this change is safe"* and *"this is
+faster"* in the same tone whether it's true or not. Most of the time they're
+right. When they're wrong, the mistake often passes every test and shows up
+later as money in the wrong place.
+
+This post explains a project I've been running, in plain words: what I tried,
+what I found, and where I think it's worth using.
+
+## The goal
+
+**Make an AI agent prove its claims before anyone believes them.**
+
+Not "the tests pass", but evidence anyone can check: a mathematical proof that
+the change keeps the rules, a concrete example where it breaks them, or a
+careful timing measurement.
+
+## The idea in one paragraph
+
+Every "this change is safe and faster" claim is really two claims. *Does it
+still give the right answers?* That can be checked, with certainty, by a proof
+checker (I used one called Lean). *Is it faster?* That can only be measured,
+and measurements are noisy. So the right answer is checked first. Nothing gets
+timed until it passes, and a fast change that gives wrong answers is rejected,
+however fast it is.
+
+## What I tested it on
+
+Two test subjects, chosen to be harder each time:
+
+1. **Part 1: a small billing system an AI agent built.** It handles bills,
+   payments, payments made in advance, and reversals (undoing an entry). The agent then proposed six changes to make
+   it faster.
+2. **Part 2: someone else's design.** Precise Ledger Pro is an open-source loan
+   ledger with a research paper. The paper describes a shortcut for fixing the
+   books when a transaction arrives late, instead of recalculating everything
+   from the start. I didn't write the code, and neither did the agent.
+
+## What I did
+
+For each one:
+
+1. **Wrote down the rules** the system must always keep, such as "a payment is
+   never applied for more than its amount" and "one customer's actions never change another
+   customer's balance". The agent drafted them. **I reviewed and locked them**,
+   so nobody (including the agent) can quietly change them afterwards.
+2. **Checked each claim against those rules** with the proof checker. The
+   result is a proof that the claim always holds, or a short, concrete case
+   where it fails.
+3. **Ran the failing cases through the real code**, to confirm the problem is in
+   the software and not just in my write-up of it.
+4. **Timed only what passed**, with a strict rule. It counts as faster only if
+   its slowest run beat the old version's fastest run.
+
+## What I found
+
+**Part 1, the agent's billing system:**
+
+- **4 of the 6 speed-ups were safe.** Together they made the system **5.03×
+  faster**.
+- **2 were rejected, and both look fine in everyday use:**
+  - *"Only look at the first 20 unpaid bills."* It breaks only once a customer
+    has 21: a payment then leaves money unused while a bill stays unpaid. The
+    checker produced the exact case.
+  - *"Use the faster disk setting."* Every test passed. But that setting can lose
+    a payment the system has already confirmed if the power cuts out, and the
+    agent never mentioned that trade-off. The checker caught it by reading the
+    live database's settings.
+- **The checker couldn't be fooled.** We tried 13 ways to fake a proof, and all
+  13 were rejected.
+- **My review mattered as much as the proofs.** The agent's first rules were
+  provably true, and three of them were about the wrong thing. For example,
+  "oldest bill first" meant the bill *created* first, not the one with the
+  earliest bill date. No proof
+  can catch a rule that's correctly proved but means the wrong thing; a person
+  has to read it.
+
+**Part 2, someone else's published design:**
+
+- **The paper's shortcut usually agrees with a full recalculation, but not
+  always.** I found three short sequences of transactions where it ends with
+  the total split differently, for example between principal and excess. Two
+  of them happen in the project's own code. The third disagrees only with a
+  rule I chose for same-day ties, which the paper doesn't promise.
+- **Four transactions are enough to make the shortcut not finish** in the
+  project's two implementations, and in my model of the paper. That isn't proof
+  it never finishes, but none of the three ever did. The paper already flags
+  this area as open work.
+- **A different shortcut is safe, and fast.** Recalculating only from the late
+  transaction's date onwards is **proved to give exactly the same answer** as
+  recalculating everything. On the project's own code it was faster in all 32
+  test workloads: **11.86× at the median**, between 1.96× and 155.94×.
+
+## The conclusion
+
+- **It catches the dangerous kind of wrong claim:** the one that looks fine in
+  everyday use and in the usual tests. Both rejected speed-ups in part 1 were of
+  that kind.
+- **It works on code the agent didn't write.** It found real edge cases in a
+  published design, and it produced a better optimisation than the one it
+  checked.
+- **It doesn't replace a person.** Someone has to read and approve the rules.
+  In both parts, my review and outside reviews caught mistakes the proofs
+  couldn't.
+
+## What it costs, and how efficient the skill is
+
+I've packaged the method as two Claude Code skills and a reviewer agent, in the
+public repo
+[burden-of-proof](https://github.com/SuvrtSharma/burden-of-proof).
+**I haven't measured how efficient they are yet**, in tokens, time, or how
+often an agent gets the verdict right. That's the next test, and until then
+I won't guess. Here is what I do know about the cost:
+
+- **Proofs are much longer than the rules they prove.** Part 1's rules are 290
+  lines, and the proofs are 1,400 lines. Part 2's rules are 463 lines, and the
+  proofs are 671. An agent writes these, with many failed attempts along the way.
+- **Checking a finished proof is cheap and automatic.** It takes seconds to
+  minutes, with no tokens: the checker is an ordinary program that runs in CI.
+- **Human review time is the real cost.** The rules have to be read by someone
+  who knows the business.
+
+The next test will give a fresh agent a set of claims with known answers (some
+true, some false, some deliberately tricky) and count the tokens, the time and
+the verdicts. The one number that has to be zero is false "verified" results.
+
+## Where it's worth using
+
+My judgement, not a measurement. It's worth the tokens when **a wrong answer
+costs money, trust or compliance, and wouldn't show up in ordinary tests**. In
+practice that means claims like "the new version gives the same answer as the
+old one" or "this rule always holds" in:
+
+- **Billing, payments, payroll, tax:** "this refactor gives the same totals";
+  "a payment is never applied twice".
+- **Stock, bookings, seat allocation:** "we can never oversell"; "releasing a
+  hold restores the count exactly".
+- **Permissions in multi-customer software:** "one customer can never see or
+  change another's data".
+- **Systems that replay history:** "a late or out-of-order event gives the same
+  result as an on-time one".
+- **Caches and running totals:** "the cached figure always equals the real one".
+- **Migrations and rewrites:** "the new service returns what the old one did,
+  for every input".
+- **Performance changes:** "this is faster", measured properly, even when no
+  proof is needed.
+
+**Where it isn't worth it:** user interfaces, copy changes, simple
+create-read-update screens, one-off scripts, and anything where nobody can
+write down what "correct" means.
+
+**Where it fits in a team's workflow:**
+
+- **As a review step** on changes that touch money, permissions or history.
+- **As a CI check.** The checker gives a plain pass or fail, so a pipeline can
+  block a change whose proof doesn't check.
+- **Before a migration cutover**, to show the new system gives the old system's
+  answers.
+- **Whenever an agent proposes an optimisation.** Check that it's right first,
+  then time it.
+
+## Where to go next
+
+- The details, for engineers: [part 1](/blog/making-ai-agents-prove-their-claims),
+  [how the checker is built](/blog/how-the-claim-checker-is-built), and
+  [part 2](/blog/a-ledger-i-didnt-write).
+- Every number, traced to its raw file: [part 1 results](/results/gods-hand)
+  and [part 2 results](/results/retroactive-ledger).
+- The tools and skills:
+  [github.com/SuvrtSharma/burden-of-proof](https://github.com/SuvrtSharma/burden-of-proof).

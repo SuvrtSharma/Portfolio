@@ -3,6 +3,23 @@
     and code reproductions (evidence/part2/published-2026-11-24), the optimisation tests and bite checks
     (rebuild-from-earliest-2026-11-24) and the speed run (speed-2026-11-24). */}
 
+> **The short version**
+>
+> - **Goal:** test the method on someone else's work: a loan ledger and its
+>   research paper, which describes a shortcut for fixing the books when a
+>   transaction arrives late.
+> - **What I did:** wrote the rules from outside sources, modelled the paper's
+>   shortcut, and compared it with simply recalculating everything.
+> - **Result:** the shortcut usually agrees, but I found short cases where it
+>   doesn't, and four transactions that stop it finishing. A different shortcut,
+>   recalculating only from the late transaction onwards, is proved to give exactly
+>   the same answer, and was 11.86× faster at the median on the project's own code.
+> - **Conclusion:** the method works on code the agent didn't write, and it can
+>   produce a better optimisation, not just find faults.
+>
+> New to this? Start with [the plain-English version](/blog/ai-agents-prove-it-plain-english).
+
+
 In [part 1](/blog/making-ai-agents-prove-their-claims) an AI agent built a small
 ledger, proposed six optimisations, and a checker judged each one: Lean 4 proofs
 for what it means, a benchmark for how fast it is, in that order. It worked, but

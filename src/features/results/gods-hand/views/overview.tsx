@@ -5,7 +5,7 @@ import { getDataProvider } from "@/lib/data";
 import type { HeadlineFigure } from "../../types";
 import { fmt1, fmtInt, fmtRatio } from "../../format";
 import { Card, DataTable, Definitions, Stat, Td, Th, ViewSection } from "../../ui";
-import { configSummaries, counterexampleComparison, mutationCounts, proofCounts, requestTotals } from "../derive";
+import { configSummaries, counterexampleComparison, mutationCounts, proofCounts, requestTotals, verdictCounts } from "../derive";
 import { evidence } from "../evidence";
 import { CallPill, Source, VerdictPill } from "../shared";
 
@@ -60,8 +60,47 @@ export function OverviewView({ figures }: { figures: HeadlineFigure[] }) {
   const proofs = proofCounts();
   const muts = mutationCounts();
 
+  const vc = verdictCounts();
+  const minute = [
+    {
+      term: "Goal",
+      detail: "Find out whether a tool can tell if an AI agent's claim that a change is “safe and faster” is true, before anyone believes it.",
+    },
+    {
+      term: "Tested on",
+      detail: `A small billing system an AI agent built (bills, payments, advance payments and reversals), and the ${vc.total} speed-ups the agent then proposed for it.`,
+    },
+    {
+      term: "What was done",
+      detail:
+        "The rules the system must always keep were written down, reviewed by a person and locked. Each change was checked against those rules first: by a proof checker, by reading the live database's settings, and by running the real code against the rules on random input. Only the changes that passed were timed.",
+    },
+    {
+      term: "Result",
+      detail: `${vc.accepted} of ${vc.total} changes were safe${all ? `, and together they made the system ${fmtRatio(all.ratio)} faster` : ""}. The ${vc.total - vc.accepted} rejected ones look fine in everyday use: one breaks only once a customer has more than 20 unpaid bills, and the other passed every functional test but can lose confirmed payments in a power cut.`,
+    },
+    {
+      term: "Conclusion",
+      detail:
+        "The checker catches wrong claims that ordinary tests miss. It doesn't replace a person: someone who knows the business still has to review the rules.",
+    },
+  ];
+
   return (
     <div className="space-y-14">
+      <ViewSection id="minute" title="In one minute">
+        <Card>
+          <Definitions items={minute} />
+          <p className="mt-4 text-sm text-muted-foreground">
+            New to this?{" "}
+            <Link href="/blog/ai-agents-prove-it-plain-english" className="text-gold hover:underline">
+              Read the plain-English version
+            </Link>
+            . The rest of this page is the detail, with every figure traced to its raw file.
+          </p>
+        </Card>
+      </ViewSection>
+
       <section aria-label="Headline figures" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {figures.map((f) => (
           <Stat key={f.label} label={f.label} value={f.value} detail={f.detail} tone={f.tone} />

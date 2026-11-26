@@ -65,8 +65,47 @@ export function OverviewView({ figures }: { figures: HeadlineFigure[] }) {
   const robustHaskell = repro.find((r) => r.case === "reading-robust" && r.implementation === "Haskell port");
   const robustJava = repro.find((r) => r.case === "reading-robust" && r.implementation === "Java service");
 
+  const minute = [
+    {
+      term: "Goal",
+      detail: "Test the same method on work nobody on this project wrote: a published design, checked against rules from outside its code.",
+    },
+    {
+      term: "Tested on",
+      detail:
+        "Precise Ledger Pro, an open-source loan ledger with a Java service, a Haskell version and a draft research paper. The paper describes fork-and-sync, a shortcut for fixing the books when a transaction arrives late, instead of recalculating everything.",
+    },
+    {
+      term: "What was done",
+      detail:
+        "The rules came from published accounting practice, not from the code. The paper's shortcut was modelled step by step and compared with a full recalculation, using a proof checker. Cases where the two differed were run through the project's own code. A safer shortcut was proved correct, then timed in that code.",
+    },
+    {
+      term: "Result",
+      detail: `The shortcut usually agrees with a full recalculation, but not always: ${counts.refutationsAccepted} short cases are proved where it ends differently (one only against our own rule for same-day ties), and ${nt.events} transactions are enough to stop it finishing. Recalculating only from the late transaction onwards is proved to give exactly the same answer, and was faster in ${sp.faster} of ${sp.workloads} workloads, ${fmtRatio(sp.ratioMedian)} at the median.`,
+    },
+    {
+      term: "Conclusion",
+      detail:
+        "The method works on code the agent didn't write. It found edge cases in the area the paper itself lists as open work, and it produced an optimisation that is both proved right and faster.",
+    },
+  ];
+
   return (
     <div className="space-y-14">
+      <ViewSection id="minute" title="In one minute">
+        <Card>
+          <Definitions items={minute} />
+          <p className="mt-4 text-sm text-muted-foreground">
+            New to this?{" "}
+            <Link href="/blog/ai-agents-prove-it-plain-english" className="text-gold hover:underline">
+              Read the plain-English version
+            </Link>
+            . The rest of this page is the detail, with every figure traced to its raw file.
+          </p>
+        </Card>
+      </ViewSection>
+
       <section aria-label="Headline figures" className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {figures.map((f) => (
           <Stat key={f.label} label={f.label} value={f.value} detail={f.detail} tone={f.tone} />

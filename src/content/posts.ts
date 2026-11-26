@@ -18,6 +18,16 @@ function cs360(
  */
 export const posts: Post[] = [
   {
+    slug: "ai-agents-prove-it-plain-english",
+    title: "Making AI agents prove their claims, in plain English",
+    summary:
+      "What I tried, what I tested it on, what I found, and where it's worth the tokens: a no-jargon summary of checking AI agents' \"safe and faster\" claims before anyone believes them.",
+    date: "2026-11-26",
+    tags: ["AI", "AI Agents", "Software Quality", "Formal Methods"],
+    readingMinutes: 7,
+    project: "gods-hand",
+  },
+  {
     slug: "a-ledger-i-didnt-write",
     title: "A ledger I didn't write: checking a paper's open question with Lean 4",
     summary:

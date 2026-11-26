@@ -1,6 +1,24 @@
 {/* Every figure below comes from the God's Hand evidence files: run 20261114T210922Z (the owner's run on a locked spec),
     evidence/findings.json, and the Nagle and fsync experiment outputs. Screenshots are from the owner's terminal. */}
 
+> **The short version**
+>
+> - **Goal:** don't believe an AI agent's "this change is safe and faster" until
+>   a tool has produced evidence for it.
+> - **Tested on:** a small billing system an agent built, and six speed-ups the
+>   agent proposed for it.
+> - **What I did:** wrote down the rules the system must keep, had them checked
+>   by a proof checker (Lean), and timed only the changes that kept the rules.
+> - **Result:** 4 of the 6 were safe, and together 5.03× faster. 2 were rejected,
+>   and both look fine in everyday use: one leaves a payment unapplied once a
+>   customer has more than 20 unpaid bills, and one passed every functional test
+>   but can lose confirmed payments in a power cut.
+> - **Conclusion:** it catches wrong claims that tests miss, but a person still
+>   has to review the rules.
+>
+> New to this? Start with [the plain-English version](/blog/ai-agents-prove-it-plain-english).
+
+
 AI agents now write a lot of my code, and they make claims faster than I can
 check them. *"This keeps the books balanced."* *"Cap the query at 20 rows; payments
 rarely cover more."* *"WAL with synchronous=NORMAL is the standard fast setting."*

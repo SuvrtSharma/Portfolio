@@ -105,10 +105,10 @@ export default async function DashboardLayout({
               {posts.length ? (
                 <div>
                   <dt className="text-xs text-muted-foreground">Written up in</dt>
-                  <dd className="flex flex-wrap gap-x-3">
-                    {posts.map((p, i) => (
+                  <dd className="flex flex-col gap-0.5">
+                    {posts.map((p) => (
                       <Link key={p.slug} href={`/blog/${p.slug}`} className="text-gold hover:underline">
-                        Part {i + 1}
+                        {p.title}
                       </Link>
                     ))}
                   </dd>
