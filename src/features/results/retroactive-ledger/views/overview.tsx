@@ -87,7 +87,7 @@ export function OverviewView({ figures }: { figures: HeadlineFigure[] }) {
     {
       term: "Conclusion",
       detail:
-        "The method works on code the agent didn't write. It found edge cases in the area the paper itself lists as open work, and it produced an optimisation that is both proved right and faster.",
+        "The method works on code the agent didn't write. It found edge cases in the area the paper itself lists as open work, and a proved-correct, faster way to recalculate that follows the paper's idea and could help fix its shortcut.",
     },
   ];
 

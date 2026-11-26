@@ -90,8 +90,10 @@ For each one:
   project's two implementations, and in my model of the paper. That isn't proof
   it never finishes, but none of the three ever did. The paper already flags
   this area as open work.
-- **A different shortcut is safe, and fast.** Recalculating only from the late
-  transaction's date onwards is **proved to give exactly the same answer** as
+- **A proved-correct version of the same idea, which could help fix it.**
+  Like the paper's shortcut, it starts from the late transaction's date and
+  recalculates only what follows. With a few changes in how it starts and how it
+  handles reversals, it's **proved to give exactly the same answer** as
   recalculating everything. On the project's own code it was faster in all 32
   test workloads: **11.86× at the median**, between 1.96× and 155.94×.
 
@@ -101,8 +103,8 @@ For each one:
   everyday use and in the usual tests. Both rejected speed-ups in part 1 were of
   that kind.
 - **It works on code the agent didn't write.** It found real edge cases in a
-  published design, and it produced a better optimisation than the one it
-  checked.
+  published design, and a proved-correct way to recalculate that could help
+  fix the original method.
 - **It doesn't replace a person.** Someone has to read and approve the rules.
   In both parts, my review and outside reviews caught mistakes the proofs
   couldn't.
